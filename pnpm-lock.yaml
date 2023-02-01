@@ -12,6 +12,7 @@ specifiers:
   '@angular/platform-browser': ^15.1.0
   '@angular/platform-browser-dynamic': ^15.1.0
   '@angular/router': ^15.1.0
+  '@types/google-one-tap': ^1.2.2
   '@types/jasmine': ~4.3.0
   jasmine-core: ~4.5.0
   karma: ~6.4.0
@@ -41,6 +42,7 @@ devDependencies:
   '@angular-devkit/build-angular': 15.1.2_sv7y4tz6xevf2fmgbnj5oigpei
   '@angular/cli': 15.1.2
   '@angular/compiler-cli': 15.1.1_6cdwpve3qxqoyywhwxcsrh7cpq
+  '@types/google-one-tap': 1.2.2
   '@types/jasmine': 4.3.1
   jasmine-core: 4.5.0
   karma: 6.4.1
@@ -2087,6 +2089,10 @@ packages:
       '@types/express-serve-static-core': 4.17.33
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.0
+    dev: true
+
+  /@types/google-one-tap/1.2.2:
+    resolution: {integrity: sha512-7uAOjukbJnzJ5P8fKPSy7QDrbLbCEyUrSH/M4K+8wnk+cbSxE3t2MmrLPX7ejUl8rDZv3oUl0/uwQRlIIrLMBA==}
     dev: true
 
   /@types/http-proxy/1.17.9:

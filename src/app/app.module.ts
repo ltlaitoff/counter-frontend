@@ -8,6 +8,7 @@ import { HomeComponent } from './pages/home/home.component'
 import { CategoriesComponent } from './pages/categories/categories.component'
 import { StatisticComponent } from './pages/statistic/statistic.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
+import { HeaderComponent } from './components/header/header.component'
 
 @NgModule({
 	declarations: [
@@ -15,7 +16,8 @@ import { AuthorizationComponent } from './pages/authorization/authorization.comp
 		HomeComponent,
 		CategoriesComponent,
 		StatisticComponent,
-		AuthorizationComponent
+		AuthorizationComponent,
+		HeaderComponent
 	],
 	imports: [BrowserModule, AppRoutingModule, HttpClientModule],
 	providers: [],

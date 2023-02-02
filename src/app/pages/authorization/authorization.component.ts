@@ -1,9 +1,8 @@
-declare const google: any
+import { Component, OnInit } from '@angular/core'
 
-import { Component, AfterViewInit } from '@angular/core'
-import { accounts } from 'google-one-tap'
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login'
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login'
 
-import { environment } from 'src/environments/environment'
 import { ApiService } from '../../services/api.service'
 import { AuthGuardService } from '../../services/auth-guard.service'
 
@@ -12,33 +11,33 @@ import { AuthGuardService } from '../../services/auth-guard.service'
 	templateUrl: './authorization.component.html',
 	styleUrls: ['./authorization.component.scss']
 })
-export class AuthorizationComponent implements AfterViewInit {
-	authorizedStatus: string = 'not authorization'
+export class AuthorizationComponent implements OnInit {
+	user: SocialUser | null = null
+	loggedIn: boolean = false
 
-	ngAfterViewInit() {
-		const googleAccounts: accounts = google.accounts
+	constructor(
+		private socialAuthService: SocialAuthService,
+		private api: ApiService,
+		private authGuard: AuthGuardService
+	) {}
 
-		googleAccounts.id.initialize({
-			client_id: environment.googleClientId,
-			ux_mode: 'popup',
-			cancel_on_tap_outside: true,
-			callback: ({ credential }) => {
-				console.log(credential)
-				this.api.authorization(credential).subscribe(value => {
-					this.authGuard.authorize(value)
-					console.log(JSON.stringify(value, null, '\t'))
-				})
-			}
-		})
-
-		googleAccounts.id.renderButton(
-			document.getElementById('gbtn') as HTMLElement,
-			{
-				size: 'large',
-				width: 320
-			}
-		)
+	signInWithGoogle(): void {
+		this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
 	}
 
-	constructor(private api: ApiService, private authGuard: AuthGuardService) {}
+	refreshToken(): void {
+		this.socialAuthService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID)
+	}
+
+	signOut(): void {
+		this.socialAuthService.signOut()
+	}
+
+	ngOnInit() {
+		this.socialAuthService.authState.subscribe(user => {
+			this.api.authorization(user.idToken).subscribe(value => {
+				this.authGuard.authorize(value)
+			})
+		})
+	}
 }

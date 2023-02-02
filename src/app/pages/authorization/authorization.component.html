@@ -1,5 +1,14 @@
-<p>login works!</p>
+<div class="flex justify-center">
+	<div class="py-4 px-6 rounded-xl mt-24 shadow-md">
+		<h2 class="text-xl text-gray-700 text-center">Login</h2>
 
-<div id="gbtn"></div>
-
-{{ authorizedStatus }}
+		<div class="mt-4">
+			<asl-google-signin-button
+				*ngIf="!user"
+				type="standard"
+				size="large"
+				width="300"
+			></asl-google-signin-button>
+		</div>
+	</div>
+</div>

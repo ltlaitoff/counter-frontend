@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { CanActivate, Router } from '@angular/router'
 import { ApiService } from './api.service'
 import { User } from '../../types/User'
+import { Subject } from 'rxjs'
 
 /*
 	Выполнение запроса на инициализацию - базового первого запроса который делается при каждом заходе на страницу
@@ -11,16 +12,12 @@ import { User } from '../../types/User'
 
 */
 
-interface UserAuthorizationSucceed extends User {
-	authorized: true
-}
-
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate {
 	private authorized: boolean = false
-	private user: User | null = null
+	private user = new Subject<User>()
 
 	initialize() {
 		this.api.initialize().subscribe(data => {
@@ -38,10 +35,10 @@ export class AuthGuardService implements CanActivate {
 		})
 	}
 
-	authorize(data: UserAuthorizationSucceed) {
+	authorize(data: User) {
 		console.log('[Authorized]')
 		this.authorized = true
-		this.user = data
+		this.user.next(data)
 
 		this.router.navigate(['/'])
 		return
@@ -56,8 +53,9 @@ export class AuthGuardService implements CanActivate {
 		return true
 	}
 
-	constructor(private router: Router, private api: ApiService) {
-		// this.router.navigate(['authorization'])
-		// this.router.navigate(['/authorization'])
+	getUserData() {
+		return this.user
 	}
+
+	constructor(private router: Router, private api: ApiService) {}
 }

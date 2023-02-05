@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { HttpClientModule } from '@angular/common/http'
+import { ReactiveFormsModule } from '@angular/forms'
 
 import {
 	SocialLoginModule,
@@ -17,6 +18,7 @@ import { AuthorizationComponent } from './pages/authorization/authorization.comp
 import { HeaderComponent } from './components/header/header.component'
 
 import { environment } from 'src/environments/environment'
+import { CategorySelectComponent } from './pages/home/category-select/category-select.component'
 
 @NgModule({
 	declarations: [
@@ -25,13 +27,15 @@ import { environment } from 'src/environments/environment'
 		CategoriesComponent,
 		StatisticComponent,
 		AuthorizationComponent,
-		HeaderComponent
+		HeaderComponent,
+		CategorySelectComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
-		SocialLoginModule
+		SocialLoginModule,
+		ReactiveFormsModule
 	],
 	providers: [
 		{

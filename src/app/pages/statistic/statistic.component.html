@@ -1,1 +1,14 @@
-<p>statistic works!</p>
+<table>
+	<tr>
+		<th>Count</th>
+		<th>Comment</th>
+		<th>Category</th>
+		<th>Date</th>
+	</tr>
+	<tr *ngFor="let record of statistics">
+		<td>{{ record.count }}</td>
+		<td>{{ record.comment }}</td>
+		<td>{{ record.category.name }}</td>
+		<td>{{ record.date }}</td>
+	</tr>
+</table>

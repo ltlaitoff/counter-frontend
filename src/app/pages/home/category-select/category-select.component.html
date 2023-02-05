@@ -1,0 +1,46 @@
+<div
+	*ngIf="categories"
+	class="relative text-gray-600"
+>
+	<div class="p-4">
+		<button
+			type="button"
+			*ngIf="currentCategory !== null"
+			class="flex gap-x-2 items-center"
+			(click)="toggleDropDown()"
+		>
+			<div
+				class="w-4 h-4 rounded-full"
+				[style]="{ background: currentCategory.color.colorHEX }"
+			></div>
+			{{ currentCategory.name }}
+		</button>
+
+		<button
+			type="button"
+			*ngIf="currentCategory === null"
+			class="text-gray-600"
+			(click)="toggleDropDown()"
+		>
+			Choice category
+		</button>
+	</div>
+
+	<div
+		class="absolute mt-2 flex flex-col p-2 bg-white border border-pink-400 rounded w-full"
+		*ngIf="isDropDownOpened"
+	>
+		<button
+			type="button"
+			class="flex gap-x-2 items-center p-2"
+			*ngFor="let category of categories"
+			(click)="onItemClick(category._id)"
+		>
+			<div
+				class="w-4 h-4 rounded-full"
+				[style]="{ background: category.color.colorHEX }"
+			></div>
+			{{ category.name }}
+		</button>
+	</div>
+</div>

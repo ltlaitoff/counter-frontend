@@ -20,6 +20,8 @@ import { HeaderComponent } from './components/header/header.component'
 import { environment } from 'src/environments/environment'
 import { CategorySelectComponent } from './pages/home/category-select/category-select.component'
 
+import { AngularSvgIconModule } from 'angular-svg-icon'
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -35,7 +37,8 @@ import { CategorySelectComponent } from './pages/home/category-select/category-s
 		AppRoutingModule,
 		HttpClientModule,
 		SocialLoginModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		AngularSvgIconModule.forRoot()
 	],
 	providers: [
 		{

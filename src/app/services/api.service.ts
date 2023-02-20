@@ -62,5 +62,27 @@ export class ApiService {
 		})
 	}
 
+	getAllColors() {
+		return this.http.get<Color[]>(`${API_BASE_URL}/color/all`, {
+			withCredentials: true
+		})
+	}
+
+	addCategory(
+		data: Omit<Omit<Omit<Category, 'color'>, 'order'>, '_id'> & {
+			color: string
+		}
+	) {
+		return this.http.post(`${API_BASE_URL}/category/add`, data, {
+			withCredentials: true
+		})
+	}
+
+	deleteCategory(id: string) {
+		return this.http.delete(`${API_BASE_URL}/category/${id}`, {
+			withCredentials: true
+		})
+	}
+
 	constructor(private http: HttpClient) {}
 }

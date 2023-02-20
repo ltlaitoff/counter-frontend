@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { User } from '../../types/User'
 import { Category } from 'src/types/Category'
 import { Statistic } from '../../types/Statistic'
+import { Color } from 'src/types/Color'
 
 const API_BASE_URL: string = 'http://localhost:8000'
 
@@ -56,8 +57,6 @@ export class ApiService {
 			date: number
 		}
 	) {
-		console.log('api call', data)
-
 		return this.http.post(`${API_BASE_URL}/statistic/add`, data, {
 			withCredentials: true
 		})

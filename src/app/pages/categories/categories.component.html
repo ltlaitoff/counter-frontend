@@ -9,7 +9,7 @@
 	</tr>
 	<tr
 		class="table-row text-slate-600 relative transition-opacity"
-		*ngFor="let category of sortedCategoriesByOrder()"
+		*ngFor="let category of sortedByOrder(categories)"
 	>
 		<td class="p-3 border">
 			<div
@@ -48,7 +48,7 @@
 		[formGroup]="addForm"
 		(ngSubmit)="onSubmitAddForm()"
 		*ngIf="isAddFormOpened"
-		class="p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow"
+		class="p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
 	>
 		<label class="flex gap-x-5 justify-between">
 			Name
@@ -67,10 +67,13 @@
 			/>
 		</label>
 
-		<fieldset class="flex gap-x-3">
+		<fieldset
+			class="flex gap-x-3"
+			*ngIf="colors"
+		>
 			<div
 				class=""
-				*ngFor="let color of colors"
+				*ngFor="let color of sortedByOrder(colors)"
 			>
 				<input
 					[value]="color._id"

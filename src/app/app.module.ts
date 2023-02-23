@@ -20,7 +20,8 @@ import { HeaderComponent } from './components/header/header.component'
 import { environment } from 'src/environments/environment'
 import { CategorySelectComponent } from './pages/home/category-select/category-select.component'
 
-import { AngularSvgIconModule } from 'angular-svg-icon'
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import { StatisticChartComponent } from './pages/statistic/statistic-chart/statistic-chart.component'
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,8 @@ import { AngularSvgIconModule } from 'angular-svg-icon'
 		StatisticComponent,
 		AuthorizationComponent,
 		HeaderComponent,
-		CategorySelectComponent
+		CategorySelectComponent,
+  StatisticChartComponent
 	],
 	imports: [
 		BrowserModule,

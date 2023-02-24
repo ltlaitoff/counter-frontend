@@ -1,4 +1,9 @@
-<main class="max-w-[1440px] m-auto h-full">
+<app-loader *ngIf="!initialize"></app-loader>
+
+<main
+	*ngIf="initialize"
+	class="max-w-[1440px] m-auto h-full"
+>
 	<app-header [userInfo]="userData"></app-header>
 	<router-outlet></router-outlet>
 </main>

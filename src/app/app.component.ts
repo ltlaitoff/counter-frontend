@@ -9,11 +9,14 @@ import { AuthGuardService } from './services/auth-guard.service'
 })
 export class AppComponent implements OnInit {
 	userData: User | null = null
+	initialize: boolean = false
 
 	title = 'counter-frontend'
 
 	ngOnInit() {
-		this.authGuard.initialize()
+		this.authGuard.initialize().subscribe(result => {
+			this.initialize = result
+		})
 
 		this.authGuard.getUserData().observed
 		this.authGuard.getUserData().subscribe(newUserData => {

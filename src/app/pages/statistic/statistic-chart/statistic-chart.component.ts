@@ -10,31 +10,71 @@ import { Statistic } from 'src/types/Statistic'
 })
 export class StatisticChartComponent implements OnInit {
 	@Input() statistics: Statistic[] = []
+	currentChartType: 'day' | 'record' = 'day'
 
-	chartData(statistics: Statistic[]) {
+	// @ts-expect-error
+	private chart: Chart
+
+	changeChartType() {
+		if (this.currentChartType === 'day') {
+			this.currentChartType = 'record'
+		} else {
+			this.currentChartType = 'day'
+		}
+
+		this.chart.data = this.chartData(this.statistics, this.currentChartType)
+		console.log(this.chart.data)
+
+		this.chart.update()
+	}
+
+	chartData(statistics: Statistic[], type: 'day' | 'record' = 'day') {
 		const temp: { categoryName: string; data: Array<any>; colorHEX: string }[] =
 			[]
 
-		this.statistics.forEach(record => {
+		statistics.forEach(record => {
 			const categoryName = record.category.name
 
-			const newChartRecord = {
-				x: new Date(record.date).getTime(),
-				y: record.count
+			let findedRecord = temp.find(item => item.categoryName === categoryName)
+
+			if (findedRecord === undefined) {
+				const index = temp.push({
+					categoryName: categoryName,
+					colorHEX: record.category.color.colorHEX,
+					data: []
+				})
+
+				findedRecord = temp[index - 1]
 			}
 
-			const findedRecord = temp.find(item => item.categoryName === categoryName)
+			//===
+			if (type === 'day') {
+				const date = new Date(new Date(record.date).toDateString()).getTime()
 
-			if (findedRecord) {
-				findedRecord.data.push(newChartRecord)
+				const findedRecordData = findedRecord.data.find(item => item.x === date)
+
+				if (findedRecordData === undefined) {
+					findedRecord.data.push({
+						x: date,
+						y: record.count
+					})
+					return
+				}
+
+				findedRecordData.y += record.count
 				return
 			}
 
-			temp.push({
-				categoryName: categoryName,
-				colorHEX: record.category.color.colorHEX,
-				data: [newChartRecord]
-			})
+			if (type === 'record') {
+				const date = new Date(record.date).getTime()
+
+				findedRecord.data.push({
+					x: date,
+					y: record.count
+				})
+
+				return
+			}
 		})
 
 		const datasets = temp.map(item => {
@@ -53,9 +93,9 @@ export class StatisticChartComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		new Chart('statistic-chart-canvas', {
+		this.chart = new Chart('statistic-chart-canvas', {
 			type: 'line',
-			data: this.chartData(this.statistics),
+			data: this.chartData(this.statistics, this.currentChartType),
 			options: {
 				responsive: true,
 				spanGaps: true,
@@ -69,8 +109,14 @@ export class StatisticChartComponent implements OnInit {
 							unit: 'day'
 						}
 					}
+				},
+				animation: {
+					duration: 400
+				},
+				animations: {
+					y: { duration: 0 }
 				}
 			}
-		}).update()
+		})
 	}
 }

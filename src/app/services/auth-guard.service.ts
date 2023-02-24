@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { CanActivate, Router } from '@angular/router'
 import { ApiService } from './api.service'
 import { User } from '../../types/User'
-import { Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 
 /*
 	Выполнение запроса на инициализацию - базового первого запроса который делается при каждом заходе на страницу
@@ -17,34 +17,34 @@ import { Subject } from 'rxjs'
 })
 export class AuthGuardService implements CanActivate {
 	private authorized: boolean = false
+	private initialized: boolean = false
 	private user = new Subject<User>()
 
 	initialize() {
-		this.api.initialize().subscribe(data => {
-			console.log(
-				'🚀 ~ file: auth-guard.service.ts:23 ~ AuthGuardService ~ this.api.initialize ~ data',
-				data
-			)
+		return new Observable<boolean>(subscriber => {
+			this.api.initialize().subscribe(data => {
+				subscriber.next(true)
+				this.initialized = true
 
-			if (data.authorized) {
-				return this.authorize(data)
-			}
+				if (data.authorized) {
+					return this.authorize(data)
+				}
 
-			console.log('[NOT Authorized]')
-			return
+				console.log('[NOT Authorized]')
+			})
 		})
 	}
 
 	authorize(data: User) {
 		console.log('[Authorized]')
+
 		this.authorized = true
 		this.user.next(data)
-
-		this.router.navigate(['/'])
-		return
 	}
 
 	canActivate() {
+		if (!this.initialized) return true
+
 		if (!this.authorized) {
 			this.router.navigate(['/authorization'])
 			return false

@@ -22,7 +22,8 @@ import { CategorySelectComponent } from './pages/home/category-select/category-s
 
 import { AngularSvgIconModule } from 'angular-svg-icon'
 import { StatisticChartComponent } from './pages/statistic/statistic-chart/statistic-chart.component'
-import { LoaderComponent } from './components/loader/loader.component'
+import { LoaderComponent } from './components/loader/loader.component';
+import { StoreModule } from '@ngrx/store'
 
 @NgModule({
 	declarations: [
@@ -42,7 +43,8 @@ import { LoaderComponent } from './components/loader/loader.component'
 		HttpClientModule,
 		SocialLoginModule,
 		ReactiveFormsModule,
-		AngularSvgIconModule.forRoot()
+		AngularSvgIconModule.forRoot(),
+		StoreModule.forRoot({}, {})
 	],
 	providers: [
 		{

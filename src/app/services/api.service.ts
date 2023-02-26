@@ -5,7 +5,8 @@ import { Category } from 'src/types/Category'
 import { Statistic } from '../../types/Statistic'
 import { Color } from 'src/types/Color'
 
-const API_BASE_URL: string = 'http://localhost:8000'
+// const API_BASE_URL: string = 'http://localhost:8000'
+const API_BASE_URL: string = 'https://counter-backend-4g7p.onrender.com'
 
 @Injectable({
 	providedIn: 'root'

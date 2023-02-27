@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.0.1
+
+- [ ] Fix authorization [#1](https://github.com/ltlaitoff/counter-frontend/issues/1)
+- [ ] Move API host variables to env [#2](https://github.com/ltlaitoff/counter-frontend/issues/2)
+
 ## v0.0.0
 
 - Created authorization with google identity

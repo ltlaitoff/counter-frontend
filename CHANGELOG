@@ -1,0 +1,9 @@
+# CHANGELOG
+
+## v0.0.0
+
+- Created authorization with google identity
+- Created add statistic record form
+- Created categories table with add and remove opportunity
+- Created statistic chart
+- Created basic statistic table

@@ -13,6 +13,7 @@ specifiers:
   '@angular/platform-browser': ^15.1.0
   '@angular/platform-browser-dynamic': ^15.1.0
   '@angular/router': ^15.1.0
+  '@ngrx/effects': ^15.3.0
   '@ngrx/store': ^15.3.0
   '@ngrx/store-devtools': 15.3.0
   '@types/google-one-tap': ^1.2.2
@@ -45,6 +46,7 @@ dependencies:
   '@angular/platform-browser': 15.1.1_rxpvwy5ptuio6t6exix22goh4e
   '@angular/platform-browser-dynamic': 15.1.1_hbzc5xw3mja47ogky4se7iwkze
   '@angular/router': 15.1.1_iaxnlggfwmbt7aywxhi6wdgvje
+  '@ngrx/effects': 15.3.0_6fmtlyuld6wrbggs7x5bgya6r4
   '@ngrx/store': 15.3.0_atos3ivlarwg33grkhrhxpyfke
   '@ngrx/store-devtools': 15.3.0_juk4uxapygcrzpkb7j3swd55ya
   angular-svg-icon: 15.0.0_xiswyukw6mp5gd7mk5yfojciii
@@ -1925,6 +1927,19 @@ packages:
   /@leichtgewicht/ip-codec/2.0.4:
     resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
     dev: true
+
+  /@ngrx/effects/15.3.0_6fmtlyuld6wrbggs7x5bgya6r4:
+    resolution: {integrity: sha512-L+Ie4XFrzYBJOV7hNQvR5hUvG1PSCDd6niwOOJg5nm9zEjSnAxveJ/a3B52pRwge6EYOnrQne97jyArxOzPCJA==}
+    peerDependencies:
+      '@angular/core': ^15.0.0
+      '@ngrx/store': 15.3.0
+      rxjs: ^6.5.3 || ^7.5.0
+    dependencies:
+      '@angular/core': 15.1.1_rxjs@7.8.0+zone.js@0.12.0
+      '@ngrx/store': 15.3.0_atos3ivlarwg33grkhrhxpyfke
+      rxjs: 7.8.0
+      tslib: 2.4.1
+    dev: false
 
   /@ngrx/store-devtools/15.3.0_juk4uxapygcrzpkb7j3swd55ya:
     resolution: {integrity: sha512-o39T11T994j5XzwiNquhRHVQiFYlOg1PJWmV++LdIaXD0zYovc9lzNDnZJy04mt9XPTDPu8QmcmzV44zUtY4vg==}

@@ -4,9 +4,9 @@ import { User } from '../../types/User'
 import { Category } from 'src/types/Category'
 import { Statistic } from '../../types/Statistic'
 import { Color } from 'src/types/Color'
+import { environment } from 'src/environments/environment'
 
-// const API_BASE_URL: string = 'http://localhost:8000'
-const API_BASE_URL: string = 'https://counter-backend-4g7p.onrender.com'
+const API_BASE_URL = environment.API_HOST
 
 @Injectable({
 	providedIn: 'root'

@@ -1,8 +1,6 @@
 name: Deploy main
 
-on:
-  push:
-    branches: ['main']
+on: [push, pull_request]
 
 jobs:
   build:
@@ -49,11 +47,3 @@ jobs:
 
       - name: Run build
         run: pnpm run build --if-present
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          # GITHUB_TOKEN: ${{ secrets. }}
-          BRANCH: gh-pages
-          FOLDER: dist
-          CLEAN: true

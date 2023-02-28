@@ -3,6 +3,9 @@ import { ApiService } from '../../services/api.service'
 import { Category } from '../../../types/Category'
 import { FormControl, FormGroup } from '@angular/forms'
 import { Color } from 'src/types/Color'
+import { Store } from '@ngrx/store'
+import { RootState } from 'src/app/store'
+import { ColorsActions, selectColors } from 'src/app/store/colors'
 
 /*
 TODO [x]: View as table with orde
@@ -22,7 +25,7 @@ TODO [ ]: Drag-n-drop order
 })
 export class CategoriesComponent implements OnInit {
 	categories: Array<Category> | null = null
-	colors: Array<Color> | null = null
+	colors: Color[] | null = null
 
 	addForm = new FormGroup({
 		name: new FormControl<string>(''),
@@ -41,8 +44,11 @@ export class CategoriesComponent implements OnInit {
 	ngOnInit() {
 		this.reloadCategories()
 
-		this.api.getAllColors().subscribe(colors => {
-			this.colors = colors
+		this.store.dispatch(ColorsActions.loadColors())
+
+		this.store.select(selectColors).subscribe(newColors => {
+			console.log(newColors)
+			this.colors = newColors
 		})
 	}
 
@@ -51,12 +57,12 @@ export class CategoriesComponent implements OnInit {
 	): Array<T> | null {
 		if (!array) return null
 
-		return array.sort((a, b) => {
+		return [...array].sort((a, b) => {
 			return a.order > b.order ? 1 : -1
 		})
 	}
 
-	constructor(private api: ApiService) {}
+	constructor(private api: ApiService, private store: Store<RootState>) {}
 
 	toggleAddForm() {
 		this.isAddFormOpened = !this.isAddFormOpened

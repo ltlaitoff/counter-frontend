@@ -5,6 +5,7 @@ import { Category } from 'src/types/Category'
 import { Statistic } from '../../types/Statistic'
 import { Color } from 'src/types/Color'
 import { environment } from 'src/environments/environment'
+import { AddCategoryInputs } from 'src/types/ApiInputs'
 
 const API_BASE_URL = environment.API_HOST
 
@@ -69,11 +70,7 @@ export class ApiService {
 		})
 	}
 
-	addCategory(
-		data: Omit<Omit<Omit<Category, 'color'>, 'order'>, '_id'> & {
-			color: string
-		}
-	) {
+	addCategory(data: AddCategoryInputs) {
 		return this.http.post<Category>(`${API_BASE_URL}/category/add`, data, {
 			withCredentials: true
 		})

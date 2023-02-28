@@ -4,12 +4,14 @@ import { select, Store } from '@ngrx/store'
 import { EMPTY } from 'rxjs'
 import { map, exhaustMap, catchError, withLatestFrom } from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
+import { CategoriesActions } from '../categories'
 
 import { ColorsActions } from '../colors'
 import { RootState } from '../rootTypes'
 
 @Injectable()
 export class ApiEffects {
+	/* Colors */
 	loadColors$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(ColorsActions.loadColors),

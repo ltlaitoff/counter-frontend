@@ -8,6 +8,7 @@ Millestone [v0.0.1](https://github.com/ltlaitoff/counter-frontend/milestone/1)
 - Move API host variables to env [#2](https://github.com/ltlaitoff/counter-frontend/issues/2)
 - Create gh-actions for deploy and check commits/pull requests [#3](https://github.com/ltlaitoff/counter-frontend/issues/3)
 - Create global store NgRx [#5](https://github.com/ltlaitoff/counter-frontend/issues/5)
+- Fix router in github.io [#6](https://github.com/ltlaitoff/counter-frontend/issues/6)
 
 ## v0.0.0
 

@@ -5,7 +5,7 @@ import { Category } from 'src/types/Category'
 import { Statistic } from '../../types/Statistic'
 import { Color } from 'src/types/Color'
 import { environment } from 'src/environments/environment'
-import { AddCategoryInputs } from 'src/types/ApiInputs'
+import * as ApiInputs from 'src/types/ApiInputs'
 
 const API_BASE_URL = environment.API_HOST
 
@@ -53,12 +53,7 @@ export class ApiService {
 		})
 	}
 
-	addStatisticRecord(
-		data: Omit<Omit<Statistic, 'category'>, 'date'> & {
-			category: string
-			date: number
-		}
-	) {
+	addStatisticRecord(data: ApiInputs.AddStatisticInputs) {
 		return this.http.post(`${API_BASE_URL}/statistic/add`, data, {
 			withCredentials: true
 		})
@@ -70,7 +65,7 @@ export class ApiService {
 		})
 	}
 
-	addCategory(data: AddCategoryInputs) {
+	addCategory(data: ApiInputs.AddCategoryInputs) {
 		return this.http.post<Category>(`${API_BASE_URL}/category/add`, data, {
 			withCredentials: true
 		})

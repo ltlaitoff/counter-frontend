@@ -1,6 +1,6 @@
 import { CategoriesEffects } from './categories/categories.effects'
-import { ApiEffects } from './effects/api.effects'
+import { ColorEffects } from './colors/colors.effects'
 
-const effects = [ApiEffects, CategoriesEffects]
+const effects = [ColorEffects, CategoriesEffects]
 
 export default effects

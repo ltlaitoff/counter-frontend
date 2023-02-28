@@ -74,7 +74,7 @@ export class ApiService {
 			color: string
 		}
 	) {
-		return this.http.post(`${API_BASE_URL}/category/add`, data, {
+		return this.http.post<Category>(`${API_BASE_URL}/category/add`, data, {
 			withCredentials: true
 		})
 	}

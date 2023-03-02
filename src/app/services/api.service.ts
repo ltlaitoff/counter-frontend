@@ -54,7 +54,7 @@ export class ApiService {
 	}
 
 	addStatisticRecord(data: ApiInputs.AddStatisticInputs) {
-		return this.http.post(`${API_BASE_URL}/statistic/add`, data, {
+		return this.http.post<Statistic>(`${API_BASE_URL}/statistic/add`, data, {
 			withCredentials: true
 		})
 	}

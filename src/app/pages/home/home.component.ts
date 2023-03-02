@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service'
 import { Category } from 'src/types/Category'
 import { RootState } from 'src/app/store'
 import { selectCategories } from 'src/app/store/categories'
+import { StatisticActions } from 'src/app/store/statistic'
 
 @Component({
 	selector: 'app-home',
@@ -37,9 +38,7 @@ export class HomeComponent implements OnInit {
 
 		console.log(valueForSend)
 
-		this.api.addStatisticRecord(valueForSend).subscribe(value => {
-			console.log(value)
-		})
+		this.store.dispatch(StatisticActions.addStatistic(valueForSend))
 	}
 
 	ngOnInit() {
@@ -48,5 +47,5 @@ export class HomeComponent implements OnInit {
 		})
 	}
 
-	constructor(private api: ApiService, private store: Store<RootState>) {}
+	constructor(private store: Store<RootState>) {}
 }

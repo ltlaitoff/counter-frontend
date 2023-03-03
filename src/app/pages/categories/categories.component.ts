@@ -3,6 +3,11 @@ import { ApiService } from '../../services/api.service'
 import { Category } from '../../../types/Category'
 import { FormControl, FormGroup } from '@angular/forms'
 import { Color } from 'src/types/Color'
+import { Store } from '@ngrx/store'
+import { RootState } from 'src/app/store'
+import { ColorsActions, selectColors } from 'src/app/store/colors'
+import { CategoriesActions } from 'src/app/store/categories'
+import { selectCategories } from '../../store/categories/categories.select'
 
 /*
 TODO [x]: View as table with orde
@@ -21,8 +26,8 @@ TODO [ ]: Drag-n-drop order
 	styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-	categories: Array<Category> | null = null
-	colors: Array<Color> | null = null
+	categories: Category[] | null = null
+	colors: Color[] | null = null
 
 	addForm = new FormGroup({
 		name: new FormControl<string>(''),
@@ -33,16 +38,20 @@ export class CategoriesComponent implements OnInit {
 	public isAddFormOpened = false
 
 	reloadCategories() {
-		this.api.getAllCategories().subscribe(categories => {
-			this.categories = categories
-		})
+		this.store.dispatch(CategoriesActions.loadCategories({ force: true }))
 	}
 
 	ngOnInit() {
-		this.reloadCategories()
+		this.store.dispatch(CategoriesActions.loadCategories())
+		this.store.dispatch(ColorsActions.loadColors())
 
-		this.api.getAllColors().subscribe(colors => {
-			this.colors = colors
+		this.store.select(selectColors).subscribe(newColors => {
+			this.colors = newColors
+		})
+
+		this.store.select(selectCategories).subscribe(value => {
+			console.log('select categories')
+			this.categories = value
 		})
 	}
 
@@ -51,12 +60,12 @@ export class CategoriesComponent implements OnInit {
 	): Array<T> | null {
 		if (!array) return null
 
-		return array.sort((a, b) => {
+		return [...array].sort((a, b) => {
 			return a.order > b.order ? 1 : -1
 		})
 	}
 
-	constructor(private api: ApiService) {}
+	constructor(private store: Store<RootState>) {}
 
 	toggleAddForm() {
 		this.isAddFormOpened = !this.isAddFormOpened
@@ -74,16 +83,12 @@ export class CategoriesComponent implements OnInit {
 			color: value.color
 		}
 
-		this.api.addCategory(valueForSend).subscribe(value => {
-			console.log('addCategory: ', value)
-			this.reloadCategories()
-			this.toggleAddForm()
-		})
+		this.store.dispatch(CategoriesActions.addCategory(valueForSend))
+
+		this.isAddFormOpened = false
 	}
 
 	deleteCategory(category: Category) {
-		this.api.deleteCategory(category._id).subscribe(value => {
-			this.reloadCategories()
-		})
+		this.store.dispatch(CategoriesActions.deleteCategory({ id: category._id }))
 	}
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { selectStatistic, StatisticActions } from 'src/app/store/statistic'
 import { Statistic } from 'src/types/Statistic'
 import { ApiService } from '../../services/api.service'
+import { RootState } from '../../store/rootTypes'
 
 @Component({
 	selector: 'app-statistic',
@@ -11,10 +14,12 @@ export class StatisticComponent implements OnInit {
 	statistics: Statistic[] | null = null
 
 	ngOnInit() {
-		this.api.getAllStatisticRecords().subscribe(statistics => {
-			this.statistics = statistics
+		this.store.dispatch(StatisticActions.loadStatistic())
+
+		this.store.select(selectStatistic).subscribe(newStatistic => {
+			this.statistics = newStatistic
 		})
 	}
 
-	constructor(private api: ApiService) {}
+	constructor(private store: Store<RootState>) {}
 }

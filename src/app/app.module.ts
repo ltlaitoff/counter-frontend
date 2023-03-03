@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { NgModule, isDevMode } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { HttpClientModule } from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms'
@@ -22,8 +22,13 @@ import { CategorySelectComponent } from './pages/home/category-select/category-s
 
 import { AngularSvgIconModule } from 'angular-svg-icon'
 import { StatisticChartComponent } from './pages/statistic/statistic-chart/statistic-chart.component'
-import { LoaderComponent } from './components/loader/loader.component';
+import { LoaderComponent } from './components/loader/loader.component'
 import { StoreModule } from '@ngrx/store'
+import { PerfComponent } from './pages/perf/perf.component'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { EffectsModule } from '@ngrx/effects'
+
+import { StoreEffects, StoreReducers } from './store/'
 
 @NgModule({
 	declarations: [
@@ -35,7 +40,8 @@ import { StoreModule } from '@ngrx/store'
 		HeaderComponent,
 		CategorySelectComponent,
 		StatisticChartComponent,
-		LoaderComponent
+		LoaderComponent,
+		PerfComponent
 	],
 	imports: [
 		BrowserModule,
@@ -44,7 +50,9 @@ import { StoreModule } from '@ngrx/store'
 		SocialLoginModule,
 		ReactiveFormsModule,
 		AngularSvgIconModule.forRoot(),
-		StoreModule.forRoot({}, {})
+		StoreModule.forRoot(StoreReducers),
+		EffectsModule.forRoot(StoreEffects),
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
 	],
 	providers: [
 		{

@@ -12,6 +12,7 @@ Millestone [v0.0.1](https://github.com/ltlaitoff/counter-frontend/milestone/1)
 - Rework header [#9](https://github.com/ltlaitoff/counter-frontend/issues/9)
 - Create footer [#10](https://github.com/ltlaitoff/counter-frontend/issues/10)
 - Create temp certs for developing [#11](https://github.com/ltlaitoff/counter-frontend/issues/11)
+- Fix statistic graph load [#14](https://github.com/ltlaitoff/counter-frontend/issues/14)
 
 ## v0.0.0
 

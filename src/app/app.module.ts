@@ -28,7 +28,8 @@ import { PerfComponent } from './pages/perf/perf.component'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 
-import { StoreEffects, StoreReducers } from './store/'
+import { StoreEffects, StoreReducers } from './store/';
+import { MenuComponent } from './components/menu/menu.component'
 
 @NgModule({
 	declarations: [
@@ -41,7 +42,8 @@ import { StoreEffects, StoreReducers } from './store/'
 		CategorySelectComponent,
 		StatisticChartComponent,
 		LoaderComponent,
-		PerfComponent
+		PerfComponent,
+  MenuComponent
 	],
 	imports: [
 		BrowserModule,

@@ -14,17 +14,12 @@ const API_BASE_URL = environment.API_HOST
 })
 export class ApiService {
 	initialize() {
-		type InitializeFailed = {
-			authorized: false
-		}
-
-		const initialize = this.http.get<InitializeFailed | User>(
-			`${API_BASE_URL}/initialize`,
-			{
-				withCredentials: true,
-				responseType: 'json'
-			}
-		)
+		const initialize = this.http.get<
+			ApiInputs.InitializeFailed | ApiInputs.InitializeSuccess
+		>(`${API_BASE_URL}/initialize`, {
+			withCredentials: true,
+			responseType: 'json'
+		})
 
 		return initialize
 	}

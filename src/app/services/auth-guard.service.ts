@@ -1,61 +1,62 @@
 import { Injectable } from '@angular/core'
-import { CanActivate, Router } from '@angular/router'
+import {
+	ActivatedRouteSnapshot,
+	CanActivate,
+	Router,
+	RouterStateSnapshot
+} from '@angular/router'
+import { Observable, ReplaySubject, first } from 'rxjs'
+
 import { ApiService } from './api.service'
-import { User } from '../../types/User'
-import { Observable, Subject } from 'rxjs'
-
-/*
-	Выполнение запроса на инициализацию - базового первого запроса который делается при каждом заходе на страницу
-	Сохранение результатов запроса в память
-	Если результат "не авторизированный" - показывать страницу авторизации
-	Если результат "авторизированный" - хранить в себе данные пользователя
-
-*/
+import { User } from 'src/types/User'
+import * as ApiInputs from 'src/types/ApiInputs'
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate {
-	private authorized: boolean = false
-	private initialized: boolean = false
-	private user = new Subject<User>()
+	public authGuardData = new ReplaySubject<ApiInputs.InitializeFailed | User>(1)
 
-	initialize() {
+	constructor(private router: Router, private api: ApiService) {
+		this.api.initialize().subscribe(value => {
+			this.authGuardData.next(value)
+		})
+	}
+
+	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 		return new Observable<boolean>(subscriber => {
-			this.api.initialize().subscribe(data => {
-				subscriber.next(true)
-				this.initialized = true
+			this.authGuardData.pipe(first()).subscribe(value => {
+				if (route.url.toString() === 'authorization') {
+					if (value.authorized === true) {
+						this.router.navigate(['/'])
+						subscriber.next(false)
+						return
+					}
 
-				if (data.authorized) {
-					return this.authorize(data)
+					subscriber.next(true)
+					return
 				}
 
-				console.log('[NOT Authorized]')
+				if (value.authorized === true) {
+					subscriber.next(true)
+					return
+				}
+
+				subscriber.next(false)
+
+				if (this.router.url !== '/authorization') {
+					console.log(
+						'%c ',
+						'background: no-repeat url(https://i.cloudup.com/Zqeq2GhGjt-3000x3000.jpeg); font-size: 1px; padding: 166.5px 250px; background-size: 500px 333px;'
+					)
+					this.router.navigate(['/authorization'])
+				}
 			})
 		})
 	}
 
 	authorize(data: User) {
-		console.log('[Authorized]')
-
-		this.authorized = true
-		this.user.next(data)
+		this.authGuardData.next(data)
+		this.router.navigate(['/'])
 	}
-
-	canActivate() {
-		if (!this.initialized) return true
-
-		if (!this.authorized) {
-			this.router.navigate(['/authorization'])
-			return false
-		}
-
-		return true
-	}
-
-	getUserData() {
-		return this.user
-	}
-
-	constructor(private router: Router, private api: ApiService) {}
 }

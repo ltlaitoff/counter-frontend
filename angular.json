@@ -75,7 +75,12 @@
 							"browserTarget": "counter-frontend:build:development"
 						}
 					},
-					"defaultConfiguration": "development"
+					"defaultConfiguration": "development",
+					"options": {
+						"ssl": true,
+						"sslKey": "certs/dev.key",
+						"sslCert": "certs/dev.crt"
+					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",

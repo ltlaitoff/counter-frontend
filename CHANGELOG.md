@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v0.0.1
+## v0.0.1 - 05.03
 
 Millestone [v0.0.1](https://github.com/ltlaitoff/counter-frontend/milestone/1)
 
@@ -14,7 +14,7 @@ Millestone [v0.0.1](https://github.com/ltlaitoff/counter-frontend/milestone/1)
 - Create temp certs for developing [#11](https://github.com/ltlaitoff/counter-frontend/issues/11)
 - Fix statistic graph load [#14](https://github.com/ltlaitoff/counter-frontend/issues/14)
 
-## v0.0.0
+## v0.0.0 - 27.02
 
 - Created authorization with google identity
 - Created add statistic record form

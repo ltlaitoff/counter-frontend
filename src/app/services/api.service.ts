@@ -4,26 +4,22 @@ import { User } from '../../types/User'
 import { Category } from 'src/types/Category'
 import { Statistic } from '../../types/Statistic'
 import { Color } from 'src/types/Color'
+import { environment } from 'src/environments/environment'
+import * as ApiInputs from 'src/types/ApiInputs'
 
-// const API_BASE_URL: string = 'http://localhost:8000'
-const API_BASE_URL: string = 'https://counter-backend-4g7p.onrender.com'
+const API_BASE_URL = environment.API_HOST
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ApiService {
 	initialize() {
-		type InitializeFailed = {
-			authorized: false
-		}
-
-		const initialize = this.http.get<InitializeFailed | User>(
-			`${API_BASE_URL}/initialize`,
-			{
-				withCredentials: true,
-				responseType: 'json'
-			}
-		)
+		const initialize = this.http.get<
+			ApiInputs.InitializeFailed | ApiInputs.InitializeSuccess
+		>(`${API_BASE_URL}/initialize`, {
+			withCredentials: true,
+			responseType: 'json'
+		})
 
 		return initialize
 	}
@@ -52,13 +48,8 @@ export class ApiService {
 		})
 	}
 
-	addStatisticRecord(
-		data: Omit<Omit<Statistic, 'category'>, 'date'> & {
-			category: string
-			date: number
-		}
-	) {
-		return this.http.post(`${API_BASE_URL}/statistic/add`, data, {
+	addStatisticRecord(data: ApiInputs.AddStatisticInputs) {
+		return this.http.post<Statistic>(`${API_BASE_URL}/statistic/add`, data, {
 			withCredentials: true
 		})
 	}
@@ -69,12 +60,8 @@ export class ApiService {
 		})
 	}
 
-	addCategory(
-		data: Omit<Omit<Omit<Category, 'color'>, 'order'>, '_id'> & {
-			color: string
-		}
-	) {
-		return this.http.post(`${API_BASE_URL}/category/add`, data, {
+	addCategory(data: ApiInputs.AddCategoryInputs) {
+		return this.http.post<Category>(`${API_BASE_URL}/category/add`, data, {
 			withCredentials: true
 		})
 	}

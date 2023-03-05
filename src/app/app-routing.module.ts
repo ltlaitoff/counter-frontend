@@ -5,6 +5,7 @@ import { CategoriesComponent } from './pages/categories/categories.component'
 import { StatisticComponent } from './pages/statistic/statistic.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
 import { AuthGuardService } from './services/auth-guard.service'
+import { PerfComponent } from './pages/perf/perf.component'
 
 const routes: Routes = [
 	{
@@ -24,7 +25,12 @@ const routes: Routes = [
 	},
 	{
 		path: 'authorization',
+		canActivate: [AuthGuardService],
 		component: AuthorizationComponent
+	},
+	{
+		path: 'perf',
+		component: PerfComponent
 	},
 	{
 		path: '',
@@ -34,7 +40,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, { useHash: true })],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {}

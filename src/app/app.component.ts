@@ -14,13 +14,12 @@ export class AppComponent implements OnInit {
 	title = 'counter-frontend'
 
 	ngOnInit() {
-		this.authGuard.initialize().subscribe(result => {
-			this.initialize = result
-		})
+		this.authGuard.authGuardData.subscribe(newUserData => {
+			this.initialize = true
 
-		this.authGuard.getUserData().observed
-		this.authGuard.getUserData().subscribe(newUserData => {
-			this.userData = newUserData
+			if (newUserData.authorized) {
+				this.userData = newUserData
+			}
 		})
 	}
 

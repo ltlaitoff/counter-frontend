@@ -2,8 +2,11 @@
 
 <main
 	*ngIf="initialize"
-	class="max-w-[1440px] m-auto h-full"
+	class="max-w-[1440px] m-auto h-screen flex flex-col"
 >
 	<app-header [userInfo]="userData"></app-header>
-	<router-outlet></router-outlet>
+	<main class="flex-grow">
+		<router-outlet></router-outlet>
+	</main>
+	<app-footer></app-footer>
 </main>

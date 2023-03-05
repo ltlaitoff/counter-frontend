@@ -13,7 +13,9 @@ specifiers:
   '@angular/platform-browser': ^15.1.0
   '@angular/platform-browser-dynamic': ^15.1.0
   '@angular/router': ^15.1.0
+  '@ngrx/effects': ^15.3.0
   '@ngrx/store': ^15.3.0
+  '@ngrx/store-devtools': 15.3.0
   '@types/google-one-tap': ^1.2.2
   '@types/jasmine': ~4.3.0
   angular-svg-icon: ^15.0.0
@@ -26,7 +28,9 @@ specifiers:
   karma-coverage: ~2.2.0
   karma-jasmine: ~5.1.0
   karma-jasmine-html-reporter: ~2.0.0
+  lottie-web: ^5.10.2
   moment: ^2.29.4
+  ngx-lottie: ^10.0.0
   postcss: ^8.4.21
   rxjs: ~7.8.0
   tailwindcss: ^3.2.4
@@ -44,11 +48,15 @@ dependencies:
   '@angular/platform-browser': 15.1.1_rxpvwy5ptuio6t6exix22goh4e
   '@angular/platform-browser-dynamic': 15.1.1_hbzc5xw3mja47ogky4se7iwkze
   '@angular/router': 15.1.1_iaxnlggfwmbt7aywxhi6wdgvje
+  '@ngrx/effects': 15.3.0_6fmtlyuld6wrbggs7x5bgya6r4
   '@ngrx/store': 15.3.0_atos3ivlarwg33grkhrhxpyfke
+  '@ngrx/store-devtools': 15.3.0_juk4uxapygcrzpkb7j3swd55ya
   angular-svg-icon: 15.0.0_xiswyukw6mp5gd7mk5yfojciii
   chart.js: 4.2.1
   chartjs-adapter-moment: 1.0.1_smhnxqdvqccpm4cxd7fhg2bwfy
+  lottie-web: 5.10.2
   moment: 2.29.4
+  ngx-lottie: 10.0.0_gq2zr3uof6lq45aosc6f5r4h6i
   rxjs: 7.8.0
   tslib: 2.4.1
   zone.js: 0.12.0
@@ -1924,6 +1932,30 @@ packages:
     resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
     dev: true
 
+  /@ngrx/effects/15.3.0_6fmtlyuld6wrbggs7x5bgya6r4:
+    resolution: {integrity: sha512-L+Ie4XFrzYBJOV7hNQvR5hUvG1PSCDd6niwOOJg5nm9zEjSnAxveJ/a3B52pRwge6EYOnrQne97jyArxOzPCJA==}
+    peerDependencies:
+      '@angular/core': ^15.0.0
+      '@ngrx/store': 15.3.0
+      rxjs: ^6.5.3 || ^7.5.0
+    dependencies:
+      '@angular/core': 15.1.1_rxjs@7.8.0+zone.js@0.12.0
+      '@ngrx/store': 15.3.0_atos3ivlarwg33grkhrhxpyfke
+      rxjs: 7.8.0
+      tslib: 2.4.1
+    dev: false
+
+  /@ngrx/store-devtools/15.3.0_juk4uxapygcrzpkb7j3swd55ya:
+    resolution: {integrity: sha512-o39T11T994j5XzwiNquhRHVQiFYlOg1PJWmV++LdIaXD0zYovc9lzNDnZJy04mt9XPTDPu8QmcmzV44zUtY4vg==}
+    peerDependencies:
+      '@ngrx/store': 15.3.0
+      rxjs: ^6.5.3 || ^7.5.0
+    dependencies:
+      '@ngrx/store': 15.3.0_atos3ivlarwg33grkhrhxpyfke
+      rxjs: 7.8.0
+      tslib: 2.4.1
+    dev: false
+
   /@ngrx/store/15.3.0_atos3ivlarwg33grkhrhxpyfke:
     resolution: {integrity: sha512-8cd0zWkOZ3TedDQHyOzUxZD1HHa0fU8fgzVX/2eIq6wmnleUxHVOKSJvA+DdE4GRoryFqVhAp17L1r5eC2QYHA==}
     peerDependencies:
@@ -2044,6 +2076,11 @@ packages:
       - bluebird
       - supports-color
     dev: true
+
+  /@scarf/scarf/1.1.1:
+    resolution: {integrity: sha512-VGbKDbk1RFIaSmdVb0cNjjWJoRWRI/Weo23AjRCC2nryO0iAS8pzsToJfPVPtVs74WHw4L1UTADNdIYRLkirZQ==}
+    requiresBuild: true
+    dev: false
 
   /@schematics/angular/15.1.2:
     resolution: {integrity: sha512-PcAbjbWvaW3yKvcGCqHrlHm4BTwGuqr58czCASc49Hy6tJba+dRblYatzB0D1tzdJOTsa684Ghg7knCN86fHeg==}
@@ -4588,6 +4625,10 @@ packages:
       - supports-color
     dev: true
 
+  /lottie-web/5.10.2:
+    resolution: {integrity: sha512-d0PFIGiwuMsJYaF4uPo+qG8dEorlI+xFI2zrrFtE1bGO4WoLIz+NjremxEq1swpR7juR10aeOtmNh3d6G3ub0A==}
+    dev: false
+
   /lru-cache/5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
     dependencies:
@@ -4926,6 +4967,18 @@ packages:
   /neo-async/2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
+
+  /ngx-lottie/10.0.0_gq2zr3uof6lq45aosc6f5r4h6i:
+    resolution: {integrity: sha512-8a0ufv13+o1cLR25SQ4N731rxD9nIA7F1jyo3l/jbUlRnrlcF5heFqWyTYnRf4BG0LQ4URuybN/nr+xbGT1W9Q==}
+    peerDependencies:
+      '@angular/core': '>=15'
+      lottie-web: '>=5.9.2'
+    dependencies:
+      '@angular/core': 15.1.1_rxjs@7.8.0+zone.js@0.12.0
+      '@scarf/scarf': 1.1.1
+      lottie-web: 5.10.2
+      tslib: 2.4.1
+    dev: false
 
   /nice-napi/1.0.2:
     resolution: {integrity: sha512-px/KnJAJZf5RuBGcfD+Sp2pAKq0ytz8j+1NehvgIGFkvtvFrDM3T8E4x/JJODXK9WZow8RRGrbA9QQ3hs+pDhA==}

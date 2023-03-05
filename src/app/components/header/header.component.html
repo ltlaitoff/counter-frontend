@@ -1,47 +1,10 @@
-<header class="pt-10 flex justify-between">
+<header class="pt-8 flex justify-between">
 	<div class="flex gap-x-8 items-center">
-		<a
-			class="text-2xl text-pink-400 hover:text-pink-600 transition-colors"
-			routerLink="/"
-		>
-			Counter
-		</a>
-		<nav>
-			<ul class="flex gap-x-3">
-				<li>
-					<a
-						class="text-gray-800 hover:text-sky-600 transition-colors"
-						routerLink="/"
-						[routerLinkActiveOptions]="{ exact: true }"
-						routerLinkActive="font-medium text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-indigo-500"
-					>
-						Home
-					</a>
-				</li>
-				<li>
-					<a
-						class="text-gray-800 hover:text-sky-600 transition-colors"
-						routerLink="/categories"
-						[routerLinkActiveOptions]="{ exact: true }"
-						routerLinkActive="font-medium text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-indigo-500"
-					>
-						Categories
-					</a>
-				</li>
-				<li>
-					<a
-						class="text-gray-800 hover:text-sky-600 transition-colors"
-						routerLink="/statistic"
-						[routerLinkActiveOptions]="{ exact: true }"
-						routerLinkActive="font-medium text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-indigo-500"
-					>
-						Statistic
-					</a>
-				</li>
-			</ul>
-		</nav>
+		<app-logo></app-logo>
+		<app-menu class="h-full"></app-menu>
 	</div>
-	<div class="">
+
+	<div class="flex items-center">
 		<div
 			*ngIf="!userInfo || !userInfo.authorized"
 			class="flex items-center gap-x-4"

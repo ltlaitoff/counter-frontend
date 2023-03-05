@@ -28,7 +28,9 @@ specifiers:
   karma-coverage: ~2.2.0
   karma-jasmine: ~5.1.0
   karma-jasmine-html-reporter: ~2.0.0
+  lottie-web: ^5.10.2
   moment: ^2.29.4
+  ngx-lottie: ^10.0.0
   postcss: ^8.4.21
   rxjs: ~7.8.0
   tailwindcss: ^3.2.4
@@ -52,7 +54,9 @@ dependencies:
   angular-svg-icon: 15.0.0_xiswyukw6mp5gd7mk5yfojciii
   chart.js: 4.2.1
   chartjs-adapter-moment: 1.0.1_smhnxqdvqccpm4cxd7fhg2bwfy
+  lottie-web: 5.10.2
   moment: 2.29.4
+  ngx-lottie: 10.0.0_gq2zr3uof6lq45aosc6f5r4h6i
   rxjs: 7.8.0
   tslib: 2.4.1
   zone.js: 0.12.0
@@ -2072,6 +2076,11 @@ packages:
       - bluebird
       - supports-color
     dev: true
+
+  /@scarf/scarf/1.1.1:
+    resolution: {integrity: sha512-VGbKDbk1RFIaSmdVb0cNjjWJoRWRI/Weo23AjRCC2nryO0iAS8pzsToJfPVPtVs74WHw4L1UTADNdIYRLkirZQ==}
+    requiresBuild: true
+    dev: false
 
   /@schematics/angular/15.1.2:
     resolution: {integrity: sha512-PcAbjbWvaW3yKvcGCqHrlHm4BTwGuqr58czCASc49Hy6tJba+dRblYatzB0D1tzdJOTsa684Ghg7knCN86fHeg==}
@@ -4616,6 +4625,10 @@ packages:
       - supports-color
     dev: true
 
+  /lottie-web/5.10.2:
+    resolution: {integrity: sha512-d0PFIGiwuMsJYaF4uPo+qG8dEorlI+xFI2zrrFtE1bGO4WoLIz+NjremxEq1swpR7juR10aeOtmNh3d6G3ub0A==}
+    dev: false
+
   /lru-cache/5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
     dependencies:
@@ -4954,6 +4967,18 @@ packages:
   /neo-async/2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
+
+  /ngx-lottie/10.0.0_gq2zr3uof6lq45aosc6f5r4h6i:
+    resolution: {integrity: sha512-8a0ufv13+o1cLR25SQ4N731rxD9nIA7F1jyo3l/jbUlRnrlcF5heFqWyTYnRf4BG0LQ4URuybN/nr+xbGT1W9Q==}
+    peerDependencies:
+      '@angular/core': '>=15'
+      lottie-web: '>=5.9.2'
+    dependencies:
+      '@angular/core': 15.1.1_rxjs@7.8.0+zone.js@0.12.0
+      '@scarf/scarf': 1.1.1
+      lottie-web: 5.10.2
+      tslib: 2.4.1
+    dev: false
 
   /nice-napi/1.0.2:
     resolution: {integrity: sha512-px/KnJAJZf5RuBGcfD+Sp2pAKq0ytz8j+1NehvgIGFkvtvFrDM3T8E4x/JJODXK9WZow8RRGrbA9QQ3hs+pDhA==}

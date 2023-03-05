@@ -28,8 +28,16 @@ import { PerfComponent } from './pages/perf/perf.component'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 
-import { StoreEffects, StoreReducers } from './store/';
+import { StoreEffects, StoreReducers } from './store/'
 import { MenuComponent } from './components/menu/menu.component'
+
+import { LottieModule } from 'ngx-lottie'
+import player from 'lottie-web'
+
+// Factory funtion needed ngx-lottie
+export function playerFactory(): any {
+	return player
+}
 
 @NgModule({
 	declarations: [
@@ -43,7 +51,7 @@ import { MenuComponent } from './components/menu/menu.component'
 		StatisticChartComponent,
 		LoaderComponent,
 		PerfComponent,
-  MenuComponent
+		MenuComponent
 	],
 	imports: [
 		BrowserModule,
@@ -54,7 +62,8 @@ import { MenuComponent } from './components/menu/menu.component'
 		AngularSvgIconModule.forRoot(),
 		StoreModule.forRoot(StoreReducers),
 		EffectsModule.forRoot(StoreEffects),
-		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+		LottieModule.forRoot({ player: playerFactory })
 	],
 	providers: [
 		{

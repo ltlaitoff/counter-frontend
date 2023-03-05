@@ -6,8 +6,7 @@ import { LogoItem } from './logo.types'
 
 @Component({
 	selector: 'app-logo',
-	templateUrl: './logo.component.html',
-	styleUrls: ['./logo.component.scss']
+	templateUrl: './logo.component.html'
 })
 export class LogoComponent {
 	logoItems: LogoItem[]

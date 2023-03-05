@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-moment'
 import { Statistic } from 'src/types/Statistic'
@@ -14,6 +14,15 @@ export class StatisticChartComponent implements OnInit {
 
 	// @ts-expect-error
 	private chart: Chart
+
+	ngOnChanges(changes: SimpleChanges) {
+		console.log(changes)
+		if (!changes['statistics'].firstChange) {
+			this.chart.data = this.chartData(this.statistics, this.currentChartType)
+
+			this.chart.update()
+		}
+	}
 
 	changeChartType() {
 		if (this.currentChartType === 'day') {

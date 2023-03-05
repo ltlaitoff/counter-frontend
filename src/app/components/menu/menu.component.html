@@ -1,1 +1,22 @@
-<p>menu works!</p>
+<nav class="h-full">
+	<ul class="h-full flex">
+		<li *ngFor="let item of menuItems">
+			<a
+				(mouseenter)="mouseLinkEnter(item.id)"
+				(mouseleave)="mouseLinkLeave(item.id)"
+				class="flex items-center gap-x-2 px-2 h-full text-gray-800 hover:text-sky-600 transition-colors"
+				[routerLink]="item.path"
+				[routerLinkActiveOptions]="{ exact: true }"
+				routerLinkActive="font-medium text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-indigo-500"
+			>
+				<div class="lottie-animation w-8">
+					<ng-lottie
+						[options]="getAnimateOptions(item.id)"
+						(animationCreated)="onAnimate($event)"
+					></ng-lottie>
+				</div>
+				{{ item.name }}
+			</a>
+		</li>
+	</ul>
+</nav>

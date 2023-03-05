@@ -32,13 +32,12 @@ import { StoreEffects, StoreReducers } from './store/'
 import { MenuComponent } from './components/menu/menu.component'
 
 import { LottieModule } from 'ngx-lottie'
-import player from 'lottie-web';
-import { LogoComponent } from './components/logo/logo.component';
+import { LogoComponent } from './components/logo/logo.component'
 import { LogoItemComponent } from './components/logo/logo-item/logo-item.component'
 
 // Factory funtion needed ngx-lottie
-export function playerFactory(): any {
-	return player
+export function playerFactory() {
+	return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web')
 }
 
 @NgModule({
@@ -54,8 +53,8 @@ export function playerFactory(): any {
 		LoaderComponent,
 		PerfComponent,
 		MenuComponent,
-  LogoComponent,
-  LogoItemComponent
+		LogoComponent,
+		LogoItemComponent
 	],
 	imports: [
 		BrowserModule,

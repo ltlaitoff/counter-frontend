@@ -1,0 +1,12 @@
+<a
+	class="flex"
+	routerLink="/"
+>
+	<app-logo-item
+		*ngFor="let item of logoItems"
+		[delay]="item.delay"
+		[color]="item.color"
+	>
+		{{ item.letter }}
+	</app-logo-item>
+</a>

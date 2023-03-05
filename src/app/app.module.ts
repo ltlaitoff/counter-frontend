@@ -29,6 +29,16 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 
 import { StoreEffects, StoreReducers } from './store/'
+import { MenuComponent } from './components/menu/menu.component'
+
+import { LottieModule } from 'ngx-lottie'
+import { LogoComponent } from './components/logo/logo.component'
+import { LogoItemComponent } from './components/logo/logo-item/logo-item.component'
+
+// Factory funtion needed ngx-lottie
+export function playerFactory() {
+	return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web')
+}
 
 @NgModule({
 	declarations: [
@@ -41,7 +51,10 @@ import { StoreEffects, StoreReducers } from './store/'
 		CategorySelectComponent,
 		StatisticChartComponent,
 		LoaderComponent,
-		PerfComponent
+		PerfComponent,
+		MenuComponent,
+		LogoComponent,
+		LogoItemComponent
 	],
 	imports: [
 		BrowserModule,
@@ -52,7 +65,8 @@ import { StoreEffects, StoreReducers } from './store/'
 		AngularSvgIconModule.forRoot(),
 		StoreModule.forRoot(StoreReducers),
 		EffectsModule.forRoot(StoreEffects),
-		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+		LottieModule.forRoot({ player: playerFactory })
 	],
 	providers: [
 		{

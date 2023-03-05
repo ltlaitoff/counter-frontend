@@ -32,7 +32,9 @@ import { StoreEffects, StoreReducers } from './store/'
 import { MenuComponent } from './components/menu/menu.component'
 
 import { LottieModule } from 'ngx-lottie'
-import player from 'lottie-web'
+import player from 'lottie-web';
+import { LogoComponent } from './components/logo/logo.component';
+import { LogoItemComponent } from './components/logo/logo-item/logo-item.component'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory(): any {
@@ -51,7 +53,9 @@ export function playerFactory(): any {
 		StatisticChartComponent,
 		LoaderComponent,
 		PerfComponent,
-		MenuComponent
+		MenuComponent,
+  LogoComponent,
+  LogoItemComponent
 	],
 	imports: [
 		BrowserModule,

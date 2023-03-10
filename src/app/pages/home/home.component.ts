@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
 	onSubmit() {
 		const value = this.addForm.value
 
-		if (!value.count || !value.comment || !value.category) {
+		if (!value.count || value.comment == null || !value.category) {
 			return
 		}
 

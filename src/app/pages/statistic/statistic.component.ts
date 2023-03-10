@@ -14,8 +14,6 @@ export class StatisticComponent implements OnInit {
 	statistics: Statistic[] | null = null
 
 	ngOnInit() {
-		this.store.dispatch(StatisticActions.loadStatistic())
-
 		this.store.select(selectStatistic).subscribe(newStatistic => {
 			this.statistics = newStatistic
 		})

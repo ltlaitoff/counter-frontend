@@ -74,9 +74,10 @@ export class CategoriesComponent implements OnInit {
 	onSubmitAddForm() {
 		const value = this.addForm.value
 
-		if (!value.name || !value.comment || !value.color) {
+		if (!value.name || value.comment == null || !value.color) {
 			return
 		}
+
 		const valueForSend = {
 			name: value.name,
 			comment: value.comment,

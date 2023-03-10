@@ -8,6 +8,7 @@ import { RootState } from 'src/app/store'
 import { ColorsActions, selectColors } from 'src/app/store/colors'
 import { CategoriesActions } from 'src/app/store/categories'
 import { selectCategories } from '../../store/categories/categories.select'
+import { ActivatedRoute } from '@angular/router'
 
 /*
 TODO [x]: View as table with orde
@@ -42,15 +43,11 @@ export class CategoriesComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.store.dispatch(CategoriesActions.load())
-		this.store.dispatch(ColorsActions.loadColors())
-
 		this.store.select(selectColors).subscribe(newColors => {
 			this.colors = newColors
 		})
 
 		this.store.select(selectCategories).subscribe(value => {
-			console.log('select categories')
 			this.categories = value
 		})
 	}
@@ -65,7 +62,10 @@ export class CategoriesComponent implements OnInit {
 		})
 	}
 
-	constructor(private store: Store<RootState>) {}
+	constructor(
+		private store: Store<RootState>,
+		private activatedRoute: ActivatedRoute
+	) {}
 
 	toggleAddForm() {
 		this.isAddFormOpened = !this.isAddFormOpened

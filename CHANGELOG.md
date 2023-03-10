@@ -13,6 +13,8 @@ Millestone [v0.0.2](https://github.com/ltlaitoff/counter-frontend/milestone/2)
 - Fix footer version in production [#26](https://github.com/ltlaitoff/counter-frontend/issues/26)
 - Create statistic edit data [#27](https://github.com/ltlaitoff/counter-frontend/issues/27)
 - Create statistic delete item [#28](https://github.com/ltlaitoff/counter-frontend/issues/28)
+- Fix on add statistic record only the first one is added [#32](https://github.com/ltlaitoff/counter-frontend/issues/32)
+- Fix allow empty comments for add categories and statistic [#33](https://github.com/ltlaitoff/counter-frontend/issues/33)
 
 ## v0.0.1 - 05.03
 

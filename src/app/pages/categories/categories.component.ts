@@ -38,11 +38,11 @@ export class CategoriesComponent implements OnInit {
 	public isAddFormOpened = false
 
 	reloadCategories() {
-		this.store.dispatch(CategoriesActions.loadCategories({ force: true }))
+		this.store.dispatch(CategoriesActions.load({ force: true }))
 	}
 
 	ngOnInit() {
-		this.store.dispatch(CategoriesActions.loadCategories())
+		this.store.dispatch(CategoriesActions.load())
 		this.store.dispatch(ColorsActions.loadColors())
 
 		this.store.select(selectColors).subscribe(newColors => {
@@ -83,12 +83,12 @@ export class CategoriesComponent implements OnInit {
 			color: value.color
 		}
 
-		this.store.dispatch(CategoriesActions.addCategory(valueForSend))
+		this.store.dispatch(CategoriesActions.add(valueForSend))
 
 		this.isAddFormOpened = false
 	}
 
 	deleteCategory(category: Category) {
-		this.store.dispatch(CategoriesActions.deleteCategory({ id: category._id }))
+		this.store.dispatch(CategoriesActions.delete(category))
 	}
 }

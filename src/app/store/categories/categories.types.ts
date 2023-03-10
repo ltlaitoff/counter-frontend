@@ -1,3 +1,8 @@
-import { Category } from 'src/types/Category'
+import { NotSyncTypes } from './not-sync'
+import { SyncTypes } from './sync'
 
-export type CategoriesState = Category[]
+export type CategoryStateItem =
+	| NotSyncTypes.StateItemWithColor
+	| SyncTypes.StateItem
+
+export { NotSyncTypes, SyncTypes }

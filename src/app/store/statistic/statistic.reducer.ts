@@ -14,5 +14,12 @@ export const statisticReducer = createReducer(
 	on(StatisticActions.addStatisticSuccess, (state, statistic) => [
 		...state,
 		statistic
-	])
+	]),
+	on(StatisticActions.deleteStatisticSuccess, (state, statistic) => {
+		if (!statistic._id) {
+			return state
+		}
+
+		return [...state.filter(item => item._id !== statistic._id)]
+	})
 )

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { selectStatistic, StatisticActions } from 'src/app/store/statistic'
 import { Statistic } from 'src/types/Statistic'
-import { ApiService } from '../../services/api.service'
 import { RootState } from '../../store/rootTypes'
 
 @Component({
@@ -20,4 +19,8 @@ export class StatisticComponent implements OnInit {
 	}
 
 	constructor(private store: Store<RootState>) {}
+
+	deleteStatisticRecord(statisticRecord: Statistic) {
+		this.store.dispatch(StatisticActions.deleteStatistic(statisticRecord))
+	}
 }

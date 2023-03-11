@@ -54,6 +54,12 @@ export class ApiService {
 		})
 	}
 
+	deleteStatistic(id: string) {
+		return this.http.delete(`${API_BASE_URL}/statistic/${id}`, {
+			withCredentials: true
+		})
+	}
+
 	getAllColors() {
 		return this.http.get<Color[]>(`${API_BASE_URL}/color/all`, {
 			withCredentials: true

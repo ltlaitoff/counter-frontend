@@ -15,7 +15,20 @@
 			*ngFor="let record of statistics"
 			class="table-row text-slate-600 relative transition-opacity"
 		>
-			<td class="p-3 border border-gray-300 font-medium">{{ record.count }}</td>
+			<td class="p-3 border border-gray-300 font-medium">
+				<div
+					class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
+				>
+					<button (click)="deleteStatisticRecord(record)">
+						<svg-icon
+							class="inline-block w-6 h-6 fill-gray-300 hover:fill-red-400 transition-all duration-500"
+							src="assets/icons/trash-can.svg"
+						></svg-icon>
+					</button>
+				</div>
+				{{ record.count }}
+			</td>
+
 			<td class="p-3 border border-gray-300">{{ record.comment }}</td>
 			<td class="p-3 border border-gray-300">
 				<div class="flex gap-2 items-center">

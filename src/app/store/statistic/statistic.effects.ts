@@ -43,15 +43,26 @@ export class StatisticEffects {
 		)
 	)
 
-	// deleteCategory$ = createEffect(() =>
-	// 	this.actions$.pipe(
-	// 		ofType(StatisticAcaddStatisticRecorddeleteCategory(props.id).pipe(
-	// 				map(() => StatisticActions.deleteCategorySuccess(props)),
-	// 				catchError(() => EMPTY)
-	// 			)
-	// 		})
-	// 	)
-	// )
+	deleteStatisticRecord$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(StatisticActions.deleteStatistic),
+			exhaustMap(statistic => {
+				if (!statistic._id) {
+					console.error(`Statistic ${JSON.stringify(statistic)} _id != string`)
+					return EMPTY
+				}
+
+				return this.api.deleteStatistic(statistic._id).pipe(
+					map(() => StatisticActions.deleteStatisticSuccess(statistic)),
+					catchError(() => {
+						console.error(`api.deleteStatistic ${JSON.stringify(statistic)}`)
+
+						return EMPTY
+					})
+				)
+			})
+		)
+	)
 
 	constructor(
 		private actions$: Actions,

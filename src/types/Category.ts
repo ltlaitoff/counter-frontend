@@ -7,3 +7,7 @@ export interface Category {
 	color: Color
 	order: number
 }
+
+export type CategoryColorString = Omit<Category, 'color'> & {
+	color: string
+}

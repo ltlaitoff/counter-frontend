@@ -8,6 +8,7 @@ import { RootState } from 'src/app/store'
 import { ColorsActions, selectColors } from 'src/app/store/colors'
 import { CategoriesActions } from 'src/app/store/categories'
 import { selectCategories } from '../../store/categories/categories.select'
+import { ActivatedRoute } from '@angular/router'
 
 /*
 TODO [x]: View as table with orde
@@ -38,19 +39,15 @@ export class CategoriesComponent implements OnInit {
 	public isAddFormOpened = false
 
 	reloadCategories() {
-		this.store.dispatch(CategoriesActions.loadCategories({ force: true }))
+		this.store.dispatch(CategoriesActions.load({ force: true }))
 	}
 
 	ngOnInit() {
-		this.store.dispatch(CategoriesActions.loadCategories())
-		this.store.dispatch(ColorsActions.loadColors())
-
 		this.store.select(selectColors).subscribe(newColors => {
 			this.colors = newColors
 		})
 
 		this.store.select(selectCategories).subscribe(value => {
-			console.log('select categories')
 			this.categories = value
 		})
 	}
@@ -65,7 +62,10 @@ export class CategoriesComponent implements OnInit {
 		})
 	}
 
-	constructor(private store: Store<RootState>) {}
+	constructor(
+		private store: Store<RootState>,
+		private activatedRoute: ActivatedRoute
+	) {}
 
 	toggleAddForm() {
 		this.isAddFormOpened = !this.isAddFormOpened
@@ -74,21 +74,22 @@ export class CategoriesComponent implements OnInit {
 	onSubmitAddForm() {
 		const value = this.addForm.value
 
-		if (!value.name || !value.comment || !value.color) {
+		if (!value.name || value.comment == null || !value.color) {
 			return
 		}
+
 		const valueForSend = {
 			name: value.name,
 			comment: value.comment,
 			color: value.color
 		}
 
-		this.store.dispatch(CategoriesActions.addCategory(valueForSend))
+		this.store.dispatch(CategoriesActions.add(valueForSend))
 
 		this.isAddFormOpened = false
 	}
 
 	deleteCategory(category: Category) {
-		this.store.dispatch(CategoriesActions.deleteCategory({ id: category._id }))
+		this.store.dispatch(CategoriesActions.delete(category))
 	}
 }

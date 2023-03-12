@@ -1,11 +1,16 @@
+import { ActionReducerMap } from '@ngrx/store'
+import { RootState } from './rootTypes'
+
 import { colorsReducer } from './colors'
-import { categoriesReducer } from './categories'
+import { categoriesReducer } from './categories/sync'
+import { categoriesNotSyncReducer } from './categories/not-sync'
 import { statisticReducer } from './statistic'
 
-const reducers = {
+const reducers: ActionReducerMap<RootState> = {
 	colors: colorsReducer,
 	categories: categoriesReducer,
-	statistic: statisticReducer
+	statistic: statisticReducer,
+	notSyncCategories: categoriesNotSyncReducer
 }
 
 export default reducers

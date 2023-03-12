@@ -1,0 +1,7 @@
+.category-color-input:checked ~ .category-color-label {
+	@apply border-2;
+}
+
+.table-row:hover .table-row--contol-buttons {
+	@apply opacity-100;
+}

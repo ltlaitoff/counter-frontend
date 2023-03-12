@@ -31,12 +31,12 @@ export const addStatisticSuccess = createAction(
 )
 
 // /* Delete */
-// export const deleteStatistic = createAction(
-// 	`${TAG} Delete new Statistic`,
-// 	props<{ id: string }>()
-// )
+export const deleteStatistic = createAction(
+	`${TAG} Delete new Statistic`,
+	(statistic: Statistic) => statistic
+)
 
-// export const deleteStatisticSuccess = createAction(
-// 	`${TAG} Delete Statistic success`,
-// 	props<{ id: string }>()
-// )
+export const deleteStatisticSuccess = createAction(
+	`${TAG} Delete Statistic success`,
+	(statistic: Statistic) => statistic
+)

@@ -21,6 +21,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+						"baseHref": "/counter-frontend/",
 						"outputPath": "dist",
 						"index": "src/index.html",
 						"main": "src/main.ts",

@@ -1,0 +1,42 @@
+<div class="mt-5">
+	<div
+		class="flex gap-4 items-center py-1 opacity-100 transition-opacity"
+		*ngFor="let item of stasticItems"
+		[class.hide]="item.isSuccessStatus === 'deleting'"
+	>
+		<div
+			class="capitalize rounded-md px-2 py-1 text-slate-600"
+			[style]="{
+				background: statusColors[item.isSuccess ? 'success' : item.status]
+			}"
+		>
+			{{ item.isSuccess ? 'success' : item.status }}
+		</div>
+
+		<div class="flex gap-1">
+			<div class="flex items-center gap-2 text-gray-600 font-medium">
+				<div
+					class="w-4 h-4 rounded-full"
+					[style]="{ background: item.category.color.colorHEX }"
+				></div>
+				{{ item.category.name }}
+			</div>
+
+			<div class="text-gray-400">count</div>
+			<div class="text-slate-600 font-medium">{{ item.count }}</div>
+
+			<div
+				*ngIf="item.comment"
+				class="text-gray-400"
+			>
+				comment
+			</div>
+			<div
+				*ngIf="item.comment"
+				class="text-slate-600 font-medium"
+			>
+				{{ item.comment }}
+			</div>
+		</div>
+	</div>
+</div>

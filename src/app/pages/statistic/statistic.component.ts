@@ -21,6 +21,6 @@ export class StatisticComponent implements OnInit {
 	constructor(private store: Store<RootState>) {}
 
 	deleteStatisticRecord(statisticRecord: Statistic) {
-		this.store.dispatch(StatisticActions.deleteStatistic(statisticRecord))
+		this.store.dispatch(StatisticActions.delete(statisticRecord))
 	}
 }

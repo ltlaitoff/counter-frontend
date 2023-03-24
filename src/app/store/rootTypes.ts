@@ -1,10 +1,11 @@
 import { ColorState } from './colors'
-import { StatisticState } from './statistic'
+import { StatisticTypes } from './statistic'
 import { CategoriesTypes } from './categories'
 
 export interface RootState {
 	colors: ColorState
 	categories: CategoriesTypes.SyncTypes.SyncState
-	statistic: StatisticState
+	statistic: StatisticTypes.SyncTypes.SyncState
 	notSyncCategories: CategoriesTypes.NotSyncTypes.NotSyncState
+	notSyncStatistic: StatisticTypes.NotSyncTypes.NotSyncState
 }

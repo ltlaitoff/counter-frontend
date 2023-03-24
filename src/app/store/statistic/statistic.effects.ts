@@ -1,25 +1,36 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
-import { EMPTY } from 'rxjs'
-import { map, exhaustMap, catchError, withLatestFrom } from 'rxjs/operators'
+import { EMPTY, of } from 'rxjs'
+import {
+	map,
+	exhaustMap,
+	catchError,
+	withLatestFrom,
+	mergeMap,
+	switchMap
+} from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
 import { StatisticActions } from '.'
+import { StatisticNotSyncActions } from './not-sync/statistic-not-sync.actions'
+import { StatisticSyncActions } from './sync/statistic-sync.actions'
 
 import { RootState } from '../rootTypes'
+import { NotSyncHelpers, NotSyncTypes } from './not-sync'
 
 @Injectable()
 export class StatisticEffects {
 	loadStatistic$ = createEffect(() =>
 		this.actions$.pipe(
-			ofType(StatisticActions.loadStatistic),
+			ofType(StatisticActions.load),
 			withLatestFrom(this.store.pipe(select('statistic'))),
+			// TODO: Why using exhaustMap?
 			exhaustMap(([params, statisticValue]) => {
 				if (statisticValue.length === 0 || params.force) {
 					return this.api.getAllStatisticRecords().pipe(
-						map(value =>
-							StatisticActions.loadStatisticSuccess({ payload: value })
-						),
+						map(value => {
+							return StatisticSyncActions.set({ statistic: value })
+						}),
 						catchError(() => EMPTY)
 					)
 				}
@@ -29,33 +40,107 @@ export class StatisticEffects {
 		)
 	)
 
-	addStatisticRecord$ = createEffect(() =>
+	/* Redirects */
+	add$ = createEffect(() =>
 		this.actions$.pipe(
-			ofType(StatisticActions.addStatistic),
-			exhaustMap(statistic => {
-				return this.api.addStatisticRecord(statistic).pipe(
-					map(newStatistic =>
-						StatisticActions.addStatisticSuccess(newStatistic)
-					),
-					catchError(() => EMPTY)
+			ofType(StatisticActions.add),
+			// TODO: Why using exhaustMap?
+			exhaustMap(statisticForAdd => {
+				const statisticAsNotSyncStateItem: NotSyncTypes.StateItem =
+					NotSyncHelpers.changeAddCategoryValueToStoreItem(statisticForAdd)
+
+				return of(
+					StatisticNotSyncActions.add(statisticAsNotSyncStateItem),
+					StatisticActions.addeffect(statisticAsNotSyncStateItem)
 				)
 			})
 		)
 	)
 
-	deleteStatisticRecord$ = createEffect(() =>
+	delete$ = createEffect(() =>
 		this.actions$.pipe(
-			ofType(StatisticActions.deleteStatistic),
-			exhaustMap(statistic => {
-				if (!statistic._id) {
-					console.error(`Statistic ${JSON.stringify(statistic)} _id != string`)
-					return EMPTY
+			ofType(StatisticActions.delete),
+			// TODO: Why using exhaustMap?
+			exhaustMap(statisticForDelete => {
+				if (statisticForDelete.status) {
+					return [
+						StatisticNotSyncActions.delete(
+							NotSyncHelpers.statisticDefaultToStatisticNotSync(
+								statisticForDelete
+							)
+						)
+					]
 				}
 
-				return this.api.deleteStatistic(statistic._id).pipe(
-					map(() => StatisticActions.deleteStatisticSuccess(statistic)),
+				const statisticAsNotSyncStateItem: NotSyncTypes.StateItem =
+					NotSyncHelpers.changeDeleteStatisticValueToStoreItem(
+						statisticForDelete
+					)
+
+				return of(
+					StatisticNotSyncActions.add(statisticAsNotSyncStateItem),
+					StatisticSyncActions.delete(statisticForDelete),
+					StatisticActions.deleteeffect(statisticAsNotSyncStateItem)
+				)
+			})
+		)
+	)
+	/* Redirects end */
+
+	/* Main effects */
+	addStatistic$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(StatisticActions.addeffect),
+			mergeMap(inputStatistic => {
+				this.store.dispatch(
+					StatisticNotSyncActions.changestatus({
+						status: NotSyncTypes.Status.SYNCHRONIZATION,
+						statistic: inputStatistic
+					})
+				)
+
+				return this.api.addStatisticRecord(inputStatistic).pipe(
+					switchMap(resultCategory => [
+						StatisticSyncActions.add({
+							statistic: resultCategory
+						}),
+						StatisticNotSyncActions.delete(inputStatistic)
+					]),
+
 					catchError(() => {
-						console.error(`api.deleteStatistic ${JSON.stringify(statistic)}`)
+						this.store.dispatch(
+							StatisticNotSyncActions.changestatus({
+								status: NotSyncTypes.Status.ERROR,
+								statistic: inputStatistic
+							})
+						)
+						return EMPTY
+					})
+				)
+			})
+		)
+	)
+
+	deleteCategory$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(StatisticActions.deleteeffect),
+			mergeMap(inputStatistic => {
+				this.store.dispatch(
+					StatisticNotSyncActions.changestatus({
+						status: NotSyncTypes.Status.SYNCHRONIZATION,
+						statistic: inputStatistic
+					})
+				)
+
+				return this.api.deleteCategory(inputStatistic._id).pipe(
+					switchMap(() => [StatisticNotSyncActions.delete(inputStatistic)]),
+					catchError(() => {
+						this.store.dispatch(
+							StatisticNotSyncActions.changestatus({
+								status: NotSyncTypes.Status.ERROR,
+								statistic: inputStatistic
+							})
+						)
 
 						return EMPTY
 					})

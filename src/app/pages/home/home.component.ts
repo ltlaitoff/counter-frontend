@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 
 		console.log(valueForSend)
 
-		this.store.dispatch(StatisticActions.addStatistic(valueForSend))
+		this.store.dispatch(StatisticActions.add(valueForSend))
 	}
 
 	ngOnInit() {

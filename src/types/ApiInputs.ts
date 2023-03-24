@@ -7,7 +7,7 @@ export type AddCategoryInputs = Omit<Category, 'color' | 'order' | '_id'> & {
 	color: string
 }
 
-export type AddStatisticInputs = StatisticRequests
+export type AddStatisticInputs = Omit<StatisticRequests, '_id'>
 
 export type InitializeSuccess = User
 export type InitializeFailed = {

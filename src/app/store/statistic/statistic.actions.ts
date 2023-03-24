@@ -1,42 +1,17 @@
-import { createAction, props } from '@ngrx/store'
+import { createActionGroup, props } from '@ngrx/store'
 import { AddStatisticInputs } from 'src/types/ApiInputs'
-import { Statistic } from 'src/types/Statistic'
+import { NotSyncTypes } from './not-sync'
+import { StatisticTypes } from '.'
 
-const TAG = '[API Statistic]'
+export const StatisticActions = createActionGroup({
+	source: 'Stastistic',
+	events: {
+		load: (props: { force: boolean } = { force: false }) => props,
 
-/* Load */
-export const loadStatistic = createAction(
-	`${TAG} Load Statistic`,
-	(props: { force: boolean } = { force: false }) => props
-)
+		add: (statistic: AddStatisticInputs) => statistic,
+		delete: (statistic: StatisticTypes.StatisticStateItem) => statistic,
 
-export const loadStatisticSuccess = createAction(
-	`${TAG} Statistic Loaded Success`,
-	props<{ payload: Statistic[] }>()
-)
-
-export const statisticLoadedError = createAction(
-	`${TAG} Statistic Loaded Error`
-)
-
-/* Add */
-export const addStatistic = createAction(
-	`${TAG} Add new Statistic record`,
-	(statistic: AddStatisticInputs) => statistic
-)
-
-export const addStatisticSuccess = createAction(
-	`${TAG} Add new Statistic record success`,
-	(statistic: Statistic) => statistic
-)
-
-// /* Delete */
-export const deleteStatistic = createAction(
-	`${TAG} Delete new Statistic`,
-	(statistic: Statistic) => statistic
-)
-
-export const deleteStatisticSuccess = createAction(
-	`${TAG} Delete Statistic success`,
-	(statistic: Statistic) => statistic
-)
+		addEffect: (statistic: NotSyncTypes.StateItem) => statistic,
+		deleteEffect: (statistic: NotSyncTypes.StateItem) => statistic
+	}
+})

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Store } from '@ngrx/store'
-import { ApiService } from 'src/app/services/api.service'
 import { Category } from 'src/types/Category'
 import { RootState } from 'src/app/store'
 import { selectCategories } from 'src/app/store/categories'
@@ -24,7 +23,11 @@ export class HomeComponent implements OnInit {
 	onSubmit() {
 		const value = this.addForm.value
 
-		if (!value.count || value.comment == null || !value.category) {
+		if (
+			value.count == null ||
+			value.comment == null ||
+			value.category == null
+		) {
 			return
 		}
 
@@ -35,8 +38,6 @@ export class HomeComponent implements OnInit {
 			date: new Date(Date.now()).getTime(),
 			summ: 0
 		}
-
-		console.log(valueForSend)
 
 		this.store.dispatch(StatisticActions.add(valueForSend))
 	}

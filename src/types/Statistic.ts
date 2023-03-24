@@ -8,3 +8,8 @@ export interface Statistic {
 	category: Category
 	summ: number
 }
+
+export type StatisticRequests = Omit<Statistic, 'category' | 'date'> & {
+	category: string
+	date: number
+}

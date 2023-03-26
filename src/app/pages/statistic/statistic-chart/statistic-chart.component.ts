@@ -42,6 +42,8 @@ export class StatisticChartComponent implements OnInit {
 			[]
 
 		statistics.forEach(record => {
+			if (!record.category) return
+
 			const categoryName = record.category.name
 
 			let findedRecord = temp.find(item => item.categoryName === categoryName)

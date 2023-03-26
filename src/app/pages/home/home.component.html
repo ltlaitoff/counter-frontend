@@ -1,4 +1,4 @@
-<div class="flex justify-center">
+<div class="mt-10 flex flex-col items-center justify-start">
 	<form
 		class="py-4 px-6 flex flex-col gap-y-3"
 		[formGroup]="addForm"
@@ -40,9 +40,11 @@
 
 		<button
 			type="submit"
-			class="rounded-md px-4 py-2 bg-green-500 text-white"
+			class="transition-all duration-200 rounded-md px-4 py-2 bg-green-500 text-white disabled:cursor-default disabled:bg-slate-300 disabled:text-gray-600 active:bg-green-400 shadow"
+			[disabled]="addForm.value.category == undefined"
 		>
 			Add
 		</button>
 	</form>
+	<app-statistic-log></app-statistic-log>
 </div>

@@ -23,7 +23,7 @@ export class CategoriesEffects {
 	add$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.add),
-
+			// TODO: Why using exhaustMap?
 			exhaustMap(categoryForAdd => {
 				const categoryAsNotSyncStateItem: NotSyncTypes.StateItem =
 					NotSyncHelpers.changeAddCategoryValueToStoreItem(categoryForAdd)
@@ -39,7 +39,7 @@ export class CategoriesEffects {
 	delete$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.delete),
-
+			// TODO: Why using exhaustMap?
 			exhaustMap(categoryForDelete => {
 				if (categoryForDelete.status) {
 					return [
@@ -67,6 +67,7 @@ export class CategoriesEffects {
 		this.actions$.pipe(
 			ofType(CategoriesActions.load),
 			withLatestFrom(this.store.pipe(select('categories'))),
+			// TODO: Why using exhaustMap?
 			exhaustMap(([params, categoriesValue]) => {
 				if (categoriesValue.length === 0 || params.force) {
 					return this.api.getAllCategories().pipe(
@@ -83,6 +84,7 @@ export class CategoriesEffects {
 	addCategory$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.addeffect),
+			// TODO: Why using switchMap?
 			switchMap(inputCategory => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
@@ -116,6 +118,7 @@ export class CategoriesEffects {
 	deleteCategory$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.deleteeffect),
+			// TODO: Why using switchMap?
 			switchMap(inputCategory => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
@@ -168,9 +171,7 @@ export class CategoriesEffects {
 			// 			category: resultCategory
 			// 		}),
 			// 		CategoriesNotSyncActions.delete({
-			// 			id: inputCategory._id
-			// 		})
-			// 	]),
+			// 	// TODO: Why using switchMap?	]),
 			// 	catchError(() => {
 			// 		this.store.dispatch(
 			// 			CategoriesNotSyncActions.changestatus({

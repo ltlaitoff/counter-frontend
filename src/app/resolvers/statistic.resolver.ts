@@ -13,7 +13,7 @@ import { StatisticActions } from '../store/statistic'
 })
 export class StatisticResolver implements Resolve<boolean> {
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		this.store.dispatch(StatisticActions.loadStatistic())
+		this.store.dispatch(StatisticActions.load())
 
 		return true
 	}

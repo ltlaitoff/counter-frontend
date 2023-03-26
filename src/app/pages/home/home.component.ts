@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Store } from '@ngrx/store'
-import { ApiService } from 'src/app/services/api.service'
 import { Category } from 'src/types/Category'
 import { RootState } from 'src/app/store'
 import { selectCategories } from 'src/app/store/categories'
@@ -21,11 +20,31 @@ export class HomeComponent implements OnInit {
 
 	categories: Category[] | null = null
 
-	onSubmit() {
-		const value = this.addForm.value
+	ngOnInit() {
+		this.store.select(selectCategories).subscribe(value => {
+			this.categories = value
+		})
+	}
 
-		if (!value.count || value.comment == null || !value.category) {
+	onSubmit() {
+		const valueForSend = this.prepareSubmitData(this.addForm.value)
+
+		if (valueForSend === null) {
 			return
+		}
+
+		this.store.dispatch(StatisticActions.add(valueForSend))
+
+		this.addForm.reset()
+	}
+
+	private prepareSubmitData(value: typeof this.addForm.value) {
+		if (
+			value.count == null ||
+			value.comment == null ||
+			value.category == null
+		) {
+			return null
 		}
 
 		const valueForSend = {
@@ -36,15 +55,7 @@ export class HomeComponent implements OnInit {
 			summ: 0
 		}
 
-		console.log(valueForSend)
-
-		this.store.dispatch(StatisticActions.addStatistic(valueForSend))
-	}
-
-	ngOnInit() {
-		this.store.select(selectCategories).subscribe(value => {
-			this.categories = value
-		})
+		return valueForSend
 	}
 
 	constructor(private store: Store<RootState>) {}

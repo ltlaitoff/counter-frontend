@@ -7,6 +7,15 @@
 - Create categories reorder [#20](https://github.com/ltlaitoff/counter-frontend/issues/20)
 - Create categories edit data [#21](https://github.com/ltlaitoff/counter-frontend/issues/21)
 
+## v1.0.0
+
+Millestone [v1.0.0](https://github.com/ltlaitoff/counter-frontend/milestone/3)
+
+- Create not-sync icon in categories page [#40](https://github.com/ltlaitoff/counter-frontend/issues/40)
+- Fix bugs of adding statistic records [#41](https://github.com/ltlaitoff/counter-frontend/issues/41)
+- Create usefull interface on home page for add statistic records [#42](https://github.com/ltlaitoff/counter-frontend/issues/42)
+- Create logout button [#43](https://github.com/ltlaitoff/counter-frontend/issues/43)
+
 ## v0.0.2 - 12.03
 
 Millestone [v0.0.2](https://github.com/ltlaitoff/counter-frontend/milestone/2)

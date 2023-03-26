@@ -1,15 +1,13 @@
 import { Category } from './Category'
-import { Statistic } from './Statistic'
+import { Statistic, StatisticRequests } from './Statistic'
 import { User } from './User'
 
+// TODO: Using CategoryColorString
 export type AddCategoryInputs = Omit<Category, 'color' | 'order' | '_id'> & {
 	color: string
 }
 
-export type AddStatisticInputs = Omit<Statistic, 'category' | 'date'> & {
-	category: string
-	date: number
-}
+export type AddStatisticInputs = Omit<StatisticRequests, '_id'>
 
 export type InitializeSuccess = User
 export type InitializeFailed = {

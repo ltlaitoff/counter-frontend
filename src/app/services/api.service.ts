@@ -34,6 +34,17 @@ export class ApiService {
 		})
 	}
 
+	logout() {
+		return this.http.post<{ status: 'ok' | unknown }>(
+			`${API_BASE_URL}/authorization/logout`,
+			null,
+			{
+				withCredentials: true,
+				responseType: 'json'
+			}
+		)
+	}
+
 	getAllCategories() {
 		return this.http.get<Category[]>(`${API_BASE_URL}/category/all`, {
 			withCredentials: true,

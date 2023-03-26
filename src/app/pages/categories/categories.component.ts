@@ -54,6 +54,13 @@ export class CategoriesComponent implements OnInit {
 
 	closeAddForm() {
 		this.isAddFormOpened = false
+		this.addForm.reset()
+	}
+
+	onOutsideClick() {
+		if (!this.isAddFormOpened) return
+
+		this.closeAddForm()
 	}
 
 	reloadCategories() {

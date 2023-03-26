@@ -1,0 +1,23 @@
+<div class="flex items-center">
+	<div
+		*ngIf="!userInfo || !userInfo.authorized"
+		class="flex items-center gap-x-4"
+	>
+		<div class="text-gray-500">Not authorized</div>
+
+		<div class="h-8 w-8 rounded-2xl bg-gray-200"></div>
+	</div>
+
+	<div
+		*ngIf="userInfo && userInfo.authorized"
+		class="flex items-center gap-x-4"
+	>
+		<div class="text-slate-800">{{ userInfo.name }}</div>
+
+		<img
+			class="max-h-8 rounded-2xl"
+			[src]="userInfo.picture"
+			alt="avatar"
+		/>
+	</div>
+</div>

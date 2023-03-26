@@ -20,15 +20,31 @@ export class HomeComponent implements OnInit {
 
 	categories: Category[] | null = null
 
-	onSubmit() {
-		const value = this.addForm.value
+	ngOnInit() {
+		this.store.select(selectCategories).subscribe(value => {
+			this.categories = value
+		})
+	}
 
+	onSubmit() {
+		const valueForSend = this.prepareSubmitData(this.addForm.value)
+
+		if (valueForSend === null) {
+			return
+		}
+
+		this.store.dispatch(StatisticActions.add(valueForSend))
+
+		this.addForm.reset()
+	}
+
+	private prepareSubmitData(value: typeof this.addForm.value) {
 		if (
 			value.count == null ||
 			value.comment == null ||
 			value.category == null
 		) {
-			return
+			return null
 		}
 
 		const valueForSend = {
@@ -39,13 +55,7 @@ export class HomeComponent implements OnInit {
 			summ: 0
 		}
 
-		this.store.dispatch(StatisticActions.add(valueForSend))
-	}
-
-	ngOnInit() {
-		this.store.select(selectCategories).subscribe(value => {
-			this.categories = value
-		})
+		return valueForSend
 	}
 
 	constructor(private store: Store<RootState>) {}

@@ -34,8 +34,10 @@ import { MenuComponent } from './components/menu/menu.component'
 import { LottieModule } from 'ngx-lottie'
 import { LogoComponent } from './components/logo/logo.component'
 import { LogoItemComponent } from './components/logo/logo-item/logo-item.component'
-import { FooterComponent } from './footer/footer.component'
-import { StatisticLogComponent } from './components/statistic-log/statistic-log.component'
+import { FooterComponent } from './components/footer/footer.component'
+import { StatisticLogComponent } from './components/statistic-log/statistic-log.component';
+import { UserInfoComponent } from './components/header/user-info/user-info.component';
+import { ClickedOutsideDirective } from './directives/clicked-outside.directive'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -58,7 +60,9 @@ export function playerFactory() {
 		LogoComponent,
 		LogoItemComponent,
 		FooterComponent,
-		StatisticLogComponent
+		StatisticLogComponent,
+  UserInfoComponent,
+  ClickedOutsideDirective
 	],
 	imports: [
 		BrowserModule,

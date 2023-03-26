@@ -19,7 +19,10 @@ export class AppComponent implements OnInit {
 
 			if (newUserData.authorized) {
 				this.userData = newUserData
+				return
 			}
+
+			this.userData = null
 		})
 	}
 

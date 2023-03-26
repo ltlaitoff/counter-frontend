@@ -121,7 +121,7 @@ export class StatisticEffects {
 		)
 	)
 
-	deleteCategory$ = createEffect(() =>
+	deleteStatistic$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(StatisticActions.deleteeffect),
 			mergeMap(inputStatistic => {
@@ -132,7 +132,7 @@ export class StatisticEffects {
 					})
 				)
 
-				return this.api.deleteCategory(inputStatistic._id).pipe(
+				return this.api.deleteStatistic(inputStatistic._id).pipe(
 					switchMap(() => [StatisticNotSyncActions.delete(inputStatistic)]),
 					catchError(() => {
 						this.store.dispatch(

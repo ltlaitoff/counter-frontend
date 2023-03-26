@@ -38,10 +38,6 @@ export class CategoriesComponent implements OnInit {
 
 	public isAddFormOpened = false
 
-	reloadCategories() {
-		this.store.dispatch(CategoriesActions.load({ force: true }))
-	}
-
 	ngOnInit() {
 		this.store.select(selectColors).subscribe(newColors => {
 			this.colors = newColors
@@ -50,6 +46,22 @@ export class CategoriesComponent implements OnInit {
 		this.store.select(selectCategories).subscribe(value => {
 			this.categories = value
 		})
+	}
+
+	toggleAddForm() {
+		this.isAddFormOpened = !this.isAddFormOpened
+	}
+
+	closeAddForm() {
+		this.isAddFormOpened = false
+	}
+
+	reloadCategories() {
+		this.store.dispatch(CategoriesActions.load({ force: true }))
+	}
+
+	deleteCategory(category: Category) {
+		this.store.dispatch(CategoriesActions.delete(category))
 	}
 
 	sortedByOrder<T extends { order: number }>(
@@ -62,20 +74,22 @@ export class CategoriesComponent implements OnInit {
 		})
 	}
 
-	constructor(
-		private store: Store<RootState>,
-		private activatedRoute: ActivatedRoute
-	) {}
+	onSubmitAddForm() {
+		const valueForSend = this.prepareSubmitData(this.addForm.value)
 
-	toggleAddForm() {
-		this.isAddFormOpened = !this.isAddFormOpened
+		if (valueForSend == null) {
+			return
+		}
+
+		this.store.dispatch(CategoriesActions.add(valueForSend))
+
+		this.addForm.reset()
+		this.closeAddForm()
 	}
 
-	onSubmitAddForm() {
-		const value = this.addForm.value
-
+	private prepareSubmitData(value: typeof this.addForm.value) {
 		if (!value.name || value.comment == null || !value.color) {
-			return
+			return null
 		}
 
 		const valueForSend = {
@@ -84,12 +98,8 @@ export class CategoriesComponent implements OnInit {
 			color: value.color
 		}
 
-		this.store.dispatch(CategoriesActions.add(valueForSend))
-
-		this.isAddFormOpened = false
+		return valueForSend
 	}
 
-	deleteCategory(category: Category) {
-		this.store.dispatch(CategoriesActions.delete(category))
-	}
+	constructor(private store: Store<RootState>) {}
 }

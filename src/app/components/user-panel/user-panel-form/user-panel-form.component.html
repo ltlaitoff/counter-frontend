@@ -1,37 +1,23 @@
 <div
 	class="absolute flex flex-col mt-4 py-1 w-full text-slate-600 rounded-lg border border-slate-200 bg-white z-50"
 >
-	<button
-		class="group/form-item flex gap-x-2 items-center w-full py-1 px-4 text-left disabled:text-gray-400 enabled:hover:bg-slate-100 enabled:hover:text-sky-600 bg-white duration-300"
-		disabled
-	>
-		<img
-			class="w-6 group-disabled/form-item:opacity-50"
-			src="assets/icons-png/profile.png"
-		/>
-		Profile
-	</button>
-	<button
-		class="group/form-item flex gap-x-2 items-center w-full py-1 px-4 text-left disabled:text-gray-400 enabled:hover:bg-slate-100 enabled:hover:text-sky-600 bg-white duration-300"
-		disabled
-	>
-		<img
-			class="w-6 group-disabled/form-item:opacity-50"
-			src="assets/icons-png/sessions.png"
-		/>
-		Sessions
-	</button>
+	<user-panel-form-item
+		imageSrc="assets/icons-png/profile.png"
+		text="Profile"
+		[disabled]="true"
+	></user-panel-form-item>
+
+	<user-panel-form-item
+		imageSrc="assets/icons-png/sessions.png"
+		text="Sessions"
+		[disabled]="true"
+	></user-panel-form-item>
 
 	<div class="w-full my-1 h-[1px] bg-slate-200"></div>
 
-	<button
-		(click)="onExitClick()"
-		class="group/form-item flex gap-x-2 items-center w-full py-1 px-4 text-left enabled:hover:bg-slate-100 enabled:hover:text-sky-600 bg-white duration-300"
-	>
-		<img
-			class="w-6 group-disabled/form-item:opacity-50"
-			src="assets/icons-png/exit.png"
-		/>
-		Exit
-	</button>
+	<user-panel-form-item
+		imageSrc="assets/icons-png/exit.png"
+		text="Exit"
+		(onClick)="onExitClick()"
+	></user-panel-form-item>
 </div>

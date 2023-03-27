@@ -1,7 +1,9 @@
 <div
 	class="relative h-full flex flex-col transition-all"
 	appClickedOutside
-	(clickedOutside)="clickedOutside()"
+	(clickedOutside)="closeWithChecks()"
+	appKeydown
+	(escapePress)="closeWithChecks()"
 >
 	<user-panel-plug *ngIf="!userInfo || !userInfo.authorized"></user-panel-plug>
 

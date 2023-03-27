@@ -13,13 +13,6 @@ export class UserPanelComponent {
 
 	isOpened = false
 
-	clickedOutside() {
-		if (this.userInfo === null) return
-		if (this.isOpened === false) return
-
-		this.isOpened = false
-	}
-
 	private toggleDropdownOpened() {
 		this.isOpened = !this.isOpened
 	}
@@ -34,6 +27,13 @@ export class UserPanelComponent {
 
 	onExitClick() {
 		this.authGuard.unauthorize()
+		this.closeDropdown()
+	}
+
+	closeWithChecks() {
+		if (this.userInfo === null) return
+		if (this.isOpened === false) return
+
 		this.closeDropdown()
 	}
 }

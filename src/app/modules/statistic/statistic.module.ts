@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { StatisticComponent } from './statistic.component'
+import { StatisticComponent } from './statistic-page/statistic-page.component'
 import { StatisticChartComponent } from './statistic-chart/statistic-chart.component'
 import { AngularSvgIconModule } from 'angular-svg-icon'
 

@@ -5,9 +5,9 @@ import { Statistic } from 'src/types/Statistic'
 import { RootState } from 'src/app/store/rootTypes'
 
 @Component({
-	selector: 'app-statistic',
-	templateUrl: './statistic.component.html',
-	styleUrls: ['./statistic.component.scss']
+	selector: 'counter-statistic-page',
+	templateUrl: './statistic-page.component.html',
+	styleUrls: ['./statistic-page.component.scss']
 })
 export class StatisticComponent implements OnInit {
 	statistics: Statistic[] | null = null

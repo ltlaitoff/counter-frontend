@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { DefaultButtonComponent } from './default-button/default-button.component'
+
+import { OutlineButtonComponent } from './outline-button/outline-button.component'
 
 @NgModule({
-	declarations: [DefaultButtonComponent],
+	declarations: [OutlineButtonComponent],
 	imports: [CommonModule],
-	exports: [DefaultButtonComponent]
+	exports: [OutlineButtonComponent]
 })
 export class ButtonsModule {}

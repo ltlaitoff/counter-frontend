@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { ClickedOutsideDirectiveModule } from 'src/app/directives/clicked-outside-directive.module'
 import { KeydownDirectiveModule } from 'src/app/directives/keydown-directive.module'
 import { CategorySelectComponent } from './category-select/category-select.component'
+import { ButtonsModule } from '../buttons/buttons.module'
 
 @NgModule({
 	declarations: [CategoriesPageComponent, CategorySelectComponent],
@@ -14,7 +15,8 @@ import { CategorySelectComponent } from './category-select/category-select.compo
 		ReactiveFormsModule,
 		AngularSvgIconModule.forRoot(),
 		ClickedOutsideDirectiveModule,
-		KeydownDirectiveModule
+		KeydownDirectiveModule,
+		ButtonsModule
 	],
 	exports: [CategoriesPageComponent, CategorySelectComponent]
 })

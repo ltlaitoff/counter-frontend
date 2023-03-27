@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { ApiService } from '../services/api.service'
-import { Category } from '../../types/Category'
+import { ApiService } from '../../services/api.service'
+import { Category } from '../../../types/Category'
 import { FormControl, FormGroup } from '@angular/forms'
 import { Color } from 'src/types/Color'
 import { Store } from '@ngrx/store'
 import { RootState } from 'src/app/store'
 import { ColorsActions, selectColors } from 'src/app/store/colors'
 import { CategoriesActions } from 'src/app/store/categories'
-import { selectCategories } from '../store/categories/categories.select'
+import { selectCategories } from '../../store/categories/categories.select'
 import { ActivatedRoute } from '@angular/router'
 
 /*
@@ -23,10 +23,10 @@ TODO [ ]: Drag-n-drop order
 
 @Component({
 	selector: 'app-categories',
-	templateUrl: './categories.component.html',
-	styleUrls: ['./categories.component.scss']
+	templateUrl: './categories-page.component.html',
+	styleUrls: ['./categories-page.component.scss']
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesPageComponent implements OnInit {
 	categories: Category[] | null = null
 	colors: Color[] | null = null
 

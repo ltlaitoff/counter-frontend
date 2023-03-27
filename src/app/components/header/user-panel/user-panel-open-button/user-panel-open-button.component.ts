@@ -1,10 +1,7 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'app-user-panel-open-button',
-  templateUrl: './user-panel-open-button.component.html',
-  styleUrls: ['./user-panel-open-button.component.scss']
+	selector: 'app-user-panel-open-button',
+	templateUrl: './user-panel-open-button.component.html'
 })
-export class UserPanelOpenButtonComponent {
-
-}
+export class UserPanelOpenButtonComponent {}

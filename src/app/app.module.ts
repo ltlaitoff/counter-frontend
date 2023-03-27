@@ -31,7 +31,6 @@ import { LottieModule } from 'ngx-lottie'
 import { LogoComponent } from './components/logo/logo.component'
 import { LogoItemComponent } from './components/logo/logo-item/logo-item.component'
 import { FooterComponent } from './components/footer/footer.component'
-import { StatisticLogComponent } from './components/statistic-log/statistic-log.component'
 
 import { UserPanelModule } from './components/user-panel/user-panel.module'
 import { ClickedOutsideDirectiveModule } from './directives/clicked-outside-directive.module'
@@ -54,8 +53,7 @@ export function playerFactory() {
 		MenuComponent,
 		LogoComponent,
 		LogoItemComponent,
-		FooterComponent,
-		StatisticLogComponent
+		FooterComponent
 	],
 	imports: [
 		BrowserModule,

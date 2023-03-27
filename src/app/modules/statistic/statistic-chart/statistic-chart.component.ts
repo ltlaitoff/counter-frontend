@@ -4,7 +4,7 @@ import 'chartjs-adapter-moment'
 import { Statistic } from 'src/types/Statistic'
 
 @Component({
-	selector: 'app-statistic-chart',
+	selector: 'counter-statistic-chart',
 	templateUrl: './statistic-chart.component.html',
 	styleUrls: ['./statistic-chart.component.scss']
 })

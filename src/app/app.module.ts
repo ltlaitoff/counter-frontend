@@ -37,7 +37,10 @@ import { LogoItemComponent } from './components/logo/logo-item/logo-item.compone
 import { FooterComponent } from './components/footer/footer.component'
 import { StatisticLogComponent } from './components/statistic-log/statistic-log.component'
 import { UserInfoComponent } from './components/header/user-panel/user-panel.component'
-import { ClickedOutsideDirective } from './directives/clicked-outside.directive'
+import { ClickedOutsideDirective } from './directives/clicked-outside.directive';
+import { UserPanelPlugComponent } from './components/header/user-panel/user-panel-plug/user-panel-plug.component';
+import { UserPanelOpenButtonComponent } from './components/header/user-panel/user-panel-open-button/user-panel-open-button.component';
+import { UserPanelFormComponent } from './components/header/user-panel/user-panel-form/user-panel-form.component'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -62,7 +65,10 @@ export function playerFactory() {
 		FooterComponent,
 		StatisticLogComponent,
 		UserInfoComponent,
-		ClickedOutsideDirective
+		ClickedOutsideDirective,
+  UserPanelPlugComponent,
+  UserPanelOpenButtonComponent,
+  UserPanelFormComponent
 	],
 	imports: [
 		BrowserModule,

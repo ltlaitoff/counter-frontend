@@ -7,11 +7,11 @@ import { selectCategories } from 'src/app/store/categories'
 import { StatisticActions } from 'src/app/store/statistic'
 
 @Component({
-	selector: 'app-home',
+	selector: 'counter-home-page',
 	templateUrl: './home-page.component.html',
 	styleUrls: ['./home-page.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomePageComponent implements OnInit {
 	addForm = new FormGroup({
 		count: new FormControl<number>(0),
 		comment: new FormControl<string>(''),

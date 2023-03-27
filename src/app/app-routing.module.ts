@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { HomeComponent } from './modules/home/home-page/home-page.component'
+import { HomePageComponent } from './modules/home/home-page/home-page.component'
 import { CategoriesPageComponent } from './modules/categories/categories-page/categories-page.component'
 import { StatisticComponent } from './modules/statistic/statistic-page/statistic-page.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
@@ -13,7 +13,7 @@ import { StatisticResolver } from './resolvers/statistic.resolver'
 const routes: Routes = [
 	{
 		path: '',
-		component: HomeComponent,
+		component: HomePageComponent,
 		canActivate: [AuthGuardService],
 		resolve: [CategoryResolver]
 	},

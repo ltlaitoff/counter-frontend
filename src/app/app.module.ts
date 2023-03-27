@@ -31,7 +31,7 @@ import { LogoComponent } from './components/logo/logo.component'
 import { LogoItemComponent } from './components/logo/logo-item/logo-item.component'
 import { FooterComponent } from './components/footer/footer.component'
 
-import { UserPanelModule } from './components/user-panel/user-panel.module'
+import { UserModule } from './modules/user/user.module'
 import { ClickedOutsideDirectiveModule } from './directives/clicked-outside-directive.module'
 import { CategoriesModule } from './modules/categories/categories.module'
 import { StatisticModule } from './modules/statistic/statistic.module'
@@ -65,7 +65,7 @@ export function playerFactory() {
 		EffectsModule.forRoot(StoreEffects),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
 		LottieModule.forRoot({ player: playerFactory }),
-		UserPanelModule,
+		UserModule,
 		ClickedOutsideDirectiveModule,
 		CategoriesModule,
 		StatisticModule,

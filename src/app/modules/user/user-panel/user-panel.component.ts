@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { User } from 'src/types/User'
-import { AuthGuardService } from '../../services/auth-guard.service'
+import { AuthGuardService } from 'src/app/services/auth-guard.service'
 
 @Component({
 	selector: 'user-panel',

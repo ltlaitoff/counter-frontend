@@ -6,7 +6,7 @@ import { AuthGuardService } from '../../services/auth-guard.service'
 	selector: 'app-user-panel',
 	templateUrl: './user-panel.component.html'
 })
-export class UserInfoComponent {
+export class UserPanelComponent {
 	constructor(private authGuard: AuthGuardService) {}
 
 	@Input() userInfo: User | null = null

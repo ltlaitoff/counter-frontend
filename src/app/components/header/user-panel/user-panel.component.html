@@ -15,7 +15,7 @@
 	></app-user-panel-open-button>
 
 	<app-user-panel-form
+		*ngIf="isOpened"
 		(exitClick)="(onExitClick)"
-		[isOpened]="isOpened"
 	></app-user-panel-form>
 </div>

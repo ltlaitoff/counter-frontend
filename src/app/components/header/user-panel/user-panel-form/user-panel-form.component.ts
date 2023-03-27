@@ -6,7 +6,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 })
 export class UserPanelFormComponent {
 	@Output() exitClick = new EventEmitter()
-	@Input() isOpened: boolean = false
 
 	onExitClick() {
 		this.exitClick.emit()

@@ -1,73 +1,77 @@
-<div
-	class="relative mt-10"
-	appClickedOutside
-	(clickedOutside)="closeWithCheck()"
-	appKeydown
-	(escapePress)="closeWithCheck()"
->
-	<counter-outline-button (buttonClick)="toggleAddForm()">
-		Add new category
-	</counter-outline-button>
-
-	<counter-load-status-button
-		(buttonClick)="reloadCategories(true)"
-		[status]="currentStatus"
-	></counter-load-status-button>
-
-	<form
-		[formGroup]="addForm"
-		(ngSubmit)="onSubmitAddForm()"
-		*ngIf="isAddFormOpened"
-		class="z-10 p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
-	>
-		<label class="flex gap-x-5 justify-between">
-			Name
-			<input
-				formControlName="name"
-				class="border border-gray-300 rounded"
-				type="text"
-			/>
-		</label>
-		<label class="flex gap-x-5 justify-between">
-			Comment
-			<input
-				formControlName="comment"
-				class="border border-gray-300 rounded"
-				type="text"
-			/>
-		</label>
-
-		<fieldset
-			class="flex gap-x-3"
-			*ngIf="colors"
+<div class="relative mt-10">
+	<div class="flex gap-x-4">
+		<div
+			class=""
+			appClickedOutside
+			(clickedOutside)="closeWithCheck()"
+			appKeydown
+			(escapePress)="closeWithCheck()"
 		>
-			<div
-				class=""
-				*ngFor="let color of sortedByOrder(colors)"
+			<counter-outline-button (buttonClick)="toggleAddForm()">
+				Add new category
+			</counter-outline-button>
+
+			<form
+				[formGroup]="addForm"
+				(ngSubmit)="onSubmitAddForm()"
+				*ngIf="isAddFormOpened"
+				class="z-10 p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
 			>
-				<input
-					[value]="color._id"
-					formControlName="color"
-					[id]="'category-color-' + color._id"
-					class="category-color-input absolute top-0 left-0 cursor-pointer opacity-0 w-0 h-0"
-					type="radio"
-					name="color"
-				/>
-				<label
-					[for]="'category-color-' + color._id"
-					class="category-color-label inline-block w-5 h-5 rounded-full border-gray-800"
-					[style]="{ background: color.colorHEX }"
-				></label>
-			</div>
-		</fieldset>
+				<label class="flex gap-x-5 justify-between">
+					Name
+					<input
+						formControlName="name"
+						class="border border-gray-300 rounded"
+						type="text"
+					/>
+				</label>
+				<label class="flex gap-x-5 justify-between">
+					Comment
+					<input
+						formControlName="comment"
+						class="border border-gray-300 rounded"
+						type="text"
+					/>
+				</label>
 
-		<button
-			type="submit"
-			class="border border-green-500 bg-green-100 py-2"
-		>
-			Add category
-		</button>
-	</form>
+				<fieldset
+					class="flex gap-x-3"
+					*ngIf="colors"
+				>
+					<div
+						class=""
+						*ngFor="let color of sortedByOrder(colors)"
+					>
+						<input
+							[value]="color._id"
+							formControlName="color"
+							[id]="'category-color-' + color._id"
+							class="category-color-input absolute top-0 left-0 cursor-pointer opacity-0 w-0 h-0"
+							type="radio"
+							name="color"
+						/>
+						<label
+							[for]="'category-color-' + color._id"
+							class="category-color-label inline-block w-5 h-5 rounded-full border-gray-800"
+							[style]="{ background: color.colorHEX }"
+						></label>
+					</div>
+				</fieldset>
+
+				<button
+					type="submit"
+					class="border border-green-500 bg-green-100 py-2"
+				>
+					Add category
+				</button>
+			</form>
+		</div>
+
+		<counter-load-status-button
+			(buttonClick)="reloadCategories(true)"
+			[status]="currentStatus"
+		></counter-load-status-button>
+	</div>
 </div>
 
 <table

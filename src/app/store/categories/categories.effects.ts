@@ -112,11 +112,22 @@ export class CategoriesEffects {
 					})
 				)
 
+				this.store.dispatch(
+					CategoriesStatusActions.set({
+						status: CategoriesStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
 				return this.api.addCategory(inputCategory).pipe(
 					switchMap(resultCategory => [
 						CategoriesSyncActions.add({
 							category: resultCategory
 						}),
+
+						CategoriesStatusActions.set({
+							status: CategoriesStatusTypes.StatusState.SYNCHRONIZED
+						}),
+
 						CategoriesNotSyncActions.delete(inputCategory)
 					]),
 					catchError(() => {
@@ -124,6 +135,12 @@ export class CategoriesEffects {
 							CategoriesNotSyncActions.changestatus({
 								status: NotSyncTypes.Status.ERROR,
 								category: inputCategory
+							})
+						)
+
+						this.store.dispatch(
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.StatusState.ERROR
 							})
 						)
 
@@ -146,13 +163,30 @@ export class CategoriesEffects {
 					})
 				)
 
+				this.store.dispatch(
+					CategoriesStatusActions.set({
+						status: CategoriesStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
 				return this.api.deleteCategory(inputCategory._id).pipe(
-					switchMap(() => [CategoriesNotSyncActions.delete(inputCategory)]),
+					switchMap(() => [
+						CategoriesStatusActions.set({
+							status: CategoriesStatusTypes.StatusState.SYNCHRONIZED
+						}),
+						CategoriesNotSyncActions.delete(inputCategory)
+					]),
 					catchError(() => {
 						this.store.dispatch(
 							CategoriesNotSyncActions.changestatus({
 								status: NotSyncTypes.Status.ERROR,
 								category: inputCategory
+							})
+						)
+
+						this.store.dispatch(
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.StatusState.ERROR
 							})
 						)
 

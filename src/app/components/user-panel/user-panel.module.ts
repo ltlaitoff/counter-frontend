@@ -5,6 +5,7 @@ import { UserPanelPlugComponent } from './user-panel-plug/user-panel-plug.compon
 import { UserPanelOpenButtonComponent } from './user-panel-open-button/user-panel-open-button.component'
 import { UserPanelFormComponent } from './user-panel-form/user-panel-form.component'
 import { UserPanelFormItemComponent } from './user-panel-form-item/user-panel-form-item.component'
+import { UserPanelFormDividerComponent } from './user-panel-form-divider/user-panel-form-divider.component'
 
 @NgModule({
 	declarations: [
@@ -12,7 +13,8 @@ import { UserPanelFormItemComponent } from './user-panel-form-item/user-panel-fo
 		UserPanelPlugComponent,
 		UserPanelOpenButtonComponent,
 		UserPanelFormComponent,
-		UserPanelFormItemComponent
+		UserPanelFormItemComponent,
+		UserPanelFormDividerComponent
 	],
 	imports: [CommonModule],
 	exports: [UserPanelComponent]

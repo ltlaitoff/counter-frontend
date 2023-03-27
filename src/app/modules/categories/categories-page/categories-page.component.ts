@@ -7,8 +7,12 @@ import { Store } from '@ngrx/store'
 import { RootState } from 'src/app/store'
 import { ColorsActions, selectColors } from 'src/app/store/colors'
 import { CategoriesActions } from 'src/app/store/categories'
-import { selectCategories } from 'src/app/store/categories/categories.select'
+import {
+	selectCategories,
+	selectCategoriesState
+} from 'src/app/store/categories/categories.select'
 import { ActivatedRoute } from '@angular/router'
+import { LoadStatus } from 'src/app/store/store.types'
 
 /*
 TODO [x]: View as table with orde
@@ -30,6 +34,8 @@ export class CategoriesPageComponent implements OnInit {
 	categories: Category[] | null = null
 	colors: Color[] | null = null
 
+	currentStatus: LoadStatus = LoadStatus.NOT_SYNCHRONIZED
+
 	addForm = new FormGroup({
 		name: new FormControl<string>(''),
 		comment: new FormControl<string>(''),
@@ -45,6 +51,10 @@ export class CategoriesPageComponent implements OnInit {
 
 		this.store.select(selectCategories).subscribe(value => {
 			this.categories = value
+		})
+
+		this.store.select(selectCategoriesState).subscribe(value => {
+			this.currentStatus = value
 		})
 	}
 
@@ -63,8 +73,8 @@ export class CategoriesPageComponent implements OnInit {
 		this.closeAddForm()
 	}
 
-	reloadCategories() {
-		this.store.dispatch(CategoriesActions.load({ force: true }))
+	reloadCategories(force: boolean) {
+		this.store.dispatch(CategoriesActions.load({ force: force }))
 	}
 
 	deleteCategory(category: Category) {

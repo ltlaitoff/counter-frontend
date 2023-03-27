@@ -1,3 +1,6 @@
-<counter-outline-button (buttonClick)="onClick()">
-	/status/
+<counter-outline-button
+	*ngIf="status !== null"
+	(buttonClick)="onClick()"
+>
+	{{ status }}
 </counter-outline-button>

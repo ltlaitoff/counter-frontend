@@ -9,6 +9,11 @@
 		Add new category
 	</counter-outline-button>
 
+	<counter-load-status-button
+		(buttonClick)="reloadCategories(true)"
+		[status]="currentStatus"
+	></counter-load-status-button>
+
 	<form
 		[formGroup]="addForm"
 		(ngSubmit)="onSubmitAddForm()"

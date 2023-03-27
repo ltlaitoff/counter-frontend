@@ -74,7 +74,7 @@ export class CategoriesEffects {
 				if (categoriesValue.length === 0 || params.force) {
 					this.store.dispatch(
 						CategoriesStatusActions.set({
-							status: CategoriesStatusTypes.Status.SYNCHRONIZATION
+							status: CategoriesStatusTypes.StatusState.SYNCHRONIZATION
 						})
 					)
 
@@ -82,12 +82,12 @@ export class CategoriesEffects {
 						mergeMap(value => [
 							CategoriesSyncActions.set({ categories: value }),
 							CategoriesStatusActions.set({
-								status: CategoriesStatusTypes.Status.SYNCHRONIZED
+								status: CategoriesStatusTypes.StatusState.SYNCHRONIZED
 							})
 						]),
 						catchError(() => {
 							CategoriesStatusActions.set({
-								status: CategoriesStatusTypes.Status.ERROR
+								status: CategoriesStatusTypes.StatusState.ERROR
 							})
 
 							return EMPTY

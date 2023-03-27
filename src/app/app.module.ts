@@ -37,7 +37,7 @@ import { StatisticLogComponent } from './components/statistic-log/statistic-log.
 
 import { UserPanelModule } from './components/user-panel/user-panel.module'
 import { ClickedOutsideDirectiveModule } from './directives/clicked-outside-directive.module'
-import { CategoriesModule } from './categories/categories.module'
+import { CategoriesModule } from './modules/categories/categories.module'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {

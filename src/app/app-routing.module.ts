@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { HomeComponent } from './pages/home/home.component'
-import { CategoriesPageComponent } from './categories/categories-page/categories-page.component'
+import { CategoriesPageComponent } from './modules/categories/categories-page/categories-page.component'
 import { StatisticComponent } from './pages/statistic/statistic.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
 import { AuthGuardService } from './services/auth-guard.service'

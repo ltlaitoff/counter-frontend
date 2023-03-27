@@ -4,7 +4,7 @@ import { CategoriesPageComponent } from './categories-page/categories-page.compo
 import { AngularSvgIconModule } from 'angular-svg-icon'
 import { ReactiveFormsModule } from '@angular/forms'
 import { ClickedOutsideDirectiveModule } from 'src/app/directives/clicked-outside-directive.module'
-import { KeydownDirectiveModule } from '../directives/keydown-directive.module'
+import { KeydownDirectiveModule } from 'src/app/directives/keydown-directive.module'
 import { CategorySelectComponent } from './category-select/category-select.component'
 
 @NgModule({

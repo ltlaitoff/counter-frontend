@@ -1,0 +1,19 @@
+<button
+	*ngIf="userInfo !== null"
+	(click)="onButtonClick()"
+	class="group/badge h-full pl-4 pr-2 py-2 flex items-center gap-x-4 rounded-l-3xl rounded rounded-r-[2rem] transition-all"
+	[class]="{ 'bg-slate-100': isOpened }"
+>
+	<div
+		class="text-slate-800 group-hover/badge:text-sky-600 duration-300"
+		[class]="{ 'group-hover/badge:text-pink-600': isOpened }"
+	>
+		{{ userInfo.name }}
+	</div>
+
+	<img
+		class="group-hover/badge:scale-105 max-h-8 rounded-2xl transition-all duration-300"
+		[src]="userInfo.picture"
+		alt="avatar"
+	/>
+</button>

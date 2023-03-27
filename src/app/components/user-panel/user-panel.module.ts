@@ -6,6 +6,7 @@ import { UserPanelOpenButtonComponent } from './user-panel-open-button/user-pane
 import { UserPanelFormComponent } from './user-panel-form/user-panel-form.component'
 import { UserPanelFormItemComponent } from './user-panel-form-item/user-panel-form-item.component'
 import { UserPanelFormDividerComponent } from './user-panel-form-divider/user-panel-form-divider.component'
+import { ClickedOutsideDirectiveModule } from 'src/app/directives/clicked-outside-directive.module'
 
 @NgModule({
 	declarations: [
@@ -16,7 +17,7 @@ import { UserPanelFormDividerComponent } from './user-panel-form-divider/user-pa
 		UserPanelFormItemComponent,
 		UserPanelFormDividerComponent
 	],
-	imports: [CommonModule],
+	imports: [CommonModule, ClickedOutsideDirectiveModule],
 	exports: [UserPanelComponent]
 })
 export class UserPanelModule {}

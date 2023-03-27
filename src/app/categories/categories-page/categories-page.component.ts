@@ -57,7 +57,7 @@ export class CategoriesPageComponent implements OnInit {
 		this.addForm.reset()
 	}
 
-	onOutsideClick() {
+	closeWithCheck() {
 		if (!this.isAddFormOpened) return
 
 		this.closeAddForm()

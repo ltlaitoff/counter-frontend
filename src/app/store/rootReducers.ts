@@ -7,6 +7,7 @@ import { categoriesNotSyncReducer } from './categories/not-sync'
 import { statisticReducer } from './statistic/sync'
 import { statisticNotSyncReducer } from './statistic/not-sync'
 import { categoriesStatusReducer } from './categories/status'
+import { statisticStatusReducer } from './statistic/status'
 
 const reducers: ActionReducerMap<RootState> = {
 	colors: colorsReducer,
@@ -14,7 +15,8 @@ const reducers: ActionReducerMap<RootState> = {
 	statistic: statisticReducer,
 	notSyncCategories: categoriesNotSyncReducer,
 	notSyncStatistic: statisticNotSyncReducer,
-	categoriesStatus: categoriesStatusReducer
+	categoriesStatus: categoriesStatusReducer,
+	statisticStatus: statisticStatusReducer
 }
 
 export default reducers

@@ -17,6 +17,7 @@ import { StatisticSyncActions } from './sync/statistic-sync.actions'
 
 import { RootState } from '../rootTypes'
 import { NotSyncHelpers, NotSyncTypes } from './not-sync'
+import { StatisticStatusActions, StatisticStatusTypes } from './status'
 
 @Injectable()
 export class StatisticEffects {
@@ -27,11 +28,30 @@ export class StatisticEffects {
 			// TODO: Why using exhaustMap?
 			exhaustMap(([params, statisticValue]) => {
 				if (statisticValue.length === 0 || params.force) {
+					this.store.dispatch(
+						StatisticStatusActions.set({
+							status: StatisticStatusTypes.StatusState.SYNCHRONIZATION
+						})
+					)
+
 					return this.api.getAllStatisticRecords().pipe(
-						map(value => {
-							return StatisticSyncActions.set({ statistic: value })
+						mergeMap(value => {
+							return [
+								StatisticStatusActions.set({
+									status: StatisticStatusTypes.StatusState.SYNCHRONIZED
+								}),
+								StatisticSyncActions.set({ statistic: value })
+							]
 						}),
-						catchError(() => EMPTY)
+						catchError(() => {
+							this.store.dispatch(
+								StatisticStatusActions.set({
+									status: StatisticStatusTypes.StatusState.ERROR
+								})
+							)
+
+							return EMPTY
+						})
 					)
 				}
 

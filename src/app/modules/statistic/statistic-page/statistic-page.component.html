@@ -3,6 +3,11 @@
 	[statistics]="statistics"
 ></counter-statistic-chart>
 
+<counter-load-status-button
+	(buttonClick)="reloadStatistic(true)"
+	[status]="currentStatus"
+></counter-load-status-button>
+
 <div class="w-full flex justify-center">
 	<table class="w-8/12 mt-10 table-auto border-white border-2">
 		<tr class="text-slate-700">

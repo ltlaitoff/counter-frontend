@@ -7,7 +7,8 @@ import {
 	switchMap,
 	exhaustMap,
 	catchError,
-	withLatestFrom
+	withLatestFrom,
+	mergeMap
 } from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
 import { CategoriesActions } from './categories.actions'
@@ -16,6 +17,7 @@ import { CategoriesSyncActions } from './sync/categories-sync.actions'
 
 import { RootState } from '../rootTypes'
 import { NotSyncTypes, NotSyncHelpers } from './not-sync'
+import { CategoriesStatusActions, CategoriesStatusTypes } from './status'
 
 @Injectable()
 export class CategoriesEffects {
@@ -70,9 +72,26 @@ export class CategoriesEffects {
 			// TODO: Why using exhaustMap?
 			exhaustMap(([params, categoriesValue]) => {
 				if (categoriesValue.length === 0 || params.force) {
+					this.store.dispatch(
+						CategoriesStatusActions.set({
+							status: CategoriesStatusTypes.Status.SYNCHRONIZATION
+						})
+					)
+
 					return this.api.getAllCategories().pipe(
-						map(value => CategoriesSyncActions.set({ categories: value })),
-						catchError(() => EMPTY)
+						mergeMap(value => [
+							CategoriesSyncActions.set({ categories: value }),
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.Status.SYNCHRONIZED
+							})
+						]),
+						catchError(() => {
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.Status.ERROR
+							})
+
+							return EMPTY
+						})
 					)
 				}
 

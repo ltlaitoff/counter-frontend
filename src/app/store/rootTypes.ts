@@ -8,4 +8,5 @@ export interface RootState {
 	statistic: StatisticTypes.SyncTypes.SyncState
 	notSyncCategories: CategoriesTypes.NotSyncTypes.NotSyncState
 	notSyncStatistic: StatisticTypes.NotSyncTypes.NotSyncState
+	categoriesStatus: CategoriesTypes.StatusTypes.StatusState
 }

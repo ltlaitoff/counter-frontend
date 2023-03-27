@@ -11,7 +11,6 @@ import {
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { HomeComponent } from './pages/home/home.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
 import { HeaderComponent } from './components/header/header.component'
 
@@ -36,6 +35,7 @@ import { UserPanelModule } from './components/user-panel/user-panel.module'
 import { ClickedOutsideDirectiveModule } from './directives/clicked-outside-directive.module'
 import { CategoriesModule } from './modules/categories/categories.module'
 import { StatisticModule } from './modules/statistic/statistic.module'
+import { HomeModule } from './modules/home/home.module'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -45,7 +45,6 @@ export function playerFactory() {
 @NgModule({
 	declarations: [
 		AppComponent,
-		HomeComponent,
 		AuthorizationComponent,
 		HeaderComponent,
 		LoaderComponent,
@@ -69,7 +68,8 @@ export function playerFactory() {
 		UserPanelModule,
 		ClickedOutsideDirectiveModule,
 		CategoriesModule,
-		StatisticModule
+		StatisticModule,
+		HomeModule
 	],
 	providers: [
 		{

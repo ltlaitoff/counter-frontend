@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { HomeComponent } from './pages/home/home.component'
+import { HomeComponent } from './modules/home/home.component'
 import { CategoriesPageComponent } from './modules/categories/categories-page/categories-page.component'
 import { StatisticComponent } from './modules/statistic/statistic-page/statistic-page.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'

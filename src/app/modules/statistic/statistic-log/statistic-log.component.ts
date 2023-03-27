@@ -18,7 +18,7 @@ type LocalStateItemNotSync =
 	}
 
 @Component({
-	selector: 'app-statistic-log',
+	selector: 'counter-statistic-log',
 	templateUrl: './statistic-log.component.html',
 	styleUrls: ['./statistic-log.component.scss']
 })

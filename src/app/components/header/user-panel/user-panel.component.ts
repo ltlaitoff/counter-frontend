@@ -11,7 +11,7 @@ export class UserInfoComponent {
 
 	@Input() userInfo: User | null = null
 
-	isOpened = false
+	isOpened = true
 
 	clickedOutside() {
 		if (this.userInfo === null) return

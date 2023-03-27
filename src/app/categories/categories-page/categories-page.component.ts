@@ -22,7 +22,7 @@ TODO [ ]: Drag-n-drop order
 */
 
 @Component({
-	selector: 'app-categories',
+	selector: 'counter-categories-page',
 	templateUrl: './categories-page.component.html',
 	styleUrls: ['./categories-page.component.scss']
 })

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { selectStatistic, StatisticActions } from 'src/app/store/statistic'
 import { Statistic } from 'src/types/Statistic'
-import { RootState } from '../../store/rootTypes'
+import { RootState } from 'src/app/store/rootTypes'
 
 @Component({
 	selector: 'app-statistic',

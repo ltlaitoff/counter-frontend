@@ -12,14 +12,12 @@ import {
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { HomeComponent } from './pages/home/home.component'
-import { StatisticComponent } from './pages/statistic/statistic.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
 import { HeaderComponent } from './components/header/header.component'
 
 import { environment } from 'src/environments/environment'
 
 import { AngularSvgIconModule } from 'angular-svg-icon'
-import { StatisticChartComponent } from './pages/statistic/statistic-chart/statistic-chart.component'
 import { LoaderComponent } from './components/loader/loader.component'
 import { StoreModule } from '@ngrx/store'
 import { PerfComponent } from './pages/perf/perf.component'
@@ -38,6 +36,7 @@ import { StatisticLogComponent } from './components/statistic-log/statistic-log.
 import { UserPanelModule } from './components/user-panel/user-panel.module'
 import { ClickedOutsideDirectiveModule } from './directives/clicked-outside-directive.module'
 import { CategoriesModule } from './modules/categories/categories.module'
+import { StatisticModule } from './modules/statistic/statistic.module'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -48,10 +47,8 @@ export function playerFactory() {
 	declarations: [
 		AppComponent,
 		HomeComponent,
-		StatisticComponent,
 		AuthorizationComponent,
 		HeaderComponent,
-		StatisticChartComponent,
 		LoaderComponent,
 		PerfComponent,
 		MenuComponent,
@@ -73,7 +70,8 @@ export function playerFactory() {
 		LottieModule.forRoot({ player: playerFactory }),
 		UserPanelModule,
 		ClickedOutsideDirectiveModule,
-		CategoriesModule
+		CategoriesModule,
+		StatisticModule
 	],
 	providers: [
 		{

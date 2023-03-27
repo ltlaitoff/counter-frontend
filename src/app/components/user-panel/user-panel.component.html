@@ -3,19 +3,17 @@
 	appClickedOutside
 	(clickedOutside)="clickedOutside()"
 >
-	<app-user-panel-plug
-		*ngIf="!userInfo || !userInfo.authorized"
-	></app-user-panel-plug>
+	<user-panel-plug *ngIf="!userInfo || !userInfo.authorized"></user-panel-plug>
 
-	<app-user-panel-open-button
+	<user-panel-open-button
 		*ngIf="userInfo && userInfo.authorized"
 		[userInfo]="userInfo"
 		[isOpened]="isOpened"
 		(buttonClick)="onBadgeClick()"
-	></app-user-panel-open-button>
+	></user-panel-open-button>
 
-	<app-user-panel-form
+	<user-panel-form
 		*ngIf="isOpened"
 		(exitClick)="onExitClick()"
-	></app-user-panel-form>
+	></user-panel-form>
 </div>

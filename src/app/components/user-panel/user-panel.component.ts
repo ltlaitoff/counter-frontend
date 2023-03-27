@@ -3,7 +3,7 @@ import { User } from 'src/types/User'
 import { AuthGuardService } from '../../services/auth-guard.service'
 
 @Component({
-	selector: 'app-user-panel',
+	selector: 'user-panel',
 	templateUrl: './user-panel.component.html'
 })
 export class UserPanelComponent {

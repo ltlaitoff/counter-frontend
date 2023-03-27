@@ -17,7 +17,6 @@ import { AuthorizationComponent } from './pages/authorization/authorization.comp
 import { HeaderComponent } from './components/header/header.component'
 
 import { environment } from 'src/environments/environment'
-import { CategorySelectComponent } from './pages/home/category-select/category-select.component'
 
 import { AngularSvgIconModule } from 'angular-svg-icon'
 import { StatisticChartComponent } from './pages/statistic/statistic-chart/statistic-chart.component'
@@ -52,7 +51,6 @@ export function playerFactory() {
 		StatisticComponent,
 		AuthorizationComponent,
 		HeaderComponent,
-		CategorySelectComponent,
 		StatisticChartComponent,
 		LoaderComponent,
 		PerfComponent,

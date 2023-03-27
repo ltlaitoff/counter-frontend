@@ -36,11 +36,11 @@ import { LogoComponent } from './components/logo/logo.component'
 import { LogoItemComponent } from './components/logo/logo-item/logo-item.component'
 import { FooterComponent } from './components/footer/footer.component'
 import { StatisticLogComponent } from './components/statistic-log/statistic-log.component'
-import { UserInfoComponent } from './components/header/user-panel/user-panel.component'
-import { ClickedOutsideDirective } from './directives/clicked-outside.directive';
-import { UserPanelPlugComponent } from './components/header/user-panel/user-panel-plug/user-panel-plug.component';
-import { UserPanelOpenButtonComponent } from './components/header/user-panel/user-panel-open-button/user-panel-open-button.component';
-import { UserPanelFormComponent } from './components/header/user-panel/user-panel-form/user-panel-form.component'
+import { UserInfoComponent } from './components/user-panel/user-panel.component'
+import { ClickedOutsideDirective } from './directives/clicked-outside.directive'
+import { UserPanelPlugComponent } from './components/user-panel/user-panel-plug/user-panel-plug.component'
+import { UserPanelOpenButtonComponent } from './components/user-panel/user-panel-open-button/user-panel-open-button.component'
+import { UserPanelFormComponent } from './components/user-panel/user-panel-form/user-panel-form.component'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -66,9 +66,9 @@ export function playerFactory() {
 		StatisticLogComponent,
 		UserInfoComponent,
 		ClickedOutsideDirective,
-  UserPanelPlugComponent,
-  UserPanelOpenButtonComponent,
-  UserPanelFormComponent
+		UserPanelPlugComponent,
+		UserPanelOpenButtonComponent,
+		UserPanelFormComponent
 	],
 	imports: [
 		BrowserModule,

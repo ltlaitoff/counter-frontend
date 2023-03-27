@@ -1,0 +1,114 @@
+<div class="relative mt-10">
+	<div class="flex gap-x-4">
+		<div
+			class=""
+			appClickedOutside
+			(clickedOutside)="closeWithCheck()"
+			appKeydown
+			(escapePress)="closeWithCheck()"
+		>
+			<counter-outline-button (buttonClick)="toggleAddForm()">
+				Add new category
+			</counter-outline-button>
+
+			<form
+				[formGroup]="addForm"
+				(ngSubmit)="onSubmitAddForm()"
+				*ngIf="isAddFormOpened"
+				class="z-10 p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
+			>
+				<label class="flex gap-x-5 justify-between">
+					Name
+					<input
+						formControlName="name"
+						class="border border-gray-300 rounded"
+						type="text"
+					/>
+				</label>
+				<label class="flex gap-x-5 justify-between">
+					Comment
+					<input
+						formControlName="comment"
+						class="border border-gray-300 rounded"
+						type="text"
+					/>
+				</label>
+
+				<fieldset
+					class="flex gap-x-3"
+					*ngIf="colors"
+				>
+					<div
+						class=""
+						*ngFor="let color of sortedByOrder(colors)"
+					>
+						<input
+							[value]="color._id"
+							formControlName="color"
+							[id]="'category-color-' + color._id"
+							class="category-color-input absolute top-0 left-0 cursor-pointer opacity-0 w-0 h-0"
+							type="radio"
+							name="color"
+						/>
+						<label
+							[for]="'category-color-' + color._id"
+							class="category-color-label inline-block w-5 h-5 rounded-full border-gray-800"
+							[style]="{ background: color.colorHEX }"
+						></label>
+					</div>
+				</fieldset>
+
+				<button
+					type="submit"
+					class="border border-green-500 bg-green-100 py-2"
+				>
+					Add category
+				</button>
+			</form>
+		</div>
+
+		<counter-load-status-button
+			(buttonClick)="reloadCategories(true)"
+			[status]="currentStatus"
+		></counter-load-status-button>
+	</div>
+</div>
+
+<table
+	class="mt-4 table-auto border-white border-2"
+	*ngIf="categories"
+>
+	<tr class="text-slate-700">
+		<th class="font-medium p-2 border border-gray-300">Name</th>
+		<th class="font-medium p-2 border border-gray-300">Comment</th>
+		<th class="font-medium p-2 border border-gray-300">Color</th>
+	</tr>
+	<tr
+		class="table-row text-slate-600 relative transition-opacity"
+		*ngFor="let category of sortedByOrder(categories)"
+	>
+		<td class="p-3 border">
+			<div
+				class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
+			>
+				<button (click)="deleteCategory(category)">
+					<svg-icon
+						class="inline-block w-6 h-6 fill-gray-300 hover:fill-red-400 transition-all duration-500"
+						src="assets/icons/trash-can.svg"
+					></svg-icon>
+				</button>
+			</div>
+			{{ category.name }}
+		</td>
+		<td class="p-3 border border-gray-300">{{ category.comment }}</td>
+		<td class="p-3 border border-gray-300">
+			<div class="flex gap-x-3 items-center capitalize">
+				<div
+					class="w-4 h-4 rounded-full"
+					[style]="{ background: category.color.colorHEX }"
+				></div>
+				{{ category.color.name }}
+			</div>
+		</td>
+	</tr>
+</table>

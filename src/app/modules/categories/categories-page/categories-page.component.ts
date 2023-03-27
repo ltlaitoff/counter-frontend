@@ -1,0 +1,122 @@
+import { Component, OnInit } from '@angular/core'
+import { ApiService } from 'src/app/services/api.service'
+import { Category } from 'src/types/Category'
+import { FormControl, FormGroup } from '@angular/forms'
+import { Color } from 'src/types/Color'
+import { Store } from '@ngrx/store'
+import { RootState } from 'src/app/store'
+import { ColorsActions, selectColors } from 'src/app/store/colors'
+import { CategoriesActions } from 'src/app/store/categories'
+import {
+	selectCategories,
+	selectCategoriesState
+} from 'src/app/store/categories/categories.select'
+import { ActivatedRoute } from '@angular/router'
+import { LoadStatus } from 'src/app/store/store.types'
+
+/*
+TODO [x]: View as table with orde
+TODO [x]: Add new category
+TODO [x]: Delete category (idk what do with statistic.. -.-)
+			Возле поля таблицы должна появляться кнопка удаления(вообще это будет набор кнопок) при нажатии на которую всплывёт модалка где нужно будет подтвердить удаление
+TODO [ ]: Change category info
+			При клике на текстовое поле появится инпут на его месте в который можно будет вписать новое значение, после закрытия инпута запрос в api на изменение
+			При клике на цвет - на его месте появляется открытый select color
+TODO [ ]: Drag-n-drop order
+*/
+
+@Component({
+	selector: 'counter-categories-page',
+	templateUrl: './categories-page.component.html',
+	styleUrls: ['./categories-page.component.scss']
+})
+export class CategoriesPageComponent implements OnInit {
+	categories: Category[] | null = null
+	colors: Color[] | null = null
+
+	currentStatus: LoadStatus = LoadStatus.NOT_SYNCHRONIZED
+
+	addForm = new FormGroup({
+		name: new FormControl<string>(''),
+		comment: new FormControl<string>(''),
+		color: new FormControl<string | null>(null)
+	})
+
+	public isAddFormOpened = false
+
+	ngOnInit() {
+		this.store.select(selectColors).subscribe(newColors => {
+			this.colors = newColors
+		})
+
+		this.store.select(selectCategories).subscribe(value => {
+			this.categories = value
+		})
+
+		this.store.select(selectCategoriesState).subscribe(value => {
+			this.currentStatus = value
+		})
+	}
+
+	toggleAddForm() {
+		this.isAddFormOpened = !this.isAddFormOpened
+	}
+
+	closeAddForm() {
+		this.isAddFormOpened = false
+		this.addForm.reset()
+	}
+
+	closeWithCheck() {
+		if (!this.isAddFormOpened) return
+
+		this.closeAddForm()
+	}
+
+	reloadCategories(force: boolean) {
+		this.store.dispatch(CategoriesActions.load({ force: force }))
+	}
+
+	deleteCategory(category: Category) {
+		this.store.dispatch(CategoriesActions.delete(category))
+	}
+
+	sortedByOrder<T extends { order: number }>(
+		array: Array<T> | null
+	): Array<T> | null {
+		if (!array) return null
+
+		return [...array].sort((a, b) => {
+			return a.order > b.order ? 1 : -1
+		})
+	}
+
+	onSubmitAddForm() {
+		const valueForSend = this.prepareSubmitData(this.addForm.value)
+
+		if (valueForSend == null) {
+			return
+		}
+
+		this.store.dispatch(CategoriesActions.add(valueForSend))
+
+		this.addForm.reset()
+		this.closeAddForm()
+	}
+
+	private prepareSubmitData(value: typeof this.addForm.value) {
+		if (!value.name || value.comment == null || !value.color) {
+			return null
+		}
+
+		const valueForSend = {
+			name: value.name,
+			comment: value.comment,
+			color: value.color
+		}
+
+		return valueForSend
+	}
+
+	constructor(private store: Store<RootState>) {}
+}

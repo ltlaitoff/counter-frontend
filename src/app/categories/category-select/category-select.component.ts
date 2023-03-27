@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { Category } from 'src/types/Category'
 
 @Component({
-	selector: 'app-category-select',
+	selector: 'counter-category-select',
 	templateUrl: './category-select.component.html',
 	providers: [
 		{

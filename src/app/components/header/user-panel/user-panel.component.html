@@ -3,6 +3,7 @@
 	appClickedOutside
 	(clickedOutside)="clickedOutside()"
 >
+	<!-- user-panel-plug -->
 	<div
 		*ngIf="!userInfo || !userInfo.authorized"
 		class="flex items-center gap-x-4"
@@ -12,6 +13,7 @@
 		<div class="h-8 w-8 rounded-2xl bg-gray-200"></div>
 	</div>
 
+	<!-- user-panel-open-button -->
 	<button
 		(click)="onBadgeClick()"
 		*ngIf="userInfo && userInfo.authorized"
@@ -32,6 +34,7 @@
 		/>
 	</button>
 
+	<!-- user-panel-form -->
 	<div
 		*ngIf="isOpened"
 		class="absolute flex flex-col mt-14 py-1 w-full text-slate-600 rounded-lg border border-slate-200 bg-white z-50"

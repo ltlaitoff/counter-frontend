@@ -3,9 +3,8 @@ import { User } from 'src/types/User'
 import { AuthGuardService } from '../../../services/auth-guard.service'
 
 @Component({
-	selector: 'app-user-info',
-	templateUrl: './user-info.component.html',
-	styleUrls: ['./user-info.component.scss']
+	selector: 'app-user-panel',
+	templateUrl: './user-panel.component.html'
 })
 export class UserInfoComponent {
 	constructor(private authGuard: AuthGuardService) {}

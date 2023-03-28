@@ -11,6 +11,7 @@
 				Add new category
 			</counter-outline-button>
 
+			<!-- categories-form-add-new -->
 			<form
 				[formGroup]="addForm"
 				(ngSubmit)="onSubmitAddForm()"
@@ -40,7 +41,7 @@
 				>
 					<div
 						class=""
-						*ngFor="let color of sortedByOrder(colors)"
+						*ngFor="let color of sortedByOrderColors"
 					>
 						<input
 							[value]="color._id"
@@ -74,41 +75,4 @@
 	</div>
 </div>
 
-<table
-	class="mt-4 table-auto border-white border-2"
-	*ngIf="categories"
->
-	<tr class="text-slate-700">
-		<th class="font-medium p-2 border border-gray-300">Name</th>
-		<th class="font-medium p-2 border border-gray-300">Comment</th>
-		<th class="font-medium p-2 border border-gray-300">Color</th>
-	</tr>
-	<tr
-		class="table-row text-slate-600 relative transition-opacity"
-		*ngFor="let category of sortedByOrder(categories)"
-	>
-		<td class="p-3 border">
-			<div
-				class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
-			>
-				<button (click)="deleteCategory(category)">
-					<svg-icon
-						class="inline-block w-6 h-6 fill-gray-300 hover:fill-red-400 transition-all duration-500"
-						src="assets/icons/trash-can.svg"
-					></svg-icon>
-				</button>
-			</div>
-			{{ category.name }}
-		</td>
-		<td class="p-3 border border-gray-300">{{ category.comment }}</td>
-		<td class="p-3 border border-gray-300">
-			<div class="flex gap-x-3 items-center capitalize">
-				<div
-					class="w-4 h-4 rounded-full"
-					[style]="{ background: category.color.colorHEX }"
-				></div>
-				{{ category.color.name }}
-			</div>
-		</td>
-	</tr>
-</table>
+<counter-categories-table></counter-categories-table>

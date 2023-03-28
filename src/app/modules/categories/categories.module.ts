@@ -7,10 +7,11 @@ import { ClickedOutsideDirectiveModule } from 'src/app/directives/clicked-outsid
 import { KeydownDirectiveModule } from 'src/app/directives/keydown-directive.module'
 import { CategorySelectComponent } from './category-select/category-select.component'
 import { ButtonsModule } from '../buttons/buttons.module'
-import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module'
+import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module';
+import { CategoriesTableComponent } from './categories-table/categories-table.component'
 
 @NgModule({
-	declarations: [CategoriesPageComponent, CategorySelectComponent],
+	declarations: [CategoriesPageComponent, CategorySelectComponent, CategoriesTableComponent],
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,

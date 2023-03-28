@@ -1,18 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { ApiService } from 'src/app/services/api.service'
-import { Category } from 'src/types/Category'
 import { FormControl, FormGroup } from '@angular/forms'
 import { Color } from 'src/types/Color'
 import { Store } from '@ngrx/store'
 import { RootState } from 'src/app/store'
-import { ColorsActions, selectColors } from 'src/app/store/colors'
+import { selectColors } from 'src/app/store/colors'
 import { CategoriesActions } from 'src/app/store/categories'
-import {
-	selectCategories,
-	selectCategoriesState
-} from 'src/app/store/categories/categories.select'
-import { ActivatedRoute } from '@angular/router'
+import { selectCategoriesState } from 'src/app/store/categories/categories.select'
 import { LoadStatus } from 'src/app/store/store.types'
+import { sortedByOrder } from '../../../helpers/sorted-by-order.helper'
 
 /*
 TODO [x]: View as table with orde
@@ -31,7 +26,6 @@ TODO [ ]: Drag-n-drop order
 	styleUrls: ['./categories-page.component.scss']
 })
 export class CategoriesPageComponent implements OnInit {
-	categories: Category[] | null = null
 	colors: Color[] | null = null
 
 	currentStatus: LoadStatus = LoadStatus.NOT_SYNCHRONIZED
@@ -47,10 +41,6 @@ export class CategoriesPageComponent implements OnInit {
 	ngOnInit() {
 		this.store.select(selectColors).subscribe(newColors => {
 			this.colors = newColors
-		})
-
-		this.store.select(selectCategories).subscribe(value => {
-			this.categories = value
 		})
 
 		this.store.select(selectCategoriesState).subscribe(value => {
@@ -77,18 +67,8 @@ export class CategoriesPageComponent implements OnInit {
 		this.store.dispatch(CategoriesActions.load({ force: force }))
 	}
 
-	deleteCategory(category: Category) {
-		this.store.dispatch(CategoriesActions.delete(category))
-	}
-
-	sortedByOrder<T extends { order: number }>(
-		array: Array<T> | null
-	): Array<T> | null {
-		if (!array) return null
-
-		return [...array].sort((a, b) => {
-			return a.order > b.order ? 1 : -1
-		})
+	get sortedByOrderColors() {
+		return sortedByOrder(this.colors)
 	}
 
 	onSubmitAddForm() {

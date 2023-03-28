@@ -14,6 +14,7 @@
 
 				<counter-categories-form-add-new
 					*ngIf="isAddFormOpened"
+					(onSubmit)="closeWithCheck()"
 				></counter-categories-form-add-new>
 			</div>
 

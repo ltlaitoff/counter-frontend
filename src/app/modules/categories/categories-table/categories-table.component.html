@@ -1,0 +1,74 @@
+<table
+	class="w-full mt-4 table-auto border-white border-2"
+	*ngIf="categories"
+>
+	<tr class="text-slate-700">
+		<th
+			class="font-medium p-2 border border-gray-300"
+			title="Color"
+		>
+			<div class="flex justify-center items-center">
+				<img
+					class="w-7 h-7"
+					src="assets/icons-png/rainbow.png"
+				/>
+			</div>
+		</th>
+		<th class="font-medium p-2 border border-gray-300">Name</th>
+		<th class="font-medium p-2 border border-gray-300">Comment</th>
+	</tr>
+	<tr
+		class="table-row text-slate-600 relative transition-opacity"
+		*ngFor="let category of sortedByOrderCategories"
+	>
+		<td class="px-4 py-2 border border-gray-300">
+			<div class="flex gap-x-3 items-center justify-center capitalize">
+				<div
+					class="w-4 h-4 rounded-full"
+					[style]="{ background: category.color.colorHEX }"
+				></div>
+			</div>
+		</td>
+		<td class="px-4 py-2 border border-gray-300">
+			<div
+				*ngIf="category?.status !== undefined"
+				class="absolute -right-8 top-1/2 -translate-y-1/2"
+			>
+				<svg-icon
+					class="inline-block w-5 h-5"
+					[ngClass]="{
+						'stroke-gray-400': checkStatusIs(
+							category.status,
+							'not-synchronized'
+						),
+						'stroke-amber-400': checkStatusIs(
+							category.status,
+							'synchronization'
+						),
+						'stroke-red-400': checkStatusIs(category.status, 'error')
+					}"
+					src="assets/icons/sync.svg"
+				></svg-icon>
+			</div>
+
+			<div
+				class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
+			>
+				<button (click)="deleteCategory(category)">
+					<svg-icon
+						class="inline-block w-6 h-6 fill-gray-300 hover:fill-red-400 transition-all duration-500"
+						src="assets/icons/trash-can.svg"
+					></svg-icon>
+				</button>
+			</div>
+			<div class="break-all">
+				{{ category.name }}
+			</div>
+		</td>
+		<td class="px-4 py-2 border border-gray-300">
+			<div class="break-all">
+				{{ category.comment }}
+			</div>
+		</td>
+	</tr>
+</table>

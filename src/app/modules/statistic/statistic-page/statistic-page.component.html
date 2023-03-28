@@ -24,6 +24,27 @@
 				>
 					<td class="px-3 py-2 border border-gray-300 font-medium">
 						<div
+							*ngIf="record?.status !== undefined"
+							class="absolute -right-8 top-1/2 -translate-y-1/2"
+						>
+							<svg-icon
+								class="inline-block w-5 h-5"
+								[ngClass]="{
+									'stroke-gray-400': checkStatusIs(
+										record.status,
+										'not-synchronized'
+									),
+									'stroke-amber-400': checkStatusIs(
+										record.status,
+										'synchronization'
+									),
+									'stroke-red-400': checkStatusIs(record.status, 'error')
+								}"
+								src="assets/icons/sync.svg"
+							></svg-icon>
+						</div>
+
+						<div
 							class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
 						>
 							<button (click)="deleteStatisticRecord(record)">

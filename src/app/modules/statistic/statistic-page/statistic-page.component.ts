@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { selectStatistic, StatisticActions } from 'src/app/store/statistic'
-import { Statistic } from 'src/types/Statistic'
 import { RootState } from 'src/app/store/rootTypes'
-import { LoadStatus } from '../../../store/store.types'
+import { LoadStatus } from 'src/app/store/store.types'
 import { selectStatisticState } from 'src/app/store/statistic/statistic.select'
+import { StatisticStateItem } from 'src/app/store/statistic/statistic.types'
+import { Status } from 'src/app/store/statistic/not-sync/statistic-not-sync.types'
 
 @Component({
 	selector: 'counter-statistic-page',
@@ -12,7 +13,7 @@ import { selectStatisticState } from 'src/app/store/statistic/statistic.select'
 	styleUrls: ['./statistic-page.component.scss']
 })
 export class StatisticComponent implements OnInit {
-	statistics: Statistic[] | null = null
+	statistics: StatisticStateItem[] | null = null
 	currentStatus: LoadStatus | null = null
 
 	ngOnInit() {
@@ -31,7 +32,25 @@ export class StatisticComponent implements OnInit {
 		this.store.dispatch(StatisticActions.load({ force: force }))
 	}
 
-	deleteStatisticRecord(statisticRecord: Statistic) {
+	checkStatusIs(
+		status: Status | undefined,
+		value: 'not-synchronized' | 'synchronization' | 'error'
+	) {
+		if (!status) return
+
+		switch (value) {
+			case 'not-synchronized':
+				return status === Status.NOT_SYNCHRONIZED
+
+			case 'synchronization':
+				return status === Status.SYNCHRONIZATION
+
+			case 'error':
+				return status === Status.ERROR
+		}
+	}
+
+	deleteStatisticRecord(statisticRecord: StatisticStateItem) {
 		this.store.dispatch(StatisticActions.delete(statisticRecord))
 	}
 }

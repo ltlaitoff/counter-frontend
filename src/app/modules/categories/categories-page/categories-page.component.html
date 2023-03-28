@@ -1,26 +1,28 @@
-<div class="relative mt-10">
-	<div class="flex gap-x-4">
-		<div
-			class=""
-			appClickedOutside
-			(clickedOutside)="closeWithCheck()"
-			appKeydown
-			(escapePress)="closeWithCheck()"
-		>
-			<counter-outline-button (buttonClick)="toggleAddForm()">
-				Add new category
-			</counter-outline-button>
+<div class="w-5/12 mx-auto">
+	<div class="relative mt-10">
+		<div class="flex gap-x-4">
+			<div
+				class=""
+				appClickedOutside
+				(clickedOutside)="closeWithCheck()"
+				appKeydown
+				(escapePress)="closeWithCheck()"
+			>
+				<counter-outline-button (buttonClick)="toggleAddForm()">
+					Add new category
+				</counter-outline-button>
 
-			<counter-categories-form-add-new
-				*ngIf="isAddFormOpened"
-			></counter-categories-form-add-new>
+				<counter-categories-form-add-new
+					*ngIf="isAddFormOpened"
+				></counter-categories-form-add-new>
+			</div>
+
+			<counter-load-status-button
+				(buttonClick)="reloadCategories(true)"
+				[status]="currentStatus"
+			></counter-load-status-button>
 		</div>
-
-		<counter-load-status-button
-			(buttonClick)="reloadCategories(true)"
-			[status]="currentStatus"
-		></counter-load-status-button>
 	</div>
-</div>
 
-<counter-categories-table></counter-categories-table>
+	<counter-categories-table class="w-full"></counter-categories-table>
+</div>

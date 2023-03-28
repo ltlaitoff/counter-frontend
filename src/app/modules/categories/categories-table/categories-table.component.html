@@ -1,11 +1,5 @@
-<!-- 
-	@Input() categories
-	sortedByOrder
-
-
- -->
 <table
-	class="mt-4 table-auto border-white border-2"
+	class="w-full mt-4 table-auto border-white border-2"
 	*ngIf="categories"
 >
 	<tr class="text-slate-700">
@@ -13,10 +7,12 @@
 			class="font-medium p-2 border border-gray-300"
 			title="Color"
 		>
-			<img
-				class="w-7 h-7"
-				src="assets/icons-png/rainbow.png"
-			/>
+			<div class="flex justify-center items-center">
+				<img
+					class="w-7 h-7"
+					src="assets/icons-png/rainbow.png"
+				/>
+			</div>
 		</th>
 		<th class="font-medium p-2 border border-gray-300">Name</th>
 		<th class="font-medium p-2 border border-gray-300">Comment</th>
@@ -26,7 +22,7 @@
 		*ngFor="let category of sortedByOrderCategories"
 	>
 		<td class="px-4 py-2 border border-gray-300">
-			<div class="flex gap-x-3 items-center capitalize">
+			<div class="flex gap-x-3 items-center justify-center capitalize">
 				<div
 					class="w-4 h-4 rounded-full"
 					[style]="{ background: category.color.colorHEX }"

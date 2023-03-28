@@ -8,10 +8,11 @@ import { KeydownDirectiveModule } from 'src/app/directives/keydown-directive.mod
 import { CategorySelectComponent } from './category-select/category-select.component'
 import { ButtonsModule } from '../buttons/buttons.module'
 import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module';
-import { CategoriesTableComponent } from './categories-table/categories-table.component'
+import { CategoriesTableComponent } from './categories-table/categories-table.component';
+import { CategoriesFormAddNewComponent } from './categories-form-add-new/categories-form-add-new.component'
 
 @NgModule({
-	declarations: [CategoriesPageComponent, CategorySelectComponent, CategoriesTableComponent],
+	declarations: [CategoriesPageComponent, CategorySelectComponent, CategoriesTableComponent, CategoriesFormAddNewComponent],
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,

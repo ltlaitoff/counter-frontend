@@ -10,8 +10,16 @@ import { ButtonsModule } from '../buttons/buttons.module'
 import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module'
 import { CategoriesTableComponent } from './categories-table/categories-table.component'
 import { CategoriesFormAddNewComponent } from './categories-form-add-new/categories-form-add-new.component'
-import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module';
+import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module'
 import { CategoriesTableControlsComponent } from './categories-table-controls/categories-table-controls.component'
+import { CategoriesTableColorHeadItemComponent } from './categories-table/categories-table-color-head-item/categories-table-color-head-item.component'
+
+import { LottieModule } from 'ngx-lottie'
+
+// Factory funtion needed ngx-lottie
+export function playerFactory() {
+	return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web')
+}
 
 @NgModule({
 	declarations: [
@@ -19,7 +27,8 @@ import { CategoriesTableControlsComponent } from './categories-table-controls/ca
 		CategorySelectComponent,
 		CategoriesTableComponent,
 		CategoriesFormAddNewComponent,
-  CategoriesTableControlsComponent
+		CategoriesTableControlsComponent,
+		CategoriesTableColorHeadItemComponent
 	],
 	imports: [
 		CommonModule,
@@ -29,7 +38,8 @@ import { CategoriesTableControlsComponent } from './categories-table-controls/ca
 		KeydownDirectiveModule,
 		ButtonsModule,
 		LoadStatusButtonModule,
-		NotSyncStatusIconModule
+		NotSyncStatusIconModule,
+		LottieModule.forRoot({ player: playerFactory })
 	],
 	exports: [CategoriesPageComponent, CategorySelectComponent]
 })

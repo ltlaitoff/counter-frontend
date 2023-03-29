@@ -6,9 +6,9 @@ import { Component, EventEmitter, Output } from '@angular/core'
 	styleUrls: ['./categories-table-controls.component.scss']
 })
 export class CategoriesTableControlsComponent {
-	@Output() onDelete = new EventEmitter()
+	@Output() delete = new EventEmitter()
 
 	onDeleteClick() {
-		this.onDelete.emit()
+		this.delete.emit()
 	}
 }

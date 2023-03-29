@@ -12,6 +12,7 @@ import { CategoryStateItem } from 'src/app/store/categories/categories.types'
 })
 export class CategoriesTableComponent implements OnInit {
 	categories: CategoryStateItem[] | null = null
+	editCategoryId: string | null = null
 
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
@@ -25,6 +26,10 @@ export class CategoriesTableComponent implements OnInit {
 
 	deleteCategory(category: CategoryStateItem) {
 		this.store.dispatch(CategoriesActions.delete(category))
+	}
+
+	editCategory(category: CategoryStateItem) {
+		this.editCategoryId = category._id
 	}
 
 	constructor(private store: Store<RootState>) {}

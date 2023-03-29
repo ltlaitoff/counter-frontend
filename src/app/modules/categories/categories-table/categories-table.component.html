@@ -31,7 +31,10 @@
 
 			<counter-categories-table-controls
 				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out"
+				[class.opacity-100]="category._id === editCategoryId"
 				(delete)="deleteCategory(category)"
+				(edit)="editCategory(category)"
+				[editActive]="category._id === editCategoryId"
 			></counter-categories-table-controls>
 
 			<div class="break-all">

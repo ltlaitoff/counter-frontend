@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
 	selector: 'counter-categories-table-controls',
@@ -7,8 +7,14 @@ import { Component, EventEmitter, Output } from '@angular/core'
 })
 export class CategoriesTableControlsComponent {
 	@Output() delete = new EventEmitter()
+	@Output() edit = new EventEmitter()
+	@Input() editActive: boolean = false
 
 	onDeleteClick() {
 		this.delete.emit()
+	}
+
+	onEditClick() {
+		this.edit.emit()
 	}
 }

@@ -6,7 +6,7 @@ import { sortedByOrder } from 'src/app/helpers'
 import { RootState } from 'src/app/store'
 import { CategoriesActions } from 'src/app/store/categories'
 import { selectColors } from 'src/app/store/colors'
-import { AddCategoryInputs } from 'src/types/ApiInputs'
+import { CategoriesBasicSet } from 'src/types/ApiInputs'
 
 @Component({
 	selector: 'counter-categories-form-add-new',
@@ -21,7 +21,7 @@ export class CategoriesFormAddNewComponent implements OnInit {
 	} | null = null
 	@Input() fromType: 'add' | 'edit' = 'add'
 
-	@Output() onSubmit = new EventEmitter<AddCategoryInputs>()
+	@Output() onSubmit = new EventEmitter<CategoriesBasicSet>()
 
 	colors: Color[] | null = null
 

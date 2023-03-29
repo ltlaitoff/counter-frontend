@@ -1,5 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store'
-import { AddCategoryInputs } from 'src/types/ApiInputs'
+import { CategoriesBasicSet } from 'src/types/ApiInputs'
 import { NotSyncTypes } from './not-sync'
 import { CategoriesTypes } from '.'
 
@@ -8,12 +8,12 @@ export const CategoriesActions = createActionGroup({
 	events: {
 		load: (props: { force: boolean } = { force: false }) => props,
 
-		add: (category: AddCategoryInputs) => category,
+		add: (category: CategoriesBasicSet) => category,
 		delete: (category: CategoriesTypes.CategoryStateItem) => category,
 		update: props<{
 			oldCategory: CategoriesTypes.CategoryStateItem
 
-			dataForUpdate: AddCategoryInputs
+			dataForUpdate: CategoriesBasicSet
 		}>(),
 
 		addEffect: (category: NotSyncTypes.StateItem) => category,

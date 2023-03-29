@@ -77,7 +77,7 @@ export class ApiService {
 		})
 	}
 
-	addCategory(data: ApiInputs.AddCategoryInputs) {
+	addCategory(data: ApiInputs.CategoriesBasicSet) {
 		return this.http.post<Category>(`${API_BASE_URL}/category/add`, data, {
 			withCredentials: true
 		})
@@ -89,7 +89,7 @@ export class ApiService {
 		})
 	}
 
-	updateCategory(id: string, data: ApiInputs.AddCategoryInputs) {
+	updateCategory(id: string, data: ApiInputs.CategoriesBasicSet) {
 		return this.http.put<Category>(`${API_BASE_URL}/category/${id}`, data, {
 			withCredentials: true
 		})

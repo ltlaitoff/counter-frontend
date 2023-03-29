@@ -1,10 +1,10 @@
-import { AddCategoryInputs } from 'src/types/ApiInputs'
+import { CategoriesBasicSet } from 'src/types/ApiInputs'
 import { NotSyncTypes } from '..'
 import { CategoriesTypes } from '../..'
 import { generateNotSyncCategoryId } from './generate-not-sync-category-id.helper'
 
 export function changeAddCategoryValueToStoreItem(
-	data: AddCategoryInputs
+	data: CategoriesBasicSet
 ): NotSyncTypes.StateItem {
 	const forAdd = {
 		...data,
@@ -30,7 +30,7 @@ export function changeDeleteCategoryValueToStoreItem(
 
 export function changeUpdateCategoryValueToStoreItem(
 	oldCategoryData: CategoriesTypes.SyncTypes.StateItem,
-	newCategoryData: AddCategoryInputs
+	newCategoryData: CategoriesBasicSet
 ): NotSyncTypes.StateItem {
 	return {
 		...oldCategoryData,

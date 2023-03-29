@@ -10,14 +10,16 @@ import { ButtonsModule } from '../buttons/buttons.module'
 import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module'
 import { CategoriesTableComponent } from './categories-table/categories-table.component'
 import { CategoriesFormAddNewComponent } from './categories-form-add-new/categories-form-add-new.component'
-import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module'
+import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module';
+import { CategoriesTableControlsComponent } from './categories-table-controls/categories-table-controls.component'
 
 @NgModule({
 	declarations: [
 		CategoriesPageComponent,
 		CategorySelectComponent,
 		CategoriesTableComponent,
-		CategoriesFormAddNewComponent
+		CategoriesFormAddNewComponent,
+  CategoriesTableControlsComponent
 	],
 	imports: [
 		CommonModule,

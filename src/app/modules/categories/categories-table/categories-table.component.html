@@ -34,16 +34,11 @@
 				[status]="category.status"
 			></counter-not-sync-status-icon>
 
-			<div
-				class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
-			>
-				<button (click)="deleteCategory(category)">
-					<svg-icon
-						class="inline-block w-6 h-6 fill-gray-300 hover:fill-red-400 transition-all duration-500"
-						src="assets/icons/trash-can.svg"
-					></svg-icon>
-				</button>
-			</div>
+			<counter-categories-table-controls
+				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out"
+				(delete)="deleteCategory(category)"
+			></counter-categories-table-controls>
+
 			<div class="break-all">
 				{{ category.name }}
 			</div>

@@ -89,5 +89,11 @@ export class ApiService {
 		})
 	}
 
+	updateCategory(id: string, data: ApiInputs.AddCategoryInputs) {
+		return this.http.put(`${API_BASE_URL}/category/${id}`, data, {
+			withCredentials: true
+		})
+	}
+
 	constructor(private http: HttpClient) {}
 }

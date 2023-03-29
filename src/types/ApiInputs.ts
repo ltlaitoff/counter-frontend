@@ -3,7 +3,7 @@ import { Statistic, StatisticRequests } from './Statistic'
 import { User } from './User'
 
 // TODO: Using CategoryColorString
-export type AddCategoryInputs = Omit<Category, 'color' | 'order' | '_id'> & {
+export type CategoriesBasicSet = Omit<Category, 'color' | 'order' | '_id'> & {
 	color: string
 }
 

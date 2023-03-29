@@ -7,12 +7,7 @@
 			class="font-medium p-2 border border-gray-300"
 			title="Color"
 		>
-			<div class="flex justify-center items-center">
-				<img
-					class="w-7 h-7"
-					src="assets/icons-png/rainbow.png"
-				/>
-			</div>
+			<counter-categories-table-color-head-item></counter-categories-table-color-head-item>
 		</th>
 		<th class="font-medium p-2 border border-gray-300">Name</th>
 		<th class="font-medium p-2 border border-gray-300">Comment</th>
@@ -30,37 +25,29 @@
 			</div>
 		</td>
 		<td class="px-4 py-2 border border-gray-300">
-			<div
-				*ngIf="category?.status !== undefined"
-				class="absolute -right-8 top-1/2 -translate-y-1/2"
-			>
-				<svg-icon
-					class="inline-block w-5 h-5"
-					[ngClass]="{
-						'stroke-gray-400': checkStatusIs(
-							category.status,
-							'not-synchronized'
-						),
-						'stroke-amber-400': checkStatusIs(
-							category.status,
-							'synchronization'
-						),
-						'stroke-red-400': checkStatusIs(category.status, 'error')
-					}"
-					src="assets/icons/sync.svg"
-				></svg-icon>
-			</div>
+			<counter-not-sync-status-icon
+				[status]="category.status"
+			></counter-not-sync-status-icon>
 
-			<div
-				class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
+			<counter-categories-table-controls
+				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative"
+				[class.opacity-100]="category._id === editCategoryId"
+				(delete)="deleteCategory(category)"
+				(edit)="editCategoryStatus(category)"
+				[editActive]="category._id === editCategoryId"
 			>
-				<button (click)="deleteCategory(category)">
-					<svg-icon
-						class="inline-block w-6 h-6 fill-gray-300 hover:fill-red-400 transition-all duration-500"
-						src="assets/icons/trash-can.svg"
-					></svg-icon>
-				</button>
-			</div>
+				<counter-categories-form-add-new
+					*ngIf="category._id === editCategoryId"
+					[fromType]="'edit'"
+					[initialFormData]="{
+						name: category.name,
+						comment: category.comment,
+						color: category.color._id
+					}"
+					(onSubmit)="editCategory(category, $event)"
+				></counter-categories-form-add-new>
+			</counter-categories-table-controls>
+
 			<div class="break-all">
 				{{ category.name }}
 			</div>

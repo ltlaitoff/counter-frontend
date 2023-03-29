@@ -5,6 +5,7 @@ import { StatisticChartComponent } from './statistic-chart/statistic-chart.compo
 import { AngularSvgIconModule } from 'angular-svg-icon'
 import { StatisticLogComponent } from './statistic-log/statistic-log.component'
 import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module'
+import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module'
 
 @NgModule({
 	declarations: [
@@ -15,7 +16,8 @@ import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-b
 	imports: [
 		CommonModule,
 		AngularSvgIconModule.forRoot(),
-		LoadStatusButtonModule
+		LoadStatusButtonModule,
+		NotSyncStatusIconModule
 	],
 	exports: [StatisticComponent, StatisticLogComponent]
 })

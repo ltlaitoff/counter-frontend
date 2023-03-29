@@ -4,7 +4,6 @@ import { sortedByOrder } from 'src/app/helpers'
 import { RootState } from 'src/app/store'
 import { selectCategories, CategoriesActions } from 'src/app/store/categories'
 import { CategoryStateItem } from 'src/app/store/categories/categories.types'
-import { Status } from 'src/app/store/categories/not-sync/categories-not-sync.types'
 
 @Component({
 	selector: 'counter-categories-table',
@@ -13,6 +12,7 @@ import { Status } from 'src/app/store/categories/not-sync/categories-not-sync.ty
 })
 export class CategoriesTableComponent implements OnInit {
 	categories: CategoryStateItem[] | null = null
+	editCategoryId: string | null = null
 
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
@@ -28,22 +28,24 @@ export class CategoriesTableComponent implements OnInit {
 		this.store.dispatch(CategoriesActions.delete(category))
 	}
 
-	checkStatusIs(
-		status: Status | undefined,
-		value: 'not-synchronized' | 'synchronization' | 'error'
-	) {
-		if (!status) return
-
-		switch (value) {
-			case 'not-synchronized':
-				return status === Status.NOT_SYNCHRONIZED
-
-			case 'synchronization':
-				return status === Status.SYNCHRONIZATION
-
-			case 'error':
-				return status === Status.ERROR
+	editCategoryStatus(category: CategoryStateItem) {
+		if (this.editCategoryId === null) {
+			this.editCategoryId = category._id
+			return
 		}
+
+		this.editCategoryId = null
+	}
+
+	editCategory(currentValue: CategoryStateItem, editedValue: any) {
+		this.editCategoryId = null
+
+		this.store.dispatch(
+			CategoriesActions.update({
+				oldCategory: currentValue,
+				dataForUpdate: editedValue
+			})
+		)
 	}
 
 	constructor(private store: Store<RootState>) {}

@@ -1,4 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store'
+import { CategoriesBasicSet } from 'src/types/ApiInputs'
 import * as NotSyncTypes from './categories-not-sync.types'
 
 export const CategoriesNotSyncActions = createActionGroup({
@@ -10,9 +11,10 @@ export const CategoriesNotSyncActions = createActionGroup({
 			status: NotSyncTypes.Status
 			category: NotSyncTypes.StateItem
 		}>(),
-		delete: props<NotSyncTypes.StateItem>()
-
-		// TODO: Create change
-		// change: props<{ category: Category }>()
+		delete: props<NotSyncTypes.StateItem>(),
+		update: props<{
+			oldCategory: NotSyncTypes.StateItem
+			dataForUpdate: CategoriesBasicSet
+		}>()
 	}
 })

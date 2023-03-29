@@ -30,12 +30,23 @@
 			></counter-not-sync-status-icon>
 
 			<counter-categories-table-controls
-				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out"
+				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative"
 				[class.opacity-100]="category._id === editCategoryId"
 				(delete)="deleteCategory(category)"
-				(edit)="editCategory(category)"
+				(edit)="editCategoryStatus(category)"
 				[editActive]="category._id === editCategoryId"
-			></counter-categories-table-controls>
+			>
+				<counter-categories-form-add-new
+					*ngIf="category._id === editCategoryId"
+					[fromType]="'edit'"
+					[initialFormData]="{
+						name: category.name,
+						comment: category.comment,
+						color: category.color._id
+					}"
+					(onSubmit)="editCategory(category, $event)"
+				></counter-categories-form-add-new>
+			</counter-categories-table-controls>
 
 			<div class="break-all">
 				{{ category.name }}

@@ -28,8 +28,20 @@ export class CategoriesTableComponent implements OnInit {
 		this.store.dispatch(CategoriesActions.delete(category))
 	}
 
-	editCategory(category: CategoryStateItem) {
-		this.editCategoryId = category._id
+	editCategoryStatus(category: CategoryStateItem) {
+		if (this.editCategoryId === null) {
+			this.editCategoryId = category._id
+			return
+		}
+
+		this.editCategoryId = null
+	}
+
+	editCategory(currentValue: CategoryStateItem, editedValue: any) {
+		// TODO: Api edit call
+		console.log('editedValue:', editedValue, 'for category: ', currentValue)
+
+		this.editCategoryId = null
 	}
 
 	constructor(private store: Store<RootState>) {}

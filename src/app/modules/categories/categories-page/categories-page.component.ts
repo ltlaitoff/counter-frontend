@@ -5,6 +5,7 @@ import { RootState } from 'src/app/store'
 import { CategoriesActions } from 'src/app/store/categories'
 import { selectCategoriesState } from 'src/app/store/categories/categories.select'
 import { LoadStatus } from 'src/app/store/store.types'
+import { AddCategoryInputs } from 'src/types/ApiInputs'
 
 /*
 TODO [x]: View as table with orde
@@ -48,6 +49,11 @@ export class CategoriesPageComponent implements OnInit {
 
 	reloadCategories(force: boolean) {
 		this.store.dispatch(CategoriesActions.load({ force: force }))
+	}
+
+	addNewCategory(data: AddCategoryInputs) {
+		this.store.dispatch(CategoriesActions.add(data))
+		this.closeWithCheck()
 	}
 
 	constructor(private store: Store<RootState>) {}

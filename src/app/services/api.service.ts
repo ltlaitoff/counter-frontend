@@ -90,7 +90,7 @@ export class ApiService {
 	}
 
 	updateCategory(id: string, data: ApiInputs.AddCategoryInputs) {
-		return this.http.put(`${API_BASE_URL}/category/${id}`, data, {
+		return this.http.put<Category>(`${API_BASE_URL}/category/${id}`, data, {
 			withCredentials: true
 		})
 	}

@@ -38,10 +38,14 @@ export class CategoriesTableComponent implements OnInit {
 	}
 
 	editCategory(currentValue: CategoryStateItem, editedValue: any) {
-		// TODO: Api edit call
-		console.log('editedValue:', editedValue, 'for category: ', currentValue)
-
 		this.editCategoryId = null
+
+		this.store.dispatch(
+			CategoriesActions.update({
+				oldCategory: currentValue,
+				dataForUpdate: editedValue
+			})
+		)
 	}
 
 	constructor(private store: Store<RootState>) {}

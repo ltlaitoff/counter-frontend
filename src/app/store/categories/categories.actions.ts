@@ -9,13 +9,15 @@ export const CategoriesActions = createActionGroup({
 		load: (props: { force: boolean } = { force: false }) => props,
 
 		add: (category: AddCategoryInputs) => category,
-		delete: (
-			category:
-				| CategoriesTypes.NotSyncTypes.StateItemWithColor
-				| CategoriesTypes.SyncTypes.StateItem
-		) => category,
+		delete: (category: CategoriesTypes.CategoryStateItem) => category,
+		update: props<{
+			oldCategory: CategoriesTypes.CategoryStateItem
+
+			dataForUpdate: AddCategoryInputs
+		}>(),
 
 		addEffect: (category: NotSyncTypes.StateItem) => category,
-		deleteEffect: (category: NotSyncTypes.StateItem) => category
+		deleteEffect: (category: NotSyncTypes.StateItem) => category,
+		updateEffect: (category: NotSyncTypes.StateItem) => category
 	}
 })

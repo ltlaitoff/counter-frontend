@@ -27,3 +27,15 @@ export function changeDeleteCategoryValueToStoreItem(
 		action: NotSyncTypes.Action.DELETED
 	}
 }
+
+export function changeUpdateCategoryValueToStoreItem(
+	oldCategoryData: CategoriesTypes.SyncTypes.StateItem,
+	newCategoryData: AddCategoryInputs
+): NotSyncTypes.StateItem {
+	return {
+		...oldCategoryData,
+		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
+		action: NotSyncTypes.Action.CHANGED,
+		...newCategoryData
+	}
+}

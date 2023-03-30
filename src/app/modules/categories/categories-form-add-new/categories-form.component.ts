@@ -8,7 +8,7 @@ import { selectColors } from 'src/app/store/colors'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
 
 @Component({
-	selector: 'counter-categories-new',
+	selector: 'counter-categories-form',
 	templateUrl: './categories-form.component.html',
 	styleUrls: ['./categories-form.component.scss']
 })

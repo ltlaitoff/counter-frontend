@@ -3,25 +3,25 @@
 	(ngSubmit)="onSubmitAddForm()"
 	class="z-20 p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
 >
-	<label class="flex gap-x-5 justify-between">
+	<label class="flex gap-x-5 justify-between items-center">
 		Name
 		<input
 			formControlName="name"
-			class="border border-gray-300 rounded"
+			class="px-2 py-1 border border-gray-300 rounded"
 			type="text"
 		/>
 	</label>
-	<label class="flex gap-x-5 justify-between">
+	<label class="flex gap-x-5 justify-between items-center">
 		Comment
 		<input
 			formControlName="comment"
-			class="border border-gray-300 rounded"
+			class="px-2 py-1 border border-gray-300 rounded"
 			type="text"
 		/>
 	</label>
 
 	<fieldset
-		class="flex gap-x-3"
+		class="flex gap-x-3 items-center justify-center flex-wrap max-w-sm"
 		*ngIf="colors"
 	>
 		<div

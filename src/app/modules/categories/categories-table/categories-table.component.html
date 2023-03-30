@@ -30,14 +30,25 @@
 			></counter-not-sync-status-icon>
 
 			<counter-categories-table-controls
+				*ngIf="category._id !== editCategoryId"
+				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative"
+				(delete)="deleteCategory(category)"
+				(edit)="editCategoryStatus(category)"
+			></counter-categories-table-controls>
+
+			<counter-categories-table-controls
+				*ngIf="category._id === editCategoryId"
 				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative"
 				[class.opacity-100]="category._id === editCategoryId"
 				(delete)="deleteCategory(category)"
 				(edit)="editCategoryStatus(category)"
 				[editActive]="category._id === editCategoryId"
+				appClickedOutside
+				(clickedOutside)="closeCategoryEdit()"
+				appKeydown
+				(escapePress)="closeCategoryEdit()"
 			>
 				<counter-categories-form
-					*ngIf="category._id === editCategoryId"
 					[fromType]="'edit'"
 					[initialFormData]="{
 						name: category.name,

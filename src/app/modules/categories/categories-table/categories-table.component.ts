@@ -48,5 +48,11 @@ export class CategoriesTableComponent implements OnInit {
 		)
 	}
 
+	closeCategoryEdit() {
+		if (this.editCategoryId !== null) {
+			this.editCategoryId = null
+		}
+	}
+
 	constructor(private store: Store<RootState>) {}
 }

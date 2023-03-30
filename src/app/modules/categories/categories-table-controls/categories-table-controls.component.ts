@@ -8,13 +8,21 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 export class CategoriesTableControlsComponent {
 	@Output() delete = new EventEmitter()
 	@Output() edit = new EventEmitter()
+	@Output() closeEdit = new EventEmitter()
+
 	@Input() editActive: boolean = false
 
 	onDeleteClick() {
 		this.delete.emit()
 	}
 
-	onEditClick() {
+	onEditClick(event: MouseEvent) {
+		event.stopPropagation()
+
 		this.edit.emit()
+	}
+
+	closeCategoryEdit() {
+		this.closeEdit.emit()
 	}
 }

@@ -18,6 +18,7 @@ import { CategoriesSyncActions } from './sync/categories-sync.actions'
 import { RootState } from '../rootTypes'
 import { NotSyncTypes, NotSyncHelpers } from './not-sync'
 import { CategoriesStatusActions, CategoriesStatusTypes } from './status'
+import { StatisticActions } from '../statistic/statistic.actions'
 
 @Injectable()
 export class CategoriesEffects {
@@ -256,7 +257,10 @@ export class CategoriesEffects {
 							status: CategoriesStatusTypes.StatusState.SYNCHRONIZED
 						}),
 
-						CategoriesNotSyncActions.delete(inputCategory)
+						CategoriesNotSyncActions.delete(inputCategory),
+
+						// TODO: Remove it after [#62](https://github.com/ltlaitoff/counter-frontend/issues/62)
+						StatisticActions.load({ force: true })
 					]),
 					catchError(() => {
 						this.store.dispatch(

@@ -38,7 +38,7 @@
 
 			<counter-categories-table-controls
 				*ngIf="category._id === editCategoryId"
-				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative"
+				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative z-10"
 				[class.opacity-100]="category._id === editCategoryId"
 				(delete)="deleteCategory(category)"
 				(edit)="editCategoryStatus(category)"

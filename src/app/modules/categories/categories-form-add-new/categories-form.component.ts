@@ -4,16 +4,15 @@ import { Store } from '@ngrx/store'
 import { Color } from 'src/types/Color'
 import { sortedByOrder } from 'src/app/helpers'
 import { RootState } from 'src/app/store'
-import { CategoriesActions } from 'src/app/store/categories'
 import { selectColors } from 'src/app/store/colors'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
 
 @Component({
-	selector: 'counter-categories-form-add-new',
-	templateUrl: './categories-form-add-new.component.html',
-	styleUrls: ['./categories-form-add-new.component.scss']
+	selector: 'counter-categories-new',
+	templateUrl: './categories-form.component.html',
+	styleUrls: ['./categories-form.component.scss']
 })
-export class CategoriesFormAddNewComponent implements OnInit {
+export class CategoriesFormComponent implements OnInit {
 	@Input() initialFormData: {
 		name: string
 		comment: string

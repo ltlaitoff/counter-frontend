@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
 	selector: 'counter-table-controls',
-	templateUrl: './table-controls.component.html',
-	styleUrls: ['./table-controls.component.scss']
+	templateUrl: './table-controls.component.html'
 })
 export class TableControlsComponent {
 	@Output() delete = new EventEmitter()

@@ -17,28 +17,16 @@
 		*ngFor="let category of sortedByOrderCategories"
 	>
 		<td class="px-4 py-2 border border-gray-300">
-			<div class="flex gap-x-3 items-center justify-center capitalize">
-				<div
-					class="w-4 h-4 rounded-full"
-					[style]="{ background: category.color.colorHEX }"
-				></div>
-			</div>
-		</td>
-		<td class="px-4 py-2 border border-gray-300">
-			<counter-not-sync-status-icon
-				[status]="category.status"
-			></counter-not-sync-status-icon>
-
 			<counter-table-controls
 				*ngIf="category._id !== editCategoryId"
-				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative"
+				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out"
 				(delete)="deleteCategory(category)"
 				(edit)="editCategoryStatus(category)"
 			></counter-table-controls>
 
 			<counter-table-controls
 				*ngIf="category._id === editCategoryId"
-				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative z-10"
+				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out z-10"
 				[class.opacity-100]="category._id === editCategoryId"
 				(delete)="deleteCategory(category)"
 				(edit)="editCategoryStatus(category)"
@@ -59,10 +47,23 @@
 				></counter-categories-form>
 			</counter-table-controls>
 
+			<div class="flex gap-x-3 items-center justify-center capitalize">
+				<div
+					class="w-4 h-4 rounded-full"
+					[style]="{ background: category.color.colorHEX }"
+				></div>
+			</div>
+		</td>
+		<td class="px-4 py-2 border border-gray-300">
+			<counter-not-sync-status-icon
+				[status]="category.status"
+			></counter-not-sync-status-icon>
+
 			<div class="break-all">
 				{{ category.name }}
 			</div>
 		</td>
+
 		<td class="px-4 py-2 border border-gray-300">
 			<div class="break-all">
 				{{ category.comment }}

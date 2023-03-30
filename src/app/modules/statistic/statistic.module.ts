@@ -6,6 +6,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon'
 import { StatisticLogComponent } from './statistic-log/statistic-log.component'
 import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module'
 import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module'
+import { TableControlsModule } from 'src/app/components-modules/table-controls/table-controls.module'
 
 @NgModule({
 	declarations: [
@@ -17,7 +18,8 @@ import { NotSyncStatusIconModule } from '../../components-modules/not-sync-statu
 		CommonModule,
 		AngularSvgIconModule.forRoot(),
 		LoadStatusButtonModule,
-		NotSyncStatusIconModule
+		NotSyncStatusIconModule,
+		TableControlsModule
 	],
 	exports: [StatisticComponent, StatisticLogComponent]
 })

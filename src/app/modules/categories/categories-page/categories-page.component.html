@@ -12,10 +12,10 @@
 					Add new category
 				</counter-outline-button>
 
-				<counter-categories-form-add-new
+				<counter-categories-form
 					*ngIf="isAddFormOpened"
 					(onSubmit)="addNewCategory($event)"
-				></counter-categories-form-add-new>
+				></counter-categories-form>
 			</div>
 
 			<counter-load-status-button

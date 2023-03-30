@@ -9,7 +9,7 @@ import { CategorySelectComponent } from './category-select/category-select.compo
 import { ButtonsModule } from '../buttons/buttons.module'
 import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module'
 import { CategoriesTableComponent } from './categories-table/categories-table.component'
-import { CategoriesFormAddNewComponent } from './categories-form-add-new/categories-form-add-new.component'
+import { CategoriesFormComponent } from './categories-form-add-new/categories-form.component'
 import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module'
 import { CategoriesTableControlsComponent } from './categories-table-controls/categories-table-controls.component'
 import { CategoriesTableColorHeadItemComponent } from './categories-table/categories-table-color-head-item/categories-table-color-head-item.component'
@@ -26,7 +26,7 @@ export function playerFactory() {
 		CategoriesPageComponent,
 		CategorySelectComponent,
 		CategoriesTableComponent,
-		CategoriesFormAddNewComponent,
+		CategoriesFormComponent,
 		CategoriesTableControlsComponent,
 		CategoriesTableColorHeadItemComponent
 	],

@@ -67,7 +67,7 @@ export class StatisticEffects {
 			// TODO: Why using exhaustMap?
 			exhaustMap(statisticForAdd => {
 				const statisticAsNotSyncStateItem: NotSyncTypes.StateItem =
-					NotSyncHelpers.changeAddCategoryValueToStoreItem(statisticForAdd)
+					NotSyncHelpers.changeAddStatisticValueToStoreItem(statisticForAdd)
 
 				return of(
 					StatisticNotSyncActions.add(statisticAsNotSyncStateItem),

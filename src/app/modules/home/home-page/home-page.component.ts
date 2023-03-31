@@ -35,7 +35,11 @@ export class HomePageComponent implements OnInit {
 
 		this.store.dispatch(StatisticActions.add(valueForSend))
 
-		this.addForm.reset()
+		this.addForm.reset({
+			count: 0,
+			comment: '',
+			category: valueForSend.category
+		})
 	}
 
 	private prepareSubmitData(value: typeof this.addForm.value) {

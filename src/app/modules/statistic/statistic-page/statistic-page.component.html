@@ -28,11 +28,36 @@
 						></counter-not-sync-status-icon>
 
 						<counter-table-controls
-							class="table-row--contol-buttons opacity-0 -translate-y-1/2 transition-all duration-300"
+							*ngIf="record._id !== editStatisticRecordId"
+							class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out"
 							(delete)="deleteStatisticRecord(record)"
+							(edit)="editStastisitcStatus(record)"
 						></counter-table-controls>
 
-						<!-- (edit)="editCategoryStatus(category)" -->
+						<counter-table-controls
+							*ngIf="record._id === editStatisticRecordId"
+							class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out z-10"
+							[class.opacity-100]="record._id === editStatisticRecordId"
+							(delete)="deleteStatisticRecord(record)"
+							(edit)="editStastisitcStatus(record)"
+							[editActive]="record._id === editStatisticRecordId"
+							appClickedOutside
+							(clickedOutside)="closeStatisticEdit()"
+							appKeydown
+							(escapePress)="closeStatisticEdit()"
+						>
+							<counter-statistic-form
+								class="absolute top-6 left-8"
+								[fromType]="'edit'"
+								[initialFormData]="{
+									date: record.date,
+									count: record.count,
+									comment: record.comment,
+									category: record.category._id
+								}"
+								(onSubmit)="editStastistic(record, $event)"
+							></counter-statistic-form>
+						</counter-table-controls>
 
 						<!-- <div
 							class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"

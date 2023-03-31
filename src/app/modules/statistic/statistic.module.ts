@@ -7,19 +7,29 @@ import { StatisticLogComponent } from './statistic-log/statistic-log.component'
 import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module'
 import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module'
 import { TableControlsModule } from 'src/app/components-modules/table-controls/table-controls.module'
+import { StatisticFormComponent } from './statistic-form/statistic-form.component'
+import { ReactiveFormsModule } from '@angular/forms'
+import { CategoriesModule } from '../categories/categories.module'
+import { ClickedOutsideDirectiveModule } from '../../directives/clicked-outside-directive.module'
+import { KeydownDirectiveModule } from '../../directives/keydown-directive.module'
 
 @NgModule({
 	declarations: [
 		StatisticComponent,
 		StatisticChartComponent,
-		StatisticLogComponent
+		StatisticLogComponent,
+		StatisticFormComponent
 	],
 	imports: [
 		CommonModule,
+		ReactiveFormsModule,
 		AngularSvgIconModule.forRoot(),
 		LoadStatusButtonModule,
 		NotSyncStatusIconModule,
-		TableControlsModule
+		TableControlsModule,
+		CategoriesModule,
+		ClickedOutsideDirectiveModule,
+		KeydownDirectiveModule
 	],
 	exports: [StatisticComponent, StatisticLogComponent]
 })

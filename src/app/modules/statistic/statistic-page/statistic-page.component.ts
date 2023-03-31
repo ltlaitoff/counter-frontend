@@ -15,6 +15,7 @@ import { Status } from 'src/app/store/statistic/not-sync/statistic-not-sync.type
 export class StatisticComponent implements OnInit {
 	statistics: StatisticStateItem[] | null = null
 	currentStatus: LoadStatus | null = null
+	editStatisticRecordId: string | null = null
 
 	ngOnInit() {
 		this.store.select(selectStatistic).subscribe(newStatistic => {
@@ -52,5 +53,30 @@ export class StatisticComponent implements OnInit {
 
 	deleteStatisticRecord(statisticRecord: StatisticStateItem) {
 		this.store.dispatch(StatisticActions.delete(statisticRecord))
+	}
+
+	closeStatisticEdit() {
+		console.log('close')
+		this.editStatisticRecordId = null
+	}
+
+	editStastisitcStatus(category: StatisticStateItem) {
+		if (this.editStatisticRecordId === null) {
+			this.editStatisticRecordId = category._id
+			return
+		}
+
+		this.editStatisticRecordId = null
+	}
+
+	editStastistic(currentValue: StatisticStateItem, editedValue: any) {
+		this.editStatisticRecordId = null
+
+		// this.store.dispatch(
+		// 	StatisticActions.update({
+		// 		oldStastistic: currentValue,
+		// 		dataForUpdate: editedValue
+		// 	})
+		// )
 	}
 }

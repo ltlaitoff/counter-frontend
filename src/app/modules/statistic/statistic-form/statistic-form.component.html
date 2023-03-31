@@ -1,0 +1,51 @@
+<form
+	[formGroup]="formData"
+	(ngSubmit)="onSubmitAddForm()"
+	class="z-20 p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
+>
+	<label class="flex gap-x-5 justify-between items-center">
+		Count
+		<input
+			type="number"
+			formControlName="count"
+			class="px-2 py-1 border border-gray-300 rounded"
+		/>
+	</label>
+	<label class="flex gap-x-5 justify-between items-center">
+		Comment
+		<input
+			type="text"
+			formControlName="comment"
+			class="px-2 py-1 border border-gray-300 rounded"
+		/>
+	</label>
+
+	<label class="flex gap-x-5 justify-between items-center">
+		Date
+		<input
+			type="datetime-local"
+			formControlName="date"
+			class="px-2 py-1 border border-gray-300 rounded"
+		/>
+	</label>
+
+	<label class="flex gap-x-5 justify-between items-center">
+		Category:
+		<counter-category-select
+			class="w-full rounded order-2 border row-span-2 border-gray-400 px-4 py-2"
+			[categories]="categories"
+			formControlName="category"
+		></counter-category-select>
+	</label>
+
+	<button
+		type="submit"
+		class="border py-2 rounded-md"
+		[ngClass]="{
+			'border-green-500 bg-green-100': formTypeIsAdd,
+			'border-sky-500 bg-sky-100': formTypeIsEdit
+		}"
+	>
+		{{ formTypeIsAdd ? 'Add' : 'Save' }}
+	</button>
+</form>

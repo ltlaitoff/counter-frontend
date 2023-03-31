@@ -56,7 +56,6 @@ export class StatisticComponent implements OnInit {
 	}
 
 	closeStatisticEdit() {
-		console.log('close')
 		this.editStatisticRecordId = null
 	}
 
@@ -72,11 +71,11 @@ export class StatisticComponent implements OnInit {
 	editStastistic(currentValue: StatisticStateItem, editedValue: any) {
 		this.editStatisticRecordId = null
 
-		// this.store.dispatch(
-		// 	StatisticActions.update({
-		// 		oldStastistic: currentValue,
-		// 		dataForUpdate: editedValue
-		// 	})
-		// )
+		this.store.dispatch(
+			StatisticActions.update({
+				oldStatistic: currentValue,
+				dataForUpdate: editedValue
+			})
+		)
 	}
 }

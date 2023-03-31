@@ -71,6 +71,12 @@ export class ApiService {
 		})
 	}
 
+	updateStatistic(id: string, data: ApiInputs.AddStatisticInputs) {
+		return this.http.put<Statistic>(`${API_BASE_URL}/statistic/${id}`, data, {
+			withCredentials: true
+		})
+	}
+
 	getAllColors() {
 		return this.http.get<Color[]>(`${API_BASE_URL}/color/all`, {
 			withCredentials: true

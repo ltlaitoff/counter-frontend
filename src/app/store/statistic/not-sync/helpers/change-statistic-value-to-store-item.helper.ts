@@ -27,3 +27,15 @@ export function changeDeleteStatisticValueToStoreItem(
 		action: NotSyncTypes.Action.DELETED
 	}
 }
+
+export function changeUpdateStatisticValueToStoreItem(
+	data: StatisticTypes.SyncTypes.StateItem,
+	newData: AddStatisticInputs
+): NotSyncTypes.StateItem {
+	return {
+		...data,
+		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
+		action: NotSyncTypes.Action.DELETED,
+		...newData
+	}
+}

@@ -29,14 +29,18 @@
 		/>
 	</label>
 
-	<label class="flex gap-x-5 justify-between items-center">
+	<div
+		class="flex gap-x-5 justify-between items-center"
+		(click)="testClick($event)"
+	>
 		Category:
 		<counter-category-select
-			class="w-full rounded order-2 border row-span-2 border-gray-400 px-4 py-2"
+			class="w-full rounded order-2 border row-span-2 border-gray-400"
+			buttonClass="px-4 py-2"
 			[categories]="categories"
 			formControlName="category"
 		></counter-category-select>
-	</label>
+	</div>
 
 	<button
 		type="submit"

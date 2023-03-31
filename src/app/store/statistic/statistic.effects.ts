@@ -77,6 +77,37 @@ export class StatisticEffects {
 		)
 	)
 
+	update$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(StatisticActions.update),
+			// TODO: Why using exhaustMap?
+			exhaustMap(categoryForUpdate => {
+				if (categoryForUpdate.oldStatistic.status) {
+					return [
+						StatisticNotSyncActions.update({
+							oldStatistic: NotSyncHelpers.statisticDefaultToStatisticNotSync(
+								categoryForUpdate.oldStatistic
+							),
+							dataForUpdate: categoryForUpdate.dataForUpdate
+						})
+					]
+				}
+
+				const oldStatisticAsNotSyncStateItem: NotSyncTypes.StateItem =
+					NotSyncHelpers.changeUpdateStatisticValueToStoreItem(
+						categoryForUpdate.oldStatistic,
+						categoryForUpdate.dataForUpdate
+					)
+
+				return of(
+					StatisticNotSyncActions.add(oldStatisticAsNotSyncStateItem),
+					StatisticSyncActions.delete(categoryForUpdate.oldStatistic),
+					StatisticActions.updateeffect(oldStatisticAsNotSyncStateItem)
+				)
+			})
+		)
+	)
+
 	delete$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(StatisticActions.delete),
@@ -126,9 +157,9 @@ export class StatisticEffects {
 				)
 
 				return this.api.addStatisticRecord(inputStatistic).pipe(
-					switchMap(resultCategory => [
+					switchMap(resultStatistic => [
 						StatisticSyncActions.add({
-							statistic: resultCategory
+							statistic: resultStatistic
 						}),
 
 						StatisticStatusActions.set({
@@ -201,6 +232,62 @@ export class StatisticEffects {
 						return EMPTY
 					})
 				)
+			})
+		)
+	)
+
+	updateStatistic$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(StatisticActions.updateeffect),
+			// TODO: Why using switchMap?
+			mergeMap(inputStatistic => {
+				this.store.dispatch(
+					StatisticNotSyncActions.changestatus({
+						status: NotSyncTypes.Status.SYNCHRONIZATION,
+						statistic: inputStatistic
+					})
+				)
+
+				this.store.dispatch(
+					StatisticStatusActions.set({
+						status: StatisticStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
+				return this.api
+					.updateStatistic(inputStatistic._id, inputStatistic)
+					.pipe(
+						switchMap(resultStatistic => [
+							StatisticSyncActions.add({
+								statistic: resultStatistic
+							}),
+
+							StatisticStatusActions.set({
+								status: StatisticStatusTypes.StatusState.SYNCHRONIZED
+							}),
+
+							StatisticNotSyncActions.delete(inputStatistic),
+
+							// TODO: Remove it after [#62](https://github.com/ltlaitoff/counter-frontend/issues/62)
+							StatisticActions.load({ force: true })
+						]),
+						catchError(() => {
+							this.store.dispatch(
+								StatisticNotSyncActions.changestatus({
+									status: NotSyncTypes.Status.ERROR,
+									statistic: inputStatistic
+								})
+							)
+
+							this.store.dispatch(
+								StatisticStatusActions.set({
+									status: StatisticStatusTypes.StatusState.ERROR
+								})
+							)
+
+							return EMPTY
+						})
+					)
 			})
 		)
 	)

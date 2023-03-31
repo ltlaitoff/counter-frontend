@@ -1,4 +1,10 @@
-import { Component, forwardRef, Input, Output } from '@angular/core'
+import {
+	Component,
+	forwardRef,
+	Input,
+	Output,
+	EventEmitter
+} from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { Category } from 'src/types/Category'
 
@@ -15,6 +21,7 @@ import { Category } from 'src/types/Category'
 })
 export class CategorySelectComponent implements ControlValueAccessor {
 	@Input() categories: Category[] | null = null
+	@Input() buttonClass: string = ''
 
 	isDropDownOpened = false
 
@@ -30,7 +37,7 @@ export class CategorySelectComponent implements ControlValueAccessor {
 
 		this.onChange(id)
 		this.setCurrentCategory()
-		this.toggleDropDown()
+		this.isDropDownOpened = false
 	}
 
 	writeValue(value: string): void {
@@ -56,6 +63,10 @@ export class CategorySelectComponent implements ControlValueAccessor {
 				this.categories.find(category => category._id === this.currentId) ||
 				null
 		}
+	}
+
+	closeDropDown() {
+		this.isDropDownOpened = false
 	}
 
 	toggleDropDown() {

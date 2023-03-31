@@ -20,7 +20,6 @@ export class StatisticFormComponent {
 	} | null = null
 
 	@Input() fromType: 'add' | 'edit' = 'add'
-
 	@Output() onSubmit = new EventEmitter<AddStatisticInputs>()
 
 	formData = new FormGroup({
@@ -31,6 +30,7 @@ export class StatisticFormComponent {
 	})
 
 	categories: Category[] | null = null
+	localSelectCategoriesDropDownStatus: boolean = false
 
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
@@ -91,6 +91,20 @@ export class StatisticFormComponent {
 
 	get formTypeIsEdit() {
 		return this.fromType === 'edit'
+	}
+
+	testClick(event: MouseEvent) {
+		console.log('select form:', event.target)
+		console.log('select form:', event.currentTarget)
+
+		if (this.localSelectCategoriesDropDownStatus) {
+		}
+
+		event.stopPropagation()
+	}
+
+	setLocalSelectCategoriesDropDownStatus(value: boolean) {
+		this.localSelectCategoriesDropDownStatus = value
 	}
 
 	constructor(private store: Store<RootState>) {}

@@ -10,8 +10,14 @@ export const StatisticActions = createActionGroup({
 
 		add: (statistic: AddStatisticInputs) => statistic,
 		delete: (statistic: StatisticTypes.StatisticStateItem) => statistic,
+		update: props<{
+			oldStatistic: StatisticTypes.StatisticStateItem
+
+			dataForUpdate: AddStatisticInputs
+		}>(),
 
 		addEffect: (statistic: NotSyncTypes.StateItem) => statistic,
-		deleteEffect: (statistic: NotSyncTypes.StateItem) => statistic
+		deleteEffect: (statistic: NotSyncTypes.StateItem) => statistic,
+		updateEffect: (statistic: NotSyncTypes.StateItem) => statistic
 	}
 })

@@ -6,6 +6,7 @@ import { LoadStatus } from 'src/app/store/store.types'
 import { selectStatisticState } from 'src/app/store/statistic/statistic.select'
 import { StatisticStateItem } from 'src/app/store/statistic/statistic.types'
 import { Status } from 'src/app/store/statistic/not-sync/statistic-not-sync.types'
+import { sortByDate } from '../helpers/sort-by-date.helper'
 
 @Component({
 	selector: 'counter-statistic-page',
@@ -15,10 +16,11 @@ import { Status } from 'src/app/store/statistic/not-sync/statistic-not-sync.type
 export class StatisticComponent implements OnInit {
 	statistics: StatisticStateItem[] | null = null
 	currentStatus: LoadStatus | null = null
+	editStatisticRecordId: string | null = null
 
 	ngOnInit() {
 		this.store.select(selectStatistic).subscribe(newStatistic => {
-			this.statistics = newStatistic
+			this.statistics = newStatistic.sort(sortByDate)
 		})
 
 		this.store.select(selectStatisticState).subscribe(value => {
@@ -52,5 +54,29 @@ export class StatisticComponent implements OnInit {
 
 	deleteStatisticRecord(statisticRecord: StatisticStateItem) {
 		this.store.dispatch(StatisticActions.delete(statisticRecord))
+	}
+
+	closeStatisticEdit() {
+		this.editStatisticRecordId = null
+	}
+
+	editStastisitcStatus(category: StatisticStateItem) {
+		if (this.editStatisticRecordId === null) {
+			this.editStatisticRecordId = category._id
+			return
+		}
+
+		this.editStatisticRecordId = null
+	}
+
+	editStastistic(currentValue: StatisticStateItem, editedValue: any) {
+		this.editStatisticRecordId = null
+
+		this.store.dispatch(
+			StatisticActions.update({
+				oldStatistic: currentValue,
+				dataForUpdate: editedValue
+			})
+		)
 	}
 }

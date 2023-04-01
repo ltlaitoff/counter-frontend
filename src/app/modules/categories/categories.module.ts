@@ -11,10 +11,10 @@ import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-b
 import { CategoriesTableComponent } from './categories-table/categories-table.component'
 import { CategoriesFormComponent } from './categories-form-add-new/categories-form.component'
 import { NotSyncStatusIconModule } from '../../components-modules/not-sync-status-icon/not-sync-status-icon.module'
-import { CategoriesTableControlsComponent } from './categories-table-controls/categories-table-controls.component'
 import { CategoriesTableColorHeadItemComponent } from './categories-table/categories-table-color-head-item/categories-table-color-head-item.component'
 
 import { LottieModule } from 'ngx-lottie'
+import { TableControlsModule } from '../../components-modules/table-controls/table-controls.module'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -27,7 +27,6 @@ export function playerFactory() {
 		CategorySelectComponent,
 		CategoriesTableComponent,
 		CategoriesFormComponent,
-		CategoriesTableControlsComponent,
 		CategoriesTableColorHeadItemComponent
 	],
 	imports: [
@@ -39,7 +38,8 @@ export function playerFactory() {
 		ButtonsModule,
 		LoadStatusButtonModule,
 		NotSyncStatusIconModule,
-		LottieModule.forRoot({ player: playerFactory })
+		LottieModule.forRoot({ player: playerFactory }),
+		TableControlsModule
 	],
 	exports: [CategoriesPageComponent, CategorySelectComponent]
 })

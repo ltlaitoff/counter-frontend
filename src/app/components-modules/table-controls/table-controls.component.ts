@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
-	selector: 'counter-categories-table-controls',
-	templateUrl: './categories-table-controls.component.html',
-	styleUrls: ['./categories-table-controls.component.scss']
+	selector: 'counter-table-controls',
+	templateUrl: './table-controls.component.html'
 })
-export class CategoriesTableControlsComponent {
+export class TableControlsComponent {
 	@Output() delete = new EventEmitter()
 	@Output() edit = new EventEmitter()
 	@Output() closeEdit = new EventEmitter()

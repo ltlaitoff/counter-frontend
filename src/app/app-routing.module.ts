@@ -27,7 +27,7 @@ const routes: Routes = [
 		path: 'statistic',
 		component: StatisticComponent,
 		canActivate: [AuthGuardService],
-		resolve: [StatisticResolver]
+		resolve: [StatisticResolver, CategoryResolver]
 	},
 	{
 		path: 'authorization',

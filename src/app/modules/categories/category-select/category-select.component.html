@@ -1,13 +1,18 @@
 <div
 	*ngIf="categories"
-	class="relative text-gray-600"
+	class="w-full h-full relative text-gray-600"
+	appClickedOutside
+	(clickedOutside)="closeDropDown()"
+	appKeydown
+	(escapePress)="closeDropDown()"
 >
-	<div class="p-4">
+	<div class="w-full h-full">
 		<button
 			type="button"
 			*ngIf="currentCategory !== null"
-			class="flex gap-x-2 items-center"
+			class="w-full h-full flex gap-x-2 items-center"
 			(click)="toggleDropDown()"
+			[ngClass]="buttonClass"
 		>
 			<div
 				class="w-4 h-4 rounded-full"
@@ -19,8 +24,9 @@
 		<button
 			type="button"
 			*ngIf="currentCategory === null"
-			class="text-gray-600"
+			class="w-full h-full text-gray-600"
 			(click)="toggleDropDown()"
+			[ngClass]="buttonClass"
 		>
 			Choice category
 		</button>

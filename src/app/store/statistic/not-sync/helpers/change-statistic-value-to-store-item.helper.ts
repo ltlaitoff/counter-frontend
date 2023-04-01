@@ -3,7 +3,7 @@ import { StatisticTypes } from '../..'
 import { generateNotSyncStatisticId } from './generate-not-sync-statistic-id.helper'
 import { AddStatisticInputs } from 'src/types/ApiInputs'
 
-export function changeAddCategoryValueToStoreItem(
+export function changeAddStatisticValueToStoreItem(
 	data: AddStatisticInputs
 ): NotSyncTypes.StateItem {
 	const forAdd = {
@@ -25,5 +25,17 @@ export function changeDeleteStatisticValueToStoreItem(
 		date: new Date(data.date).getTime(),
 		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
 		action: NotSyncTypes.Action.DELETED
+	}
+}
+
+export function changeUpdateStatisticValueToStoreItem(
+	data: StatisticTypes.SyncTypes.StateItem,
+	newData: AddStatisticInputs
+): NotSyncTypes.StateItem {
+	return {
+		...data,
+		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
+		action: NotSyncTypes.Action.DELETED,
+		...newData
 	}
 }

@@ -239,7 +239,6 @@ export class StatisticEffects {
 	updateStatistic$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(StatisticActions.updateeffect),
-			// TODO: Why using switchMap?
 			mergeMap(inputStatistic => {
 				this.store.dispatch(
 					StatisticNotSyncActions.changestatus({
@@ -266,10 +265,7 @@ export class StatisticEffects {
 								status: StatisticStatusTypes.StatusState.SYNCHRONIZED
 							}),
 
-							StatisticNotSyncActions.delete(inputStatistic),
-
-							// TODO: Remove it after [#62](https://github.com/ltlaitoff/counter-frontend/issues/62)
-							StatisticActions.load({ force: true })
+							StatisticNotSyncActions.delete(inputStatistic)
 						]),
 						catchError(() => {
 							this.store.dispatch(

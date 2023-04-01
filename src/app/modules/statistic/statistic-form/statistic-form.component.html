@@ -1,7 +1,7 @@
 <form
 	[formGroup]="formData"
 	(ngSubmit)="onSubmitAddForm()"
-	class="z-20 p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
+	class="p-4 absolute mt-3 border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
 >
 	<label class="flex gap-x-5 justify-between items-center">
 		Count
@@ -29,12 +29,10 @@
 		/>
 	</label>
 
-	<div
-		class="flex gap-x-5 justify-between items-center"
-		(click)="testClick($event)"
-	>
+	<div class="flex gap-x-5 justify-between items-center">
 		Category:
 		<counter-category-select
+			(click)="testClick($event)"
 			class="w-full rounded order-2 border row-span-2 border-gray-400"
 			buttonClass="px-4 py-2"
 			[categories]="categories"

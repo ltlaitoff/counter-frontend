@@ -20,9 +20,9 @@
 			<ng-container *ngFor="let record of statistics">
 				<tr
 					*ngIf="record.category !== null"
-					class="table-row text-slate-600 relative transition-opacity"
+					class="table-row text-slate-600 transition-opacity relative"
 				>
-					<td class="relative px-3 py-2 border border-gray-300 font-medium">
+					<td class="px-3 py-2 border border-gray-300 font-medium">
 						<counter-not-sync-status-icon
 							[status]="record.status"
 						></counter-not-sync-status-icon>
@@ -36,7 +36,7 @@
 
 						<counter-table-controls
 							*ngIf="record._id === editStatisticRecordId"
-							class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out z-10"
+							class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative z-10"
 							[class.opacity-100]="record._id === editStatisticRecordId"
 							(delete)="deleteStatisticRecord(record)"
 							(edit)="editStastisitcStatus(record)"

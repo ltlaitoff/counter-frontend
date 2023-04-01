@@ -26,7 +26,7 @@
 
 			<counter-table-controls
 				*ngIf="category._id === editCategoryId"
-				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out z-10"
+				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative z-10"
 				[class.opacity-100]="category._id === editCategoryId"
 				(delete)="deleteCategory(category)"
 				(edit)="editCategoryStatus(category)"
@@ -37,6 +37,7 @@
 				(escapePress)="closeCategoryEdit()"
 			>
 				<counter-categories-form
+					class="absolute top-6 left-8"
 					[fromType]="'edit'"
 					[initialFormData]="{
 						name: category.name,

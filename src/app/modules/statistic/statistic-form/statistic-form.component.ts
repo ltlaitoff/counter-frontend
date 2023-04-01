@@ -49,7 +49,15 @@ export class StatisticFormComponent {
 	}
 
 	private formatDateToDateTimeLocalInput(input: string) {
-		return input.slice(0, -5)
+		const inputAsDate = new Date(input)
+
+		const dateWithTimezoneOffset = new Date(
+			inputAsDate.getTime() - inputAsDate.getTimezoneOffset() * 60000
+		)
+
+		const result = dateWithTimezoneOffset.toISOString().slice(0, -5)
+
+		return result
 	}
 
 	onSubmitAddForm() {

@@ -6,6 +6,7 @@ import { LoadStatus } from 'src/app/store/store.types'
 import { selectStatisticState } from 'src/app/store/statistic/statistic.select'
 import { StatisticStateItem } from 'src/app/store/statistic/statistic.types'
 import { Status } from 'src/app/store/statistic/not-sync/statistic-not-sync.types'
+import { sortByDate } from '../helpers/sort-by-date.helper'
 
 @Component({
 	selector: 'counter-statistic-page',
@@ -19,7 +20,7 @@ export class StatisticComponent implements OnInit {
 
 	ngOnInit() {
 		this.store.select(selectStatistic).subscribe(newStatistic => {
-			this.statistics = newStatistic
+			this.statistics = newStatistic.sort(sortByDate)
 		})
 
 		this.store.select(selectStatisticState).subscribe(value => {

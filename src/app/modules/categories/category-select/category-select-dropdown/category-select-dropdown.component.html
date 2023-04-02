@@ -19,25 +19,43 @@
 		*ngIf="categoriesList"
 	>
 		<button
+			*ngIf="!searchValue"
 			type="button"
 			class="flex gap-x-2 items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
-			*ngFor="let category of categoriesList"
-			(click)="onItemClick(category._id)"
-			[style]="{
-				color: category.color.colorHEX
-			}"
-			[class.bg-slate-200]="currentCategory?._id === category._id"
-			[class.cursor-default]="currentCategory?._id === category._id"
+			(click)="onItemClick(null)"
 		>
 			<div
-				class="min-w-[0.5rem] max-w-[0.5rem] w-full h-2 rounded-full"
-				[style]="{ background: category.color.colorHEX }"
+				class="min-w-[0.5rem] max-w-[0.5rem] w-full h-2 rounded-full bg-gray-500"
 			></div>
 			<div
-				class="text-left w-full text-ellipsis overflow-hidden whitespace-nowrap"
-				[innerHTML]="category.name | highlight : searchValue"
-			></div>
+				class="text-left w-full text-ellipsis overflow-hidden whitespace-nowrap text-gray-500"
+			>
+				No category
+			</div>
 		</button>
+
+		<ng-container>
+			<button
+				type="button"
+				class="flex gap-x-2 items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
+				*ngFor="let category of categoriesList"
+				(click)="onItemClick(category._id)"
+				[style]="{
+					color: category.color.colorHEX
+				}"
+				[class.bg-slate-200]="currentCategory?._id === category._id"
+				[class.cursor-default]="currentCategory?._id === category._id"
+			>
+				<div
+					class="min-w-[0.5rem] max-w-[0.5rem] w-full h-2 rounded-full"
+					[style]="{ background: category.color.colorHEX }"
+				></div>
+				<div
+					class="text-left w-full text-ellipsis overflow-hidden whitespace-nowrap"
+					[innerHTML]="category.name | highlight : searchValue"
+				></div>
+			</button>
+		</ng-container>
 	</div>
 
 	<div

@@ -16,7 +16,7 @@ export class CategorySelectDropdownComponent {
 	@Input() categories: CategoryStateItem[] | null = null
 	@Input() currentCategory: CategoryStateItem | null = null
 
-	@Output() itemClick = new EventEmitter<string>()
+	@Output() itemClick = new EventEmitter<string | null>()
 
 	searchValue: string = ''
 
@@ -36,7 +36,7 @@ export class CategorySelectDropdownComponent {
 
 	constructor(private store: Store<RootState>) {}
 
-	onItemClick(id: string) {
+	onItemClick(id: string | null) {
 		this.itemClick.emit(id)
 	}
 

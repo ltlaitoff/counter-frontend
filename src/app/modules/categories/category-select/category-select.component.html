@@ -10,7 +10,7 @@
 		<button
 			type="button"
 			*ngIf="currentCategory !== null"
-			class="w-full h-full flex gap-x-2 items-center"
+			class="w-full h-full flex gap-x-2 items-center max-w-[250px]"
 			(click)="toggleDropDown()"
 			[ngClass]="buttonClass"
 		>
@@ -18,7 +18,9 @@
 				class="w-4 h-4 rounded-full"
 				[style]="{ background: currentCategory.color.colorHEX }"
 			></div>
-			{{ currentCategory.name }}
+			<div class="text-ellipsis overflow-hidden whitespace-nowrap">
+				{{ currentCategory.name }}
+			</div>
 		</button>
 
 		<button

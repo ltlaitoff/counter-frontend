@@ -15,7 +15,7 @@ const routes: Routes = [
 		path: '',
 		component: HomePageComponent,
 		canActivate: [AuthGuardService],
-		resolve: [CategoryResolver]
+		resolve: [CategoryResolver, ColorResolver]
 	},
 	{
 		path: 'categories',

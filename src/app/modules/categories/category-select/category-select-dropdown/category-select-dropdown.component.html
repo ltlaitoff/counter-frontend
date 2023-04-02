@@ -1,12 +1,12 @@
 <div
-	class="absolute mt-2 flex flex-col bg-white border border-gray-400 rounded w-[440px] max-h-[300px]"
+	class="absolute mt-2 px-2 py-1 flex flex-col bg-white border border-gray-400 rounded w-[440px] max-h-[400px]"
 	*ngIf="categories"
 >
 	<header>Search</header>
-	<div class="p-2 overflow-y-auto flex flex-col gap-y-[2px]">
+	<div class="py-2 overflow-y-auto flex flex-col gap-y-[2px]">
 		<button
 			type="button"
-			class="flex gap-x-2 items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full"
+			class="flex gap-x-2 items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
 			*ngFor="let category of categories"
 			(click)="onItemClick(category._id)"
 			[style]="{
@@ -26,5 +26,27 @@
 			</div>
 		</button>
 	</div>
-	<footer>Go to categories</footer>
+
+	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
+
+	<footer class="w-full relative">
+		<button
+			class="py-2 px-2 w-full rounded-md text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
+			type="button"
+			(click)="toggleAddForm()"
+			[class.bg-slate-200]="isAddFormOpened"
+			[class.fill-sky-500]="isAddFormOpened"
+		>
+			<svg-icon
+				class="inline-block w-6 h-6 fill-inherit"
+				src="assets/icons/plus.svg"
+			></svg-icon>
+			Add new category
+		</button>
+
+		<counter-categories-form
+			*ngIf="isAddFormOpened"
+			(onSubmit)="addNewCategory($event)"
+		></counter-categories-form>
+	</footer>
 </div>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { CategoriesPageComponent } from './categories-page/categories-page.component'
 import { AngularSvgIconModule } from 'angular-svg-icon'
-import { ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ClickedOutsideDirectiveModule } from 'src/app/directives/clicked-outside-directive.module'
 import { KeydownDirectiveModule } from 'src/app/directives/keydown-directive.module'
 import { CategorySelectComponent } from './category-select/category-select.component'
@@ -14,8 +14,9 @@ import { NotSyncStatusIconModule } from '../../components-modules/not-sync-statu
 import { CategoriesTableColorHeadItemComponent } from './categories-table/categories-table-color-head-item/categories-table-color-head-item.component'
 
 import { LottieModule } from 'ngx-lottie'
-import { TableControlsModule } from '../../components-modules/table-controls/table-controls.module';
+import { TableControlsModule } from '../../components-modules/table-controls/table-controls.module'
 import { CategorySelectDropdownComponent } from './category-select/category-select-dropdown/category-select-dropdown.component'
+import { HighlightPipe } from './category-select/highlight.pipe'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -29,11 +30,13 @@ export function playerFactory() {
 		CategoriesTableComponent,
 		CategoriesFormComponent,
 		CategoriesTableColorHeadItemComponent,
-  CategorySelectDropdownComponent
+		CategorySelectDropdownComponent,
+		HighlightPipe
 	],
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
+		FormsModule,
 		AngularSvgIconModule.forRoot(),
 		ClickedOutsideDirectiveModule,
 		KeydownDirectiveModule,

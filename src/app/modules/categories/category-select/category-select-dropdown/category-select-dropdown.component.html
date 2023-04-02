@@ -2,12 +2,26 @@
 	class="absolute mt-2 px-2 py-1 flex flex-col bg-white border border-gray-400 rounded w-[440px] max-h-[400px]"
 	*ngIf="categories"
 >
-	<header>Search</header>
-	<div class="py-2 overflow-y-auto flex flex-col gap-y-[2px]">
+	<header class="px-2 pt-2 pb-1">
+		<input
+			(keydown.enter)="$event.preventDefault()"
+			class="w-full py-2 px-4 rounded-md bg-slate-100 placeholder:text-slate-500"
+			type="text"
+			placeholder="Search"
+			[(ngModel)]="searchValue"
+		/>
+	</header>
+
+	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
+
+	<div
+		class="py-2 overflow-y-auto flex flex-col gap-y-[2px]"
+		*ngIf="categoriesList"
+	>
 		<button
 			type="button"
 			class="flex gap-x-2 items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
-			*ngFor="let category of categories"
+			*ngFor="let category of categoriesList"
 			(click)="onItemClick(category._id)"
 			[style]="{
 				color: category.color.colorHEX
@@ -21,17 +35,23 @@
 			></div>
 			<div
 				class="text-left w-full text-ellipsis overflow-hidden whitespace-nowrap"
-			>
-				{{ category.name }}
-			</div>
+				[innerHTML]="category.name | highlight : searchValue"
+			></div>
 		</button>
+	</div>
+
+	<div
+		*ngIf="categoriesList === null"
+		class="p-2"
+	>
+		Not found
 	</div>
 
 	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
 
 	<footer class="w-full relative">
 		<button
-			class="py-2 px-2 w-full rounded-md text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
+			class="py-1 px-2 w-full rounded-md text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
 			type="button"
 			(click)="toggleAddForm()"
 			[class.bg-slate-200]="isAddFormOpened"

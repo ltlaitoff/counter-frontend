@@ -14,7 +14,8 @@ import { NotSyncStatusIconModule } from '../../components-modules/not-sync-statu
 import { CategoriesTableColorHeadItemComponent } from './categories-table/categories-table-color-head-item/categories-table-color-head-item.component'
 
 import { LottieModule } from 'ngx-lottie'
-import { TableControlsModule } from '../../components-modules/table-controls/table-controls.module'
+import { TableControlsModule } from '../../components-modules/table-controls/table-controls.module';
+import { CategorySelectDropdownComponent } from './category-select/category-select-dropdown/category-select-dropdown.component'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -27,7 +28,8 @@ export function playerFactory() {
 		CategorySelectComponent,
 		CategoriesTableComponent,
 		CategoriesFormComponent,
-		CategoriesTableColorHeadItemComponent
+		CategoriesTableColorHeadItemComponent,
+  CategorySelectDropdownComponent
 	],
 	imports: [
 		CommonModule,

@@ -32,7 +32,7 @@ export class CategorySelectComponent implements ControlValueAccessor {
 	onChange: any = () => {}
 	onTouched: any = () => {}
 
-	onItemClick(id: string) {
+	onItemClick(id: string | null) {
 		this.currentId = id
 
 		this.onChange(id)

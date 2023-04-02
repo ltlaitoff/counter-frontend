@@ -1,0 +1,90 @@
+<div
+	class="absolute -left-5 mt-2 px-2 py-1 flex flex-col bg-white border border-gray-400 rounded w-[440px] max-h-[400px]"
+	*ngIf="categories"
+>
+	<header class="px-2 pt-2 pb-1">
+		<input
+			(keydown.enter)="$event.preventDefault()"
+			class="w-full py-2 px-4 rounded-md bg-slate-100 placeholder:text-slate-500"
+			type="text"
+			placeholder="Search"
+			[(ngModel)]="searchValue"
+		/>
+	</header>
+
+	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
+
+	<div
+		class="py-2 overflow-y-auto flex flex-col gap-y-[2px]"
+		*ngIf="categoriesList"
+	>
+		<button
+			*ngIf="!searchValue"
+			type="button"
+			class="flex gap-x-2 items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
+			(click)="onItemClick(null)"
+		>
+			<div
+				class="min-w-[0.5rem] max-w-[0.5rem] w-full h-2 rounded-full bg-gray-500"
+			></div>
+			<div
+				class="text-left w-full text-ellipsis overflow-hidden whitespace-nowrap text-gray-500"
+			>
+				No category
+			</div>
+		</button>
+
+		<ng-container>
+			<button
+				type="button"
+				class="flex gap-x-2 items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
+				*ngFor="let category of categoriesList"
+				(click)="onItemClick(category._id)"
+				[style]="{
+					color: category.color.colorHEX
+				}"
+				[class.bg-slate-200]="currentCategory?._id === category._id"
+				[class.cursor-default]="currentCategory?._id === category._id"
+			>
+				<div
+					class="min-w-[0.5rem] max-w-[0.5rem] w-full h-2 rounded-full"
+					[style]="{ background: category.color.colorHEX }"
+				></div>
+				<div
+					class="text-left w-full text-ellipsis overflow-hidden whitespace-nowrap"
+					[innerHTML]="category.name | highlight : searchValue"
+				></div>
+			</button>
+		</ng-container>
+	</div>
+
+	<div
+		*ngIf="categoriesList === null"
+		class="p-2"
+	>
+		Not found
+	</div>
+
+	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
+
+	<footer class="w-full relative">
+		<button
+			class="py-1 px-2 w-full rounded-md text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
+			type="button"
+			(click)="toggleAddForm()"
+			[class.bg-slate-200]="isAddFormOpened"
+			[class.fill-sky-500]="isAddFormOpened"
+		>
+			<svg-icon
+				class="inline-block w-6 h-6 fill-inherit"
+				src="assets/icons/plus.svg"
+			></svg-icon>
+			Add new category
+		</button>
+
+		<counter-categories-form
+			*ngIf="isAddFormOpened"
+			(onSubmit)="addNewCategory($event)"
+		></counter-categories-form>
+	</footer>
+</div>

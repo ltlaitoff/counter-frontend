@@ -1,20 +1,24 @@
 # CHANGELOG
 
-## TODO
-
-- Create statistic edit data [#27](https://github.com/ltlaitoff/counter-frontend/issues/27)
-- Fix bundle size [#25](https://github.com/ltlaitoff/counter-frontend/issues/25)
-- Create categories reorder [#20](https://github.com/ltlaitoff/counter-frontend/issues/20)
-- Create categories edit data [#21](https://github.com/ltlaitoff/counter-frontend/issues/21)
-
-## v1.0.0
+## v1.0.0 - 03.04
 
 Millestone [v1.0.0](https://github.com/ltlaitoff/counter-frontend/milestone/3)
 
+- Create versioning by requests to api [#69](https://github.com/ltlaitoff/counter-frontend/issues/69)
+- Create pick category with find and scroll(ex Toggle) [#49](https://github.com/ltlaitoff/counter-frontend/issues/49)
+- Create statistic edit data [#27](https://github.com/ltlaitoff/counter-frontend/issues/27)
+- Fix add statistic record bugs [#65](https://github.com/ltlaitoff/counter-frontend/issues/65)
+- Fix update-category-form bugs [#61](https://github.com/ltlaitoff/counter-frontend/issues/61)
+- Create categories edit data [#21](https://github.com/ltlaitoff/counter-frontend/issues/21)
 - Create not-sync icon in categories page [#40](https://github.com/ltlaitoff/counter-frontend/issues/40)
+- Create buttons for force update categories and statistic [#48](https://github.com/ltlaitoff/counter-frontend/issues/48)
+- Refactor and append functional header/user-panel [#56](https://github.com/ltlaitoff/counter-frontend/issues/56)
+- Clean statistic and categories add form after submit [#51](https://github.com/ltlaitoff/counter-frontend/issues/51)
+- Bug: On delete category and not delete statistic record -> error on frontend [#50](https://github.com/ltlaitoff/counter-frontend/issues/50)
 - Fix bugs of adding statistic records [#41](https://github.com/ltlaitoff/counter-frontend/issues/41)
 - Create usefull interface on home page for add statistic records [#42](https://github.com/ltlaitoff/counter-frontend/issues/42)
 - Create logout button [#43](https://github.com/ltlaitoff/counter-frontend/issues/43)
+- Create not-sync store statistic [#44](https://github.com/ltlaitoff/counter-frontend/issues/44)
 
 ## v0.0.2 - 12.03
 

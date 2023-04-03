@@ -6,8 +6,7 @@ export const StatisticSyncActions = createActionGroup({
 	events: {
 		set: props<{ statistic: SyncTypes.SyncState }>(),
 		add: props<{ statistic: SyncTypes.StateItem }>(),
-		delete: props<SyncTypes.StateItem>()
-
-		// TODO: Create change
+		delete: props<SyncTypes.StateItem>(),
+		update: props<{ category: SyncTypes.StateItem }>()
 	}
 })

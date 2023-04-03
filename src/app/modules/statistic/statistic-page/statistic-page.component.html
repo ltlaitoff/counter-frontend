@@ -1,0 +1,102 @@
+<counter-statistic-chart
+	*ngIf="statistics"
+	[statistics]="statistics"
+></counter-statistic-chart>
+
+<div class="mt-10 flex justify-center">
+	<div class="w-8/12">
+		<counter-load-status-button
+			(buttonClick)="reloadStatistic(true)"
+			[status]="currentStatus"
+		></counter-load-status-button>
+
+		<table class="mt-6 w-full table-auto border-white border-2">
+			<tr class="text-slate-700">
+				<th class="font-medium p-2 border border-gray-300">Count</th>
+				<th class="font-medium p-2 border border-gray-300">Comment</th>
+				<th class="font-medium p-2 border border-gray-300">Category</th>
+				<th class="font-medium p-2 border border-gray-300">Date</th>
+			</tr>
+			<ng-container *ngFor="let record of statistics">
+				<tr
+					*ngIf="record.category !== null"
+					class="table-row text-slate-600 transition-opacity relative"
+				>
+					<td class="px-3 py-2 border border-gray-300 font-medium">
+						<counter-not-sync-status-icon
+							[status]="record.status"
+						></counter-not-sync-status-icon>
+
+						<counter-table-controls
+							*ngIf="record._id !== editStatisticRecordId"
+							class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out"
+							(delete)="deleteStatisticRecord(record)"
+							(edit)="editStastisitcStatus(record)"
+						></counter-table-controls>
+
+						<counter-table-controls
+							*ngIf="record._id === editStatisticRecordId"
+							class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative z-10"
+							[class.opacity-100]="record._id === editStatisticRecordId"
+							(delete)="deleteStatisticRecord(record)"
+							(edit)="editStastisitcStatus(record)"
+							[editActive]="record._id === editStatisticRecordId"
+							appClickedOutside
+							(clickedOutside)="closeStatisticEdit()"
+							appKeydown
+							(escapePress)="closeStatisticEdit()"
+						>
+							<counter-statistic-form
+								class="absolute top-6 left-8"
+								[fromType]="'edit'"
+								[initialFormData]="{
+									date: record.date,
+									count: record.count,
+									comment: record.comment,
+									category: record.category._id
+								}"
+								(onSubmit)="editStastistic(record, $event)"
+							></counter-statistic-form>
+						</counter-table-controls>
+
+						<!-- <div
+							class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
+						>
+							<button (click)="deleteStatisticRecord(record)">
+								<svg-icon
+									class="inline-block w-6 h-6 fill-gray-300 hover:fill-red-400 transition-all duration-500"
+									src="assets/icons/trash-can.svg"
+								></svg-icon>
+							</button>
+						</div> -->
+						{{ record.count }}
+					</td>
+
+					<td class="px-3 py-2 border border-gray-300">
+						<div class="break-all">
+							{{ record.comment }}
+						</div>
+					</td>
+					<td class="px-3 py-2 border border-gray-300">
+						<div class="flex gap-2 items-center">
+							<div
+								class="max-w-[1rem] w-full h-4 rounded-full"
+								[style]="{ background: record.category.color.colorHEX }"
+							></div>
+							<div class="break-all">
+								{{ record.category.name }}
+							</div>
+						</div>
+					</td>
+
+					<td class="px-3 py-2 border border-gray-300">
+						{{ record.date | date : 'MMM d, h:mm:ss a' }}
+						<div class="inline text-gray-400">
+							{{ record.date | date : 'y' }}
+						</div>
+					</td>
+				</tr>
+			</ng-container>
+		</table>
+	</div>
+</div>

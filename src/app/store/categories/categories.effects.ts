@@ -7,7 +7,8 @@ import {
 	switchMap,
 	exhaustMap,
 	catchError,
-	withLatestFrom
+	withLatestFrom,
+	mergeMap
 } from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
 import { CategoriesActions } from './categories.actions'
@@ -16,6 +17,8 @@ import { CategoriesSyncActions } from './sync/categories-sync.actions'
 
 import { RootState } from '../rootTypes'
 import { NotSyncTypes, NotSyncHelpers } from './not-sync'
+import { CategoriesStatusActions, CategoriesStatusTypes } from './status'
+import { StatisticActions } from '../statistic/statistic.actions'
 
 @Injectable()
 export class CategoriesEffects {
@@ -31,6 +34,37 @@ export class CategoriesEffects {
 				return of(
 					CategoriesNotSyncActions.add(categoryAsNotSyncStateItem),
 					CategoriesActions.addeffect(categoryAsNotSyncStateItem)
+				)
+			})
+		)
+	)
+
+	update$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(CategoriesActions.update),
+			// TODO: Why using exhaustMap?
+			exhaustMap(categoryForUpdate => {
+				if (categoryForUpdate.oldCategory.status) {
+					return [
+						CategoriesNotSyncActions.update({
+							oldCategory: NotSyncHelpers.categoryColorToString(
+								categoryForUpdate.oldCategory
+							),
+							dataForUpdate: categoryForUpdate.dataForUpdate
+						})
+					]
+				}
+
+				const oldCategoryAsNotSyncStateItem: NotSyncTypes.StateItem =
+					NotSyncHelpers.changeUpdateCategoryValueToStoreItem(
+						categoryForUpdate.oldCategory,
+						categoryForUpdate.dataForUpdate
+					)
+
+				return of(
+					CategoriesNotSyncActions.add(oldCategoryAsNotSyncStateItem),
+					CategoriesSyncActions.delete(categoryForUpdate.oldCategory),
+					CategoriesActions.updateeffect(oldCategoryAsNotSyncStateItem)
 				)
 			})
 		)
@@ -70,9 +104,26 @@ export class CategoriesEffects {
 			// TODO: Why using exhaustMap?
 			exhaustMap(([params, categoriesValue]) => {
 				if (categoriesValue.length === 0 || params.force) {
+					this.store.dispatch(
+						CategoriesStatusActions.set({
+							status: CategoriesStatusTypes.StatusState.SYNCHRONIZATION
+						})
+					)
+
 					return this.api.getAllCategories().pipe(
-						map(value => CategoriesSyncActions.set({ categories: value })),
-						catchError(() => EMPTY)
+						mergeMap(value => [
+							CategoriesSyncActions.set({ categories: value }),
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.StatusState.SYNCHRONIZED
+							})
+						]),
+						catchError(() => {
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.StatusState.ERROR
+							})
+
+							return EMPTY
+						})
 					)
 				}
 
@@ -93,11 +144,22 @@ export class CategoriesEffects {
 					})
 				)
 
+				this.store.dispatch(
+					CategoriesStatusActions.set({
+						status: CategoriesStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
 				return this.api.addCategory(inputCategory).pipe(
 					switchMap(resultCategory => [
 						CategoriesSyncActions.add({
 							category: resultCategory
 						}),
+
+						CategoriesStatusActions.set({
+							status: CategoriesStatusTypes.StatusState.SYNCHRONIZED
+						}),
+
 						CategoriesNotSyncActions.delete(inputCategory)
 					]),
 					catchError(() => {
@@ -105,6 +167,12 @@ export class CategoriesEffects {
 							CategoriesNotSyncActions.changestatus({
 								status: NotSyncTypes.Status.ERROR,
 								category: inputCategory
+							})
+						)
+
+						this.store.dispatch(
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.StatusState.ERROR
 							})
 						)
 
@@ -127,8 +195,19 @@ export class CategoriesEffects {
 					})
 				)
 
+				this.store.dispatch(
+					CategoriesStatusActions.set({
+						status: CategoriesStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
 				return this.api.deleteCategory(inputCategory._id).pipe(
-					switchMap(() => [CategoriesNotSyncActions.delete(inputCategory)]),
+					switchMap(() => [
+						CategoriesStatusActions.set({
+							status: CategoriesStatusTypes.StatusState.SYNCHRONIZED
+						}),
+						CategoriesNotSyncActions.delete(inputCategory)
+					]),
 					catchError(() => {
 						this.store.dispatch(
 							CategoriesNotSyncActions.changestatus({
@@ -137,60 +216,72 @@ export class CategoriesEffects {
 							})
 						)
 
+						this.store.dispatch(
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.StatusState.ERROR
+							})
+						)
+
 						return EMPTY
 					})
 				)
 			})
-			/*
-				
-				
-				
-				
-
-
-				CategoriesActions.delete 
-				Должен принимать категорию целую
-
-				Если категория - не синхронизированная и у неё статус Error либо Not-Sync.. то удаляем
-				Если статус Synchronization - выдаём пользователю ошибку
-
-				Если категория синхронизированная:
-				- Добавляем новую not-sync категорию с deleted
-				- Удаляем sync
-				- Ставим статус Synchronization 
-				- Делаем запрос на АПИ для удаления 
-				- Если запрос успешный - удаляем из not-sync
-				- Если запрос не успешный - ставим статус Error
-				*/
-
-			// // TODO: Add request to api for delete category
-
-			// return this.api.deleteCategory(inputCategory).pipe(
-			// 	switchMap(resultCategory => [
-			// 		CategoriesSyncActions.add({
-			// 			category: resultCategory
-			// 		}),
-			// 		CategoriesNotSyncActions.delete({
-			// 	// TODO: Why using switchMap?	]),
-			// 	catchError(() => {
-			// 		this.store.dispatch(
-			// 			CategoriesNotSyncActions.changestatus({
-			// 				status: NotSyncTypes.Status.ERROR,
-			// 				category: inputCategory
-			// 			})
-			// 		)
-
-			// 		return EMPTY
-			// 	})
-			// )
 		)
 	)
 
-	/*	
-	TODO: 
-	- [ ] changeCategory
-	- [ ] Select
-	*/
+	updateCategory$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(CategoriesActions.updateeffect),
+			// TODO: Why using switchMap?
+			switchMap(inputCategory => {
+				this.store.dispatch(
+					CategoriesNotSyncActions.changestatus({
+						status: NotSyncTypes.Status.SYNCHRONIZATION,
+						category: inputCategory
+					})
+				)
+
+				this.store.dispatch(
+					CategoriesStatusActions.set({
+						status: CategoriesStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
+				return this.api.updateCategory(inputCategory._id, inputCategory).pipe(
+					switchMap(resultCategory => [
+						CategoriesSyncActions.add({
+							category: resultCategory
+						}),
+
+						CategoriesStatusActions.set({
+							status: CategoriesStatusTypes.StatusState.SYNCHRONIZED
+						}),
+
+						CategoriesNotSyncActions.delete(inputCategory),
+
+						// TODO: Remove it after [#62](https://github.com/ltlaitoff/counter-frontend/issues/62)
+						StatisticActions.load({ force: true })
+					]),
+					catchError(() => {
+						this.store.dispatch(
+							CategoriesNotSyncActions.changestatus({
+								status: NotSyncTypes.Status.ERROR,
+								category: inputCategory
+							})
+						)
+
+						this.store.dispatch(
+							CategoriesStatusActions.set({
+								status: CategoriesStatusTypes.StatusState.ERROR
+							})
+						)
+
+						return EMPTY
+					})
+				)
+			})
+		)
+	)
 
 	/* Main effects end */
 

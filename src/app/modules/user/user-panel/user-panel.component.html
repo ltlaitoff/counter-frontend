@@ -1,0 +1,21 @@
+<div
+	class="relative h-full flex flex-col transition-all"
+	appClickedOutside
+	(clickedOutside)="closeWithChecks()"
+	appKeydown
+	(escapePress)="closeWithChecks()"
+>
+	<user-panel-plug *ngIf="!userInfo || !userInfo.authorized"></user-panel-plug>
+
+	<user-panel-open-button
+		*ngIf="userInfo && userInfo.authorized"
+		[userInfo]="userInfo"
+		[isOpened]="isOpened"
+		(buttonClick)="onBadgeClick()"
+	></user-panel-open-button>
+
+	<user-panel-form
+		*ngIf="isOpened"
+		(exitClick)="onExitClick()"
+	></user-panel-form>
+</div>

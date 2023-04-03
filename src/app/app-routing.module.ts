@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { HomeComponent } from './pages/home/home.component'
-import { CategoriesComponent } from './pages/categories/categories.component'
-import { StatisticComponent } from './pages/statistic/statistic.component'
+import { HomePageComponent } from './modules/home/home-page/home-page.component'
+import { CategoriesPageComponent } from './modules/categories/categories-page/categories-page.component'
+import { StatisticComponent } from './modules/statistic/statistic-page/statistic-page.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
 import { AuthGuardService } from './services/auth-guard.service'
 import { PerfComponent } from './pages/perf/perf.component'
@@ -13,13 +13,13 @@ import { StatisticResolver } from './resolvers/statistic.resolver'
 const routes: Routes = [
 	{
 		path: '',
-		component: HomeComponent,
+		component: HomePageComponent,
 		canActivate: [AuthGuardService],
-		resolve: [CategoryResolver]
+		resolve: [CategoryResolver, ColorResolver]
 	},
 	{
 		path: 'categories',
-		component: CategoriesComponent,
+		component: CategoriesPageComponent,
 		canActivate: [AuthGuardService],
 		resolve: [CategoryResolver, ColorResolver]
 	},
@@ -27,7 +27,7 @@ const routes: Routes = [
 		path: 'statistic',
 		component: StatisticComponent,
 		canActivate: [AuthGuardService],
-		resolve: [StatisticResolver]
+		resolve: [StatisticResolver, CategoryResolver]
 	},
 	{
 		path: 'authorization',

@@ -1,0 +1,30 @@
+<div
+	class="absolute -ml-[4.5rem] h-full top-[50%] -translate-y-1/2 flex gap-x-2"
+>
+	<div class="relative w-full flex gap-x-1">
+		<button
+			class="opacity-40 hover:opacity-100 transition-all duration-100"
+			[class.!opacity-40]="editActive"
+			(click)="onDeleteClick()"
+			[disabled]="editActive"
+		>
+			<svg-icon
+				class="inline-block w-6 h-6 fill-inherit"
+				src="assets/icons/trash-can.svg"
+			></svg-icon>
+		</button>
+
+		<button
+			class="opacity-40 hover:opacity-100 transition-all duration-100"
+			(click)="onEditClick($event)"
+			[class.!opacity-100]="editActive"
+		>
+			<svg-icon
+				class="inline-block w-6 h-6"
+				src="assets/icons/pencil.svg"
+			></svg-icon>
+		</button>
+
+		<ng-content *ngIf="editActive"></ng-content>
+	</div>
+</div>

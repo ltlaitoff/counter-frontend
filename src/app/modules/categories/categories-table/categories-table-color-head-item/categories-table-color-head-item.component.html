@@ -1,0 +1,13 @@
+<div
+	class="lottie-animation h-8"
+	(mouseenter)="mouseEnter()"
+	(mouseleave)="mouseLeave()"
+>
+	<ng-lottie
+		[options]="{
+			autoplay: false,
+			path: 'assets/animated-icons/paint-roller.json'
+		}"
+		(animationCreated)="onAnimate($event)"
+	></ng-lottie>
+</div>

@@ -7,9 +7,7 @@ export const CategoriesSyncActions = createActionGroup({
 	events: {
 		set: props<{ categories: SyncTypes.SyncState }>(),
 		add: props<{ category: SyncTypes.StateItem }>(),
-		delete: props<SyncTypes.StateItem>()
-
-		// TODO: Create change
-		// change: props<{ category: Category }>()
+		delete: props<SyncTypes.StateItem>(),
+		update: props<{ category: SyncTypes.StateItem }>()
 	}
 })

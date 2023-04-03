@@ -1,10 +1,10 @@
-import { AddCategoryInputs } from 'src/types/ApiInputs'
+import { CategoriesBasicSet } from 'src/types/ApiInputs'
 import { NotSyncTypes } from '..'
 import { CategoriesTypes } from '../..'
 import { generateNotSyncCategoryId } from './generate-not-sync-category-id.helper'
 
 export function changeAddCategoryValueToStoreItem(
-	data: AddCategoryInputs
+	data: CategoriesBasicSet
 ): NotSyncTypes.StateItem {
 	const forAdd = {
 		...data,
@@ -25,5 +25,17 @@ export function changeDeleteCategoryValueToStoreItem(
 		color: data.color._id,
 		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
 		action: NotSyncTypes.Action.DELETED
+	}
+}
+
+export function changeUpdateCategoryValueToStoreItem(
+	oldCategoryData: CategoriesTypes.SyncTypes.StateItem,
+	newCategoryData: CategoriesBasicSet
+): NotSyncTypes.StateItem {
+	return {
+		...oldCategoryData,
+		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
+		action: NotSyncTypes.Action.CHANGED,
+		...newCategoryData
 	}
 }

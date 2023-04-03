@@ -1,0 +1,43 @@
+<div
+	*ngIf="categories"
+	class="w-full h-full relative text-gray-600"
+	appClickedOutside
+	(clickedOutside)="closeDropDown()"
+	appKeydown
+	(escapePress)="closeDropDown()"
+>
+	<div class="w-full h-full">
+		<button
+			type="button"
+			*ngIf="currentCategory !== null"
+			class="w-full h-full flex gap-x-2 items-center max-w-[250px]"
+			(click)="toggleDropDown()"
+			[ngClass]="buttonClass"
+		>
+			<div
+				class="w-4 h-4 rounded-full"
+				[style]="{ background: currentCategory.color.colorHEX }"
+			></div>
+			<div class="text-ellipsis overflow-hidden whitespace-nowrap">
+				{{ currentCategory.name }}
+			</div>
+		</button>
+
+		<button
+			type="button"
+			*ngIf="currentCategory === null"
+			class="w-full h-full text-gray-600"
+			(click)="toggleDropDown()"
+			[ngClass]="buttonClass"
+		>
+			Choice category
+		</button>
+	</div>
+
+	<counter-category-select-dropdown
+		*ngIf="isDropDownOpened"
+		[categories]="categories"
+		[currentCategory]="currentCategory"
+		(itemClick)="onItemClick($event)"
+	></counter-category-select-dropdown>
+</div>

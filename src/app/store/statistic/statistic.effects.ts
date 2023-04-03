@@ -17,6 +17,7 @@ import { StatisticSyncActions } from './sync/statistic-sync.actions'
 
 import { RootState } from '../rootTypes'
 import { NotSyncHelpers, NotSyncTypes } from './not-sync'
+import { StatisticStatusActions, StatisticStatusTypes } from './status'
 
 @Injectable()
 export class StatisticEffects {
@@ -27,11 +28,30 @@ export class StatisticEffects {
 			// TODO: Why using exhaustMap?
 			exhaustMap(([params, statisticValue]) => {
 				if (statisticValue.length === 0 || params.force) {
+					this.store.dispatch(
+						StatisticStatusActions.set({
+							status: StatisticStatusTypes.StatusState.SYNCHRONIZATION
+						})
+					)
+
 					return this.api.getAllStatisticRecords().pipe(
-						map(value => {
-							return StatisticSyncActions.set({ statistic: value })
+						mergeMap(value => {
+							return [
+								StatisticStatusActions.set({
+									status: StatisticStatusTypes.StatusState.SYNCHRONIZED
+								}),
+								StatisticSyncActions.set({ statistic: value })
+							]
 						}),
-						catchError(() => EMPTY)
+						catchError(() => {
+							this.store.dispatch(
+								StatisticStatusActions.set({
+									status: StatisticStatusTypes.StatusState.ERROR
+								})
+							)
+
+							return EMPTY
+						})
 					)
 				}
 
@@ -47,11 +67,42 @@ export class StatisticEffects {
 			// TODO: Why using exhaustMap?
 			exhaustMap(statisticForAdd => {
 				const statisticAsNotSyncStateItem: NotSyncTypes.StateItem =
-					NotSyncHelpers.changeAddCategoryValueToStoreItem(statisticForAdd)
+					NotSyncHelpers.changeAddStatisticValueToStoreItem(statisticForAdd)
 
 				return of(
 					StatisticNotSyncActions.add(statisticAsNotSyncStateItem),
 					StatisticActions.addeffect(statisticAsNotSyncStateItem)
+				)
+			})
+		)
+	)
+
+	update$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(StatisticActions.update),
+			// TODO: Why using exhaustMap?
+			exhaustMap(categoryForUpdate => {
+				if (categoryForUpdate.oldStatistic.status) {
+					return [
+						StatisticNotSyncActions.update({
+							oldStatistic: NotSyncHelpers.statisticDefaultToStatisticNotSync(
+								categoryForUpdate.oldStatistic
+							),
+							dataForUpdate: categoryForUpdate.dataForUpdate
+						})
+					]
+				}
+
+				const oldStatisticAsNotSyncStateItem: NotSyncTypes.StateItem =
+					NotSyncHelpers.changeUpdateStatisticValueToStoreItem(
+						categoryForUpdate.oldStatistic,
+						categoryForUpdate.dataForUpdate
+					)
+
+				return of(
+					StatisticNotSyncActions.add(oldStatisticAsNotSyncStateItem),
+					StatisticSyncActions.delete(categoryForUpdate.oldStatistic),
+					StatisticActions.updateeffect(oldStatisticAsNotSyncStateItem)
 				)
 			})
 		)
@@ -99,11 +150,22 @@ export class StatisticEffects {
 					})
 				)
 
+				this.store.dispatch(
+					StatisticStatusActions.set({
+						status: StatisticStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
 				return this.api.addStatisticRecord(inputStatistic).pipe(
-					switchMap(resultCategory => [
+					switchMap(resultStatistic => [
 						StatisticSyncActions.add({
-							statistic: resultCategory
+							statistic: resultStatistic
 						}),
+
+						StatisticStatusActions.set({
+							status: StatisticStatusTypes.StatusState.SYNCHRONIZED
+						}),
+
 						StatisticNotSyncActions.delete(inputStatistic)
 					]),
 
@@ -114,6 +176,13 @@ export class StatisticEffects {
 								statistic: inputStatistic
 							})
 						)
+
+						this.store.dispatch(
+							StatisticStatusActions.set({
+								status: StatisticStatusTypes.StatusState.ERROR
+							})
+						)
+
 						return EMPTY
 					})
 				)
@@ -132,8 +201,20 @@ export class StatisticEffects {
 					})
 				)
 
+				this.store.dispatch(
+					StatisticStatusActions.set({
+						status: StatisticStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
 				return this.api.deleteStatistic(inputStatistic._id).pipe(
-					switchMap(() => [StatisticNotSyncActions.delete(inputStatistic)]),
+					switchMap(() => [
+						StatisticStatusActions.set({
+							status: StatisticStatusTypes.StatusState.SYNCHRONIZED
+						}),
+
+						StatisticNotSyncActions.delete(inputStatistic)
+					]),
 					catchError(() => {
 						this.store.dispatch(
 							StatisticNotSyncActions.changestatus({
@@ -142,9 +223,67 @@ export class StatisticEffects {
 							})
 						)
 
+						this.store.dispatch(
+							StatisticStatusActions.set({
+								status: StatisticStatusTypes.StatusState.ERROR
+							})
+						)
+
 						return EMPTY
 					})
 				)
+			})
+		)
+	)
+
+	updateStatistic$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(StatisticActions.updateeffect),
+			mergeMap(inputStatistic => {
+				this.store.dispatch(
+					StatisticNotSyncActions.changestatus({
+						status: NotSyncTypes.Status.SYNCHRONIZATION,
+						statistic: inputStatistic
+					})
+				)
+
+				this.store.dispatch(
+					StatisticStatusActions.set({
+						status: StatisticStatusTypes.StatusState.SYNCHRONIZATION
+					})
+				)
+
+				return this.api
+					.updateStatistic(inputStatistic._id, inputStatistic)
+					.pipe(
+						switchMap(resultStatistic => [
+							StatisticSyncActions.add({
+								statistic: resultStatistic
+							}),
+
+							StatisticStatusActions.set({
+								status: StatisticStatusTypes.StatusState.SYNCHRONIZED
+							}),
+
+							StatisticNotSyncActions.delete(inputStatistic)
+						]),
+						catchError(() => {
+							this.store.dispatch(
+								StatisticNotSyncActions.changestatus({
+									status: NotSyncTypes.Status.ERROR,
+									statistic: inputStatistic
+								})
+							)
+
+							this.store.dispatch(
+								StatisticStatusActions.set({
+									status: StatisticStatusTypes.StatusState.ERROR
+								})
+							)
+
+							return EMPTY
+						})
+					)
 			})
 		)
 	)

@@ -1,0 +1,13 @@
+<counter-outline-button
+	*ngIf="status !== null"
+	(buttonClick)="onClick()"
+>
+	<div class="flex items-center gap-x-2 capitalize">
+		<img
+			class="w-6 h-6"
+			[src]="icons[status]"
+		/>
+
+		{{ status }}
+	</div>
+</counter-outline-button>

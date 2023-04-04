@@ -11,6 +11,7 @@
 		</th>
 		<th class="font-medium p-2 border border-gray-300">Name</th>
 		<th class="font-medium p-2 border border-gray-300">Comment</th>
+		<th class="font-medium p-2 border border-gray-300">Dimension</th>
 	</tr>
 	<tr
 		class="table-row text-slate-600 relative transition-opacity"
@@ -42,7 +43,8 @@
 					[initialFormData]="{
 						name: category.name,
 						comment: category.comment,
-						color: category.color._id
+						color: category.color._id,
+						dimension: category.dimension || ''
 					}"
 					(onSubmit)="editCategory(category, $event)"
 				></counter-categories-form>
@@ -68,6 +70,12 @@
 		<td class="px-4 py-2 border border-gray-300">
 			<div class="break-all">
 				{{ category.comment }}
+			</div>
+		</td>
+
+		<td class="px-4 py-2 border border-gray-300">
+			<div class="break-all">
+				{{ category.dimension }}
 			</div>
 		</td>
 	</tr>

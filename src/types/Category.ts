@@ -4,4 +4,5 @@ export interface Category {
 	comment: string
 	color: string
 	order: number
+	dimension?: string
 }

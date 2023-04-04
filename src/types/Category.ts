@@ -6,6 +6,7 @@ export interface Category {
 	comment: string
 	color: Color
 	order: number
+	dimension?: string
 }
 
 export type CategoryColorString = Omit<Category, 'color'> & {

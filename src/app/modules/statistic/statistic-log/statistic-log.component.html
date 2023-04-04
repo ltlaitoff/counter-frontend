@@ -20,6 +20,12 @@
 					[style]="{ background: item.category.color.colorHEX }"
 				></div>
 				{{ item.category.name }}
+				<span
+					*ngIf="item.category.dimension"
+					class="text-gray-400 font-normal"
+				>
+					({{ item.category.dimension }})
+				</span>
 			</div>
 
 			<div class="text-gray-400">count</div>

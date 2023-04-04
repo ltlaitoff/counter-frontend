@@ -1,22 +1,22 @@
 import { Component, Input } from '@angular/core'
-import { Status } from 'src/app/store/categories/not-sync/categories-not-sync.types'
+import { NotSyncStatus } from 'src/app/store/store.types'
 
 @Component({
 	selector: 'counter-not-sync-status-icon',
 	templateUrl: './not-sync-status-icon.component.html'
 })
 export class NotSyncStatusIconComponent {
-	@Input() status: Status | undefined = undefined
+	@Input() status: NotSyncStatus | undefined = undefined
 
 	get statusIsNotSynchronized() {
-		return this.status === Status.NOT_SYNCHRONIZED
+		return this.status === NotSyncStatus.NOT_SYNCHRONIZED
 	}
 
 	get statusIsSynchronization() {
-		return this.status === Status.SYNCHRONIZATION
+		return this.status === NotSyncStatus.SYNCHRONIZATION
 	}
 
 	get statusIsError() {
-		return this.status === Status.ERROR
+		return this.status === NotSyncStatus.ERROR
 	}
 }

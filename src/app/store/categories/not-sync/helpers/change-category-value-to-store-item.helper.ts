@@ -1,16 +1,16 @@
+import { NotSyncStatus, NotSyncAction } from 'src/app/store/store.types'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
-import { NotSyncTypes } from '..'
-import { CategoriesTypes } from '../..'
+import { NotSyncStateItem, SyncStateItem } from '../../categories.types'
 import { generateNotSyncCategoryId } from './generate-not-sync-category-id.helper'
 
 export function changeAddCategoryValueToStoreItem(
 	data: CategoriesBasicSet
-): NotSyncTypes.StateItem {
+): NotSyncStateItem {
 	const forAdd = {
 		...data,
 		_id: generateNotSyncCategoryId(),
-		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
-		action: NotSyncTypes.Action.CREATED,
+		status: NotSyncStatus.NOT_SYNCHRONIZED,
+		action: NotSyncAction.CREATED,
 		order: 999
 	}
 
@@ -18,24 +18,23 @@ export function changeAddCategoryValueToStoreItem(
 }
 
 export function changeDeleteCategoryValueToStoreItem(
-	data: CategoriesTypes.SyncTypes.StateItem
-): NotSyncTypes.StateItem {
+	data: SyncStateItem
+): NotSyncStateItem {
 	return {
 		...data,
-		color: data.color._id,
-		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
-		action: NotSyncTypes.Action.DELETED
+		status: NotSyncStatus.NOT_SYNCHRONIZED,
+		action: NotSyncAction.DELETED
 	}
 }
 
 export function changeUpdateCategoryValueToStoreItem(
-	oldCategoryData: CategoriesTypes.SyncTypes.StateItem,
+	oldCategoryData: SyncStateItem,
 	newCategoryData: CategoriesBasicSet
-): NotSyncTypes.StateItem {
+): NotSyncStateItem {
 	return {
 		...oldCategoryData,
-		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
-		action: NotSyncTypes.Action.CHANGED,
+		status: NotSyncStatus.NOT_SYNCHRONIZED,
+		action: NotSyncAction.CHANGED,
 		...newCategoryData
 	}
 }

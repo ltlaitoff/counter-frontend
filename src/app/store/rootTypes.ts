@@ -4,9 +4,9 @@ import { CategoriesTypes } from './categories'
 
 export interface RootState {
 	colors: ColorState
-	categories: CategoriesTypes.SyncTypes.SyncState
+	categories: CategoriesTypes.SyncState
 	statistic: StatisticTypes.SyncTypes.SyncState
-	notSyncCategories: CategoriesTypes.NotSyncTypes.NotSyncState
+	notSyncCategories: CategoriesTypes.NotSyncState
 	notSyncStatistic: StatisticTypes.NotSyncTypes.NotSyncState
 	categoriesStatus: CategoriesTypes.StatusTypes.StatusState
 	statisticStatus: StatisticTypes.StatusTypes.StatusState

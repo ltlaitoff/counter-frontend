@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store'
+import { NotSyncState } from '../categories.types'
 import { CategoriesNotSyncActions } from './categories-not-sync.actions'
-import * as NotSyncTypes from './categories-not-sync.types'
 
-export const initialState: NotSyncTypes.NotSyncState = []
+export const initialState: NotSyncState = []
 
 export const categoriesNotSyncReducer = createReducer(
 	initialState,

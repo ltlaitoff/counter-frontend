@@ -1,10 +1,13 @@
 import { Color } from 'src/types/Color'
-import { NotSyncTypes } from '../categories.types'
+import {
+	CategoryStateItem,
+	CategoryStateItemWithColor
+} from '../categories.types'
 
-export const changeCategoryColorIdToColorObject = (
-	categories: NotSyncTypes.StateItem[],
+export function changeCategoryColorIdToColorObject(
+	categories: CategoryStateItem[],
 	colors: Color[]
-): NotSyncTypes.StateItemWithColor[] => {
+): CategoryStateItemWithColor[] {
 	if (colors.length === 0) return []
 
 	return categories.map(item => {
@@ -18,5 +21,5 @@ export const changeCategoryColorIdToColorObject = (
 			...item,
 			color: color
 		}
-	})
+	}) as CategoryStateItemWithColor[]
 }

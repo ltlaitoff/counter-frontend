@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { CategoriesActions } from 'src/app/store/categories'
-import { CategoryStateItem } from 'src/app/store/categories/categories.types'
+import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
 import { RootState } from '../../../../store/rootTypes'
 import { HighlightPipe } from '../highlight.pipe'
@@ -13,8 +13,8 @@ import { HighlightPipe } from '../highlight.pipe'
 	providers: [HighlightPipe]
 })
 export class CategorySelectDropdownComponent {
-	@Input() categories: CategoryStateItem[] | null = null
-	@Input() currentCategory: CategoryStateItem | null = null
+	@Input() categories: CategoryStateItemWithColor[] | null = null
+	@Input() currentCategory: CategoryStateItemWithColor | null = null
 
 	@Output() itemClick = new EventEmitter<string | null>()
 

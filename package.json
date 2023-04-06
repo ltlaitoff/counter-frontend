@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"scripts": {
 		"ng": "ng",
-		"start": "TEST_VAR='test' ng serve --ssl",
+		"start": "ng serve --ssl",
 		"build": "ng build",
 		"build:next": "ng build --configuration next",
 		"watch": "ng build --watch --configuration development",

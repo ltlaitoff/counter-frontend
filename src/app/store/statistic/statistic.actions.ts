@@ -1,7 +1,7 @@
 import { createActionGroup, props } from '@ngrx/store'
 import { AddStatisticInputs } from 'src/types/ApiInputs'
-import { NotSyncTypes } from './not-sync'
-import { StatisticTypes } from '.'
+import { NotSyncStateItem } from './statistic.types'
+import { StatisticStateItemWithCategory } from './statistic.types'
 
 export const StatisticActions = createActionGroup({
 	source: 'Stastistic',
@@ -9,15 +9,15 @@ export const StatisticActions = createActionGroup({
 		load: (props: { force: boolean } = { force: false }) => props,
 
 		add: (statistic: AddStatisticInputs) => statistic,
-		delete: (statistic: StatisticTypes.StatisticStateItem) => statistic,
+		delete: (statistic: StatisticStateItemWithCategory) => statistic,
 		update: props<{
-			oldStatistic: StatisticTypes.StatisticStateItem
+			oldStatistic: StatisticStateItemWithCategory
 
 			dataForUpdate: AddStatisticInputs
 		}>(),
 
-		addEffect: (statistic: NotSyncTypes.StateItem) => statistic,
-		deleteEffect: (statistic: NotSyncTypes.StateItem) => statistic,
-		updateEffect: (statistic: NotSyncTypes.StateItem) => statistic
+		addEffect: (statistic: NotSyncStateItem) => statistic,
+		deleteEffect: (statistic: NotSyncStateItem) => statistic,
+		updateEffect: (statistic: NotSyncStateItem) => statistic
 	}
 })

@@ -56,7 +56,7 @@ export class HomePageComponent implements OnInit {
 			count: value.count,
 			comment: value.comment,
 			category: value.category,
-			date: new Date(Date.now()).getTime(),
+			date: new Date(Date.now()).toISOString(),
 			summ: 0
 		}
 

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { RootState } from 'src/app/store'
-import { Category } from 'src/types/Category'
+import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { AddStatisticInputs } from '../../../../types/ApiInputs'
 import { selectCategories } from '../../../store/categories/categories.select'
 
@@ -29,7 +29,7 @@ export class StatisticFormComponent {
 		category: new FormControl<string | null>(null)
 	})
 
-	categories: Category[] | null = null
+	categories: CategoryStateItemWithColor[] | null = null
 	localSelectCategoriesDropDownStatus: boolean = false
 
 	ngOnInit() {
@@ -80,13 +80,11 @@ export class StatisticFormComponent {
 			return null
 		}
 
-		const dateAsTimeStamp = new Date(value.date).getTime()
-
 		const valueForSend = {
 			count: value.count,
 			comment: value.comment,
 			category: value.category,
-			date: dateAsTimeStamp,
+			date: value.date,
 			summ: -1
 		}
 

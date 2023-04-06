@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store'
+import { NotSyncState } from '../statistic.types'
 import { StatisticNotSyncActions } from './statistic-not-sync.actions'
-import * as NotSyncTypes from './statistic-not-sync.types'
 
-export const initialState: NotSyncTypes.NotSyncState = []
+export const initialState: NotSyncState = []
 
 export const statisticNotSyncReducer = createReducer(
 	initialState,

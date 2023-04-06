@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-moment'
-import { Statistic } from 'src/types/Statistic'
+import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statistic.types'
 
 @Component({
 	selector: 'counter-statistic-chart',
@@ -9,7 +9,7 @@ import { Statistic } from 'src/types/Statistic'
 	styleUrls: ['./statistic-chart.component.scss']
 })
 export class StatisticChartComponent implements OnInit {
-	@Input() statistics: Statistic[] = []
+	@Input() statistics: StatisticStateItemWithCategory[] = []
 	currentChartType: 'day' | 'record' = 'day'
 
 	// @ts-expect-error
@@ -37,7 +37,10 @@ export class StatisticChartComponent implements OnInit {
 		this.chart.update()
 	}
 
-	chartData(statistics: Statistic[], type: 'day' | 'record' = 'day') {
+	chartData(
+		statistics: StatisticStateItemWithCategory[],
+		type: 'day' | 'record' = 'day'
+	) {
 		const temp: { categoryName: string; data: Array<any>; colorHEX: string }[] =
 			[]
 

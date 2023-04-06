@@ -1,7 +1,9 @@
 import { createActionGroup, props } from '@ngrx/store'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
-import { CategoriesTypes } from '.'
-import { NotSyncStateItem } from './categories.types'
+import {
+	NotSyncStateItem,
+	CategoryStateItemWithColor
+} from './categories.types'
 
 export const CategoriesActions = createActionGroup({
 	source: 'Categories',
@@ -9,9 +11,9 @@ export const CategoriesActions = createActionGroup({
 		load: (props: { force: boolean } = { force: false }) => props,
 
 		add: (category: CategoriesBasicSet) => category,
-		delete: (category: CategoriesTypes.CategoryStateItem) => category,
+		delete: (category: CategoryStateItemWithColor) => category,
 		update: props<{
-			oldCategory: CategoriesTypes.CategoryStateItem
+			oldCategory: CategoryStateItemWithColor
 
 			dataForUpdate: CategoriesBasicSet
 		}>(),

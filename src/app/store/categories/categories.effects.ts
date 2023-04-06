@@ -21,6 +21,7 @@ import { CategoriesStatusActions, CategoriesStatusTypes } from './status'
 import { StatisticActions } from '../statistic/statistic.actions'
 import { NotSyncStateItem } from './categories.types'
 import { NotSyncStatus } from '../store.types'
+import { categoryStateItemWithColorToDefault } from './helpers/category-state-item-with-color-to-default.helper'
 
 @Injectable()
 export class CategoriesEffects {
@@ -46,10 +47,14 @@ export class CategoriesEffects {
 			ofType(CategoriesActions.update),
 			// TODO: Why using exhaustMap?
 			exhaustMap(categoryForUpdate => {
-				if (categoryForUpdate.oldCategory.status) {
+				const oldCategory = categoryStateItemWithColorToDefault(
+					categoryForUpdate.oldCategory
+				)
+
+				if (oldCategory.status) {
 					return [
 						CategoriesNotSyncActions.update({
-							oldCategory: categoryForUpdate.oldCategory,
+							oldCategory: oldCategory,
 							dataForUpdate: categoryForUpdate.dataForUpdate
 						})
 					]
@@ -57,13 +62,13 @@ export class CategoriesEffects {
 
 				const oldCategoryAsNotSyncStateItem: NotSyncStateItem =
 					NotSyncHelpers.changeUpdateCategoryValueToStoreItem(
-						categoryForUpdate.oldCategory,
+						oldCategory,
 						categoryForUpdate.dataForUpdate
 					)
 
 				return of(
 					CategoriesNotSyncActions.add(oldCategoryAsNotSyncStateItem),
-					CategoriesSyncActions.delete(categoryForUpdate.oldCategory),
+					CategoriesSyncActions.delete(oldCategory),
 					CategoriesActions.updateeffect(oldCategoryAsNotSyncStateItem)
 				)
 			})
@@ -74,12 +79,16 @@ export class CategoriesEffects {
 		this.actions$.pipe(
 			ofType(CategoriesActions.delete),
 			// TODO: Why using exhaustMap?
-			exhaustMap(categoryForDelete => {
+			exhaustMap(categoryForDeleteInput => {
+				const categoryForDelete = categoryStateItemWithColorToDefault(
+					categoryForDeleteInput
+				)
+
 				if (categoryForDelete.status) {
 					return of(CategoriesNotSyncActions.delete(categoryForDelete))
 				}
 
-				const categoryAsNotSyncStateItem: NotSyncStateItem =
+				const categoryAsNotSyncStateItem =
 					NotSyncHelpers.changeDeleteCategoryValueToStoreItem(categoryForDelete)
 
 				return of(

@@ -15,19 +15,19 @@ const routes: Routes = [
 		path: '',
 		component: HomePageComponent,
 		canActivate: [AuthGuardService],
-		resolve: [CategoryResolver, ColorResolver]
+		resolve: [ColorResolver, CategoryResolver]
 	},
 	{
 		path: 'categories',
 		component: CategoriesPageComponent,
 		canActivate: [AuthGuardService],
-		resolve: [CategoryResolver, ColorResolver]
+		resolve: [ColorResolver, CategoryResolver]
 	},
 	{
 		path: 'statistic',
 		component: StatisticComponent,
 		canActivate: [AuthGuardService],
-		resolve: [StatisticResolver, CategoryResolver]
+		resolve: [ColorResolver, CategoryResolver, StatisticResolver]
 	},
 	{
 		path: 'authorization',

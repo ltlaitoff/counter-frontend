@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store'
-import * as CategoriesSyncTypes from './categories-sync.types'
 import { CategoriesSyncActions } from './categories-sync.actions'
+import { SyncState } from '../categories.types'
 
-export const initialState: CategoriesSyncTypes.SyncState = []
+export const initialState: SyncState = []
 
 export const categoriesReducer = createReducer(
 	initialState,

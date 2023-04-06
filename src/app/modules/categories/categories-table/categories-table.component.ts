@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store'
 import { sortedByOrder } from 'src/app/helpers'
 import { RootState } from 'src/app/store'
 import { selectCategories, CategoriesActions } from 'src/app/store/categories'
-import { CategoryStateItem } from 'src/app/store/categories/categories.types'
+import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 
 @Component({
 	selector: 'counter-categories-table',
@@ -11,7 +11,7 @@ import { CategoryStateItem } from 'src/app/store/categories/categories.types'
 	styleUrls: ['./categories-table.component.scss']
 })
 export class CategoriesTableComponent implements OnInit {
-	categories: CategoryStateItem[] | null = null
+	categories: CategoryStateItemWithColor[] | null = null
 	editCategoryId: string | null = null
 
 	ngOnInit() {
@@ -24,11 +24,11 @@ export class CategoriesTableComponent implements OnInit {
 		return sortedByOrder(this.categories)
 	}
 
-	deleteCategory(category: CategoryStateItem) {
+	deleteCategory(category: CategoryStateItemWithColor) {
 		this.store.dispatch(CategoriesActions.delete(category))
 	}
 
-	editCategoryStatus(category: CategoryStateItem) {
+	editCategoryStatus(category: CategoryStateItemWithColor) {
 		if (this.editCategoryId === null) {
 			this.editCategoryId = category._id
 			return
@@ -37,7 +37,7 @@ export class CategoriesTableComponent implements OnInit {
 		this.editCategoryId = null
 	}
 
-	editCategory(currentValue: CategoryStateItem, editedValue: any) {
+	editCategory(currentValue: CategoryStateItemWithColor, editedValue: any) {
 		this.editCategoryId = null
 
 		this.store.dispatch(

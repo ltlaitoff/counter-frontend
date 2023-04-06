@@ -6,7 +6,7 @@ import {
 	EventEmitter
 } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { Category } from 'src/types/Category'
+import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 
 @Component({
 	selector: 'counter-category-select',
@@ -20,14 +20,14 @@ import { Category } from 'src/types/Category'
 	]
 })
 export class CategorySelectComponent implements ControlValueAccessor {
-	@Input() categories: Category[] | null = null
+	@Input() categories: CategoryStateItemWithColor[] | null = null
 	@Input() buttonClass: string = ''
 
 	isDropDownOpened = false
 
 	disabled = false
 	currentId: string | null = null
-	currentCategory: Category | null = null
+	currentCategory: CategoryStateItemWithColor | null = null
 
 	onChange: any = () => {}
 	onTouched: any = () => {}

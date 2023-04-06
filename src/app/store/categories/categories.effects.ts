@@ -16,9 +16,12 @@ import { CategoriesNotSyncActions } from './not-sync/categories-not-sync.actions
 import { CategoriesSyncActions } from './sync/categories-sync.actions'
 
 import { RootState } from '../rootTypes'
-import { NotSyncTypes, NotSyncHelpers } from './not-sync'
+import { NotSyncHelpers } from './not-sync'
 import { CategoriesStatusActions, CategoriesStatusTypes } from './status'
 import { StatisticActions } from '../statistic/statistic.actions'
+import { NotSyncStateItem } from './categories.types'
+import { NotSyncStatus } from '../store.types'
+import { categoryStateItemWithColorToDefault } from './helpers/category-state-item-with-color-to-default.helper'
 
 @Injectable()
 export class CategoriesEffects {
@@ -28,7 +31,7 @@ export class CategoriesEffects {
 			ofType(CategoriesActions.add),
 			// TODO: Why using exhaustMap?
 			exhaustMap(categoryForAdd => {
-				const categoryAsNotSyncStateItem: NotSyncTypes.StateItem =
+				const categoryAsNotSyncStateItem: NotSyncStateItem =
 					NotSyncHelpers.changeAddCategoryValueToStoreItem(categoryForAdd)
 
 				return of(
@@ -44,26 +47,28 @@ export class CategoriesEffects {
 			ofType(CategoriesActions.update),
 			// TODO: Why using exhaustMap?
 			exhaustMap(categoryForUpdate => {
-				if (categoryForUpdate.oldCategory.status) {
+				const oldCategory = categoryStateItemWithColorToDefault(
+					categoryForUpdate.oldCategory
+				)
+
+				if (oldCategory.status) {
 					return [
 						CategoriesNotSyncActions.update({
-							oldCategory: NotSyncHelpers.categoryColorToString(
-								categoryForUpdate.oldCategory
-							),
+							oldCategory: oldCategory,
 							dataForUpdate: categoryForUpdate.dataForUpdate
 						})
 					]
 				}
 
-				const oldCategoryAsNotSyncStateItem: NotSyncTypes.StateItem =
+				const oldCategoryAsNotSyncStateItem: NotSyncStateItem =
 					NotSyncHelpers.changeUpdateCategoryValueToStoreItem(
-						categoryForUpdate.oldCategory,
+						oldCategory,
 						categoryForUpdate.dataForUpdate
 					)
 
 				return of(
 					CategoriesNotSyncActions.add(oldCategoryAsNotSyncStateItem),
-					CategoriesSyncActions.delete(categoryForUpdate.oldCategory),
+					CategoriesSyncActions.delete(oldCategory),
 					CategoriesActions.updateeffect(oldCategoryAsNotSyncStateItem)
 				)
 			})
@@ -74,16 +79,16 @@ export class CategoriesEffects {
 		this.actions$.pipe(
 			ofType(CategoriesActions.delete),
 			// TODO: Why using exhaustMap?
-			exhaustMap(categoryForDelete => {
+			exhaustMap(categoryForDeleteInput => {
+				const categoryForDelete = categoryStateItemWithColorToDefault(
+					categoryForDeleteInput
+				)
+
 				if (categoryForDelete.status) {
-					return [
-						CategoriesNotSyncActions.delete(
-							NotSyncHelpers.categoryColorToString(categoryForDelete)
-						)
-					]
+					return of(CategoriesNotSyncActions.delete(categoryForDelete))
 				}
 
-				const categoryAsNotSyncStateItem: NotSyncTypes.StateItem =
+				const categoryAsNotSyncStateItem =
 					NotSyncHelpers.changeDeleteCategoryValueToStoreItem(categoryForDelete)
 
 				return of(
@@ -139,7 +144,7 @@ export class CategoriesEffects {
 			switchMap(inputCategory => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
-						status: NotSyncTypes.Status.SYNCHRONIZATION,
+						status: NotSyncStatus.SYNCHRONIZATION,
 						category: inputCategory
 					})
 				)
@@ -165,7 +170,7 @@ export class CategoriesEffects {
 					catchError(() => {
 						this.store.dispatch(
 							CategoriesNotSyncActions.changestatus({
-								status: NotSyncTypes.Status.ERROR,
+								status: NotSyncStatus.ERROR,
 								category: inputCategory
 							})
 						)
@@ -190,7 +195,7 @@ export class CategoriesEffects {
 			switchMap(inputCategory => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
-						status: NotSyncTypes.Status.SYNCHRONIZATION,
+						status: NotSyncStatus.SYNCHRONIZATION,
 						category: inputCategory
 					})
 				)
@@ -211,7 +216,7 @@ export class CategoriesEffects {
 					catchError(() => {
 						this.store.dispatch(
 							CategoriesNotSyncActions.changestatus({
-								status: NotSyncTypes.Status.ERROR,
+								status: NotSyncStatus.ERROR,
 								category: inputCategory
 							})
 						)
@@ -236,7 +241,7 @@ export class CategoriesEffects {
 			switchMap(inputCategory => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
-						status: NotSyncTypes.Status.SYNCHRONIZATION,
+						status: NotSyncStatus.SYNCHRONIZATION,
 						category: inputCategory
 					})
 				)
@@ -265,7 +270,7 @@ export class CategoriesEffects {
 					catchError(() => {
 						this.store.dispatch(
 							CategoriesNotSyncActions.changestatus({
-								status: NotSyncTypes.Status.ERROR,
+								status: NotSyncStatus.ERROR,
 								category: inputCategory
 							})
 						)

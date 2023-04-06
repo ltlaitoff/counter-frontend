@@ -1,14 +1,8 @@
-import { Color } from './Color'
-
 export interface Category {
 	_id: string
 	name: string
 	comment: string
-	color: Color
+	color: string
 	order: number
 	dimension?: string
-}
-
-export type CategoryColorString = Omit<Category, 'color'> & {
-	color: string
 }

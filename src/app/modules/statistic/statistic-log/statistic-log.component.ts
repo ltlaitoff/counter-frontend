@@ -1,21 +1,19 @@
 import { Component } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { RootState } from 'src/app/store'
-import { StatisticTypes } from 'src/app/store/statistic'
-import { selectNotSyncStatistic } from 'src/app/store/statistic/not-sync/statistic-not-sync.select'
-import { Status } from 'src/app/store/statistic/not-sync/statistic-not-sync.types'
+import { selectNotSyncStatisticWithCategory } from 'src/app/store/statistic/statistic.select'
+import { StatisticNotSyncStateItemWithCategory } from 'src/app/store/statistic/statistic.types'
+import { NotSyncStatus } from 'src/app/store/store.types'
 
-type LocalStateItem =
-	StatisticTypes.NotSyncTypes.StateItemWithDefaultStatistic & {
-		isSuccess?: never
-		isSuccessStatus?: never
-	}
+type LocalStateItem = StatisticNotSyncStateItemWithCategory & {
+	isSuccess?: never
+	isSuccessStatus?: never
+}
 
-type LocalStateItemNotSync =
-	StatisticTypes.NotSyncTypes.StateItemWithDefaultStatistic & {
-		isSuccess: boolean
-		isSuccessStatus: string | null
-	}
+type LocalStateItemNotSync = StatisticNotSyncStateItemWithCategory & {
+	isSuccess: boolean
+	isSuccessStatus: string | null
+}
 
 @Component({
 	selector: 'counter-statistic-log',
@@ -29,14 +27,14 @@ export class StatisticLogComponent {
 	notSyncStatisticSuccessesItems: LocalStateItemNotSync[] = []
 
 	statusColors = {
-		[Status.NOT_SYNCHRONIZED]: '#d4d4d8',
-		[Status.SYNCHRONIZATION]: '#fde68a',
-		[Status.ERROR]: '#fca5a5',
+		[NotSyncStatus.NOT_SYNCHRONIZED]: '#d4d4d8',
+		[NotSyncStatus.SYNCHRONIZATION]: '#fde68a',
+		[NotSyncStatus.ERROR]: '#fca5a5',
 		success: '#86efac'
 	}
 
 	ngOnInit() {
-		this.store.select(selectNotSyncStatistic).subscribe(value => {
+		this.store.select(selectNotSyncStatisticWithCategory).subscribe(value => {
 			this.updateNoSyncLocalState(value)
 		})
 	}

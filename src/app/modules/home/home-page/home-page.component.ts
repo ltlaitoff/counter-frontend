@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Store } from '@ngrx/store'
-import { Category } from 'src/types/Category'
+
 import { RootState } from 'src/app/store'
 import { selectCategories } from 'src/app/store/categories'
+import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { StatisticActions } from 'src/app/store/statistic'
 
 @Component({
@@ -18,7 +19,7 @@ export class HomePageComponent implements OnInit {
 		category: new FormControl<string | null>(null)
 	})
 
-	categories: Category[] | null = null
+	categories: CategoryStateItemWithColor[] | null = null
 
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
@@ -55,7 +56,7 @@ export class HomePageComponent implements OnInit {
 			count: value.count,
 			comment: value.comment,
 			category: value.category,
-			date: new Date(Date.now()).getTime(),
+			date: new Date(Date.now()).toISOString(),
 			summ: 0
 		}
 

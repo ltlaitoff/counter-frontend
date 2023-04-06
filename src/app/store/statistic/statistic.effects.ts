@@ -20,7 +20,7 @@ import { NotSyncHelpers } from './not-sync'
 import { StatisticStatusActions, StatisticStatusTypes } from './status'
 import { NotSyncStateItem } from './statistic.types'
 import { NotSyncStatus } from '../store.types'
-import { statisticStateItemWithCategoryToDefault } from './helpers'
+import { statisticStateItemWithCategoryToDefault } from './helpers/statistic-state-item-with-category-to-default.helper'
 
 @Injectable()
 export class StatisticEffects {

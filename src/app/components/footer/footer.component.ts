@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { environment } from 'src/environments/environment'
 
 @Component({
@@ -7,4 +7,5 @@ import { environment } from 'src/environments/environment'
 })
 export class FooterComponent {
 	version = environment.version
+	type = environment.type
 }

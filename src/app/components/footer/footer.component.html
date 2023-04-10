@@ -28,25 +28,18 @@
 		</a>
 	</div>
 
-	<nav class="text-slate-500">
-		<ul>
-			<li>
-				<a
-					class="px-2 py-1 hover:text-slate-300 transition-colors"
-					href="https://github.com/ltlaitoff"
-				>
-					Github
-				</a>
-			</li>
-
-			<li>
-				<a
-					class="px-2 py-1 hover:text-slate-300 transition-colors"
-					href="icons8.com"
-				>
-					Icons
-				</a>
-			</li>
-		</ul>
-	</nav>
+	<div class="flex items-center gap-x-1">
+		<a
+			*ngFor="let item of config.sourceLinks"
+			[href]="item.link"
+			class="px-1 inline-block w-8 hover:bg-fuchsia-200 rounded"
+			target="_blank"
+		>
+			<svg-icon
+				[src]="item.icon"
+				class="w-full"
+				[applyClass]="true"
+			></svg-icon>
+		</a>
+	</div>
 </footer>

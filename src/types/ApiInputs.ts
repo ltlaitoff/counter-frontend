@@ -13,3 +13,11 @@ export type InitializeSuccess = User
 export type InitializeFailed = {
 	authorized: false
 }
+
+export interface ReorderCategoryData {
+	categoryId: string
+	previousIndex: number
+	currentIndex: number
+}
+
+export type ReorderCategoryReturnData = ReorderCategoryData[]

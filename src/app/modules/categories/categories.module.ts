@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { DragDropModule } from '@angular/cdk/drag-drop'
+
 import { CategoriesPageComponent } from './categories-page/categories-page.component'
 import { AngularSvgIconModule } from 'angular-svg-icon'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -44,7 +46,8 @@ export function playerFactory() {
 		LoadStatusButtonModule,
 		NotSyncStatusIconModule,
 		LottieModule.forRoot({ player: playerFactory }),
-		TableControlsModule
+		TableControlsModule,
+		DragDropModule
 	],
 	exports: [CategoriesPageComponent, CategorySelectComponent]
 })

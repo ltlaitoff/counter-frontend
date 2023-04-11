@@ -1,10 +1,11 @@
 <table
-	class="w-full mt-4 table-auto border-white border-2"
+	class="drop-table table-auto w-full mt-4 border-white border-2"
 	*ngIf="categories"
 >
 	<tr class="text-slate-700">
+		<th></th>
 		<th
-			class="font-medium p-2 border border-gray-300"
+			class="font-medium p-2 border border-gray-300 border-l-transparent"
 			title="Color"
 		>
 			<counter-categories-table-color-head-item></counter-categories-table-color-head-item>
@@ -13,70 +14,47 @@
 		<th class="font-medium p-2 border border-gray-300">Comment</th>
 		<th class="font-medium p-2 border border-gray-300">Dimension</th>
 	</tr>
-	<tr
-		class="table-row text-slate-600 relative transition-opacity"
-		*ngFor="let category of sortedByOrderCategories"
-	>
-		<td class="px-4 py-2 border border-gray-300">
-			<counter-table-controls
-				*ngIf="category._id !== editCategoryId"
-				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out"
-				(delete)="deleteCategory(category)"
-				(edit)="editCategoryStatus(category)"
-			></counter-table-controls>
+	<tbody class="w-full relative">
+		<tr
+			class="group drop-item table-row text-slate-600 relative transition-opacity"
+			*ngFor="let category of sortedByOrderCategories"
+		>
+			<td>
+				<counter-categories-table-control
+					class="group-hover:opacity-100 opacity-0 transition-all duration-100 ease-out"
+					[category]="category"
+				></counter-categories-table-control>
+			</td>
 
-			<counter-table-controls
-				*ngIf="category._id === editCategoryId"
-				class="table-row--contol-buttons opacity-0 transition-all duration-100 ease-out relative z-10"
-				[class.opacity-100]="category._id === editCategoryId"
-				(delete)="deleteCategory(category)"
-				(edit)="editCategoryStatus(category)"
-				[editActive]="category._id === editCategoryId"
-				appClickedOutside
-				(clickedOutside)="closeCategoryEdit()"
-				appKeydown
-				(escapePress)="closeCategoryEdit()"
-			>
-				<counter-categories-form
-					class="absolute top-6 left-8"
-					[fromType]="'edit'"
-					[initialFormData]="{
-						name: category.name,
-						comment: category.comment,
-						color: category.color._id,
-						dimension: category.dimension || ''
-					}"
-					(onSubmit)="editCategory(category, $event)"
-				></counter-categories-form>
-			</counter-table-controls>
+			<td class="px-4 py-2 border border-gray-300 border-l-0">
+				<div class="flex gap-x-3 items-center justify-center capitalize">
+					<div
+						class="w-4 h-4 rounded-full"
+						[style]="{ background: category.color.colorHEX }"
+					></div>
+				</div>
+			</td>
+			<td class="px-4 py-2 border border-gray-300">
+				<counter-not-sync-status-icon
+					[status]="category.status"
+				></counter-not-sync-status-icon>
 
-			<div class="flex gap-x-3 items-center justify-center capitalize">
-				<div
-					class="w-4 h-4 rounded-full"
-					[style]="{ background: category.color.colorHEX }"
-				></div>
-			</div>
-		</td>
-		<td class="px-4 py-2 border border-gray-300">
-			<counter-not-sync-status-icon
-				[status]="category.status"
-			></counter-not-sync-status-icon>
+				<div class="break-all">
+					{{ category.name }}
+				</div>
+			</td>
 
-			<div class="break-all">
-				{{ category.name }}
-			</div>
-		</td>
+			<td class="px-4 py-2 border border-gray-300">
+				<div class="break-all">
+					{{ category.comment }}
+				</div>
+			</td>
 
-		<td class="px-4 py-2 border border-gray-300">
-			<div class="break-all">
-				{{ category.comment }}
-			</div>
-		</td>
-
-		<td class="px-4 py-2 border border-gray-300">
-			<div class="break-all">
-				{{ category.dimension }}
-			</div>
-		</td>
-	</tr>
+			<td class="px-4 py-2 border border-gray-300">
+				<div class="break-all">
+					{{ category.dimension }}
+				</div>
+			</td>
+		</tr>
+	</tbody>
 </table>

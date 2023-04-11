@@ -1,0 +1,32 @@
+<ng-container *ngIf="category">
+	<counter-table-controls
+		*ngIf="category._id !== editCategoryId"
+		(delete)="deleteCategory(category)"
+		(edit)="editCategoryStatus(category)"
+	></counter-table-controls>
+
+	<counter-table-controls
+		*ngIf="category._id === editCategoryId"
+		class="relative z-10"
+		[class.opacity-100]="category._id === editCategoryId"
+		(delete)="deleteCategory(category)"
+		(edit)="editCategoryStatus(category)"
+		[editActive]="category._id === editCategoryId"
+		appClickedOutside
+		(clickedOutside)="closeCategoryEdit()"
+		appKeydown
+		(escapePress)="closeCategoryEdit()"
+	>
+		<counter-categories-form
+			class="absolute top-6 left-8"
+			[fromType]="'edit'"
+			[initialFormData]="{
+				name: category.name,
+				comment: category.comment,
+				color: category.color._id,
+				dimension: category.dimension || ''
+			}"
+			(onSubmit)="editCategory(category, $event)"
+		></counter-categories-form>
+	</counter-table-controls>
+</ng-container>

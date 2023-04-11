@@ -19,6 +19,7 @@ import { LottieModule } from 'ngx-lottie'
 import { TableControlsModule } from '../../components-modules/table-controls/table-controls.module'
 import { CategorySelectDropdownComponent } from './category-select/category-select-dropdown/category-select-dropdown.component'
 import { HighlightPipe } from './category-select/highlight.pipe'
+import { CategoriesTableControlComponent } from './categories-table-control/categories-table-control.component'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -33,7 +34,8 @@ export function playerFactory() {
 		CategoriesFormComponent,
 		CategoriesTableColorHeadItemComponent,
 		CategorySelectDropdownComponent,
-		HighlightPipe
+		HighlightPipe,
+		CategoriesTableControlComponent
 	],
 	imports: [
 		CommonModule,

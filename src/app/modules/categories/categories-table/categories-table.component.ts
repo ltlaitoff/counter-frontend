@@ -3,7 +3,10 @@ import { Store } from '@ngrx/store'
 import { sortedByOrder } from 'src/app/helpers'
 import { RootState } from 'src/app/store'
 import { selectCategories, CategoriesActions } from 'src/app/store/categories'
-import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
+import {
+	CategoryStateItemWithColor,
+	CategorySyncStateItemWithColor
+} from 'src/app/store/categories/categories.types'
 
 @Component({
 	selector: 'counter-categories-table',
@@ -12,7 +15,6 @@ import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.
 })
 export class CategoriesTableComponent implements OnInit {
 	categories: CategoryStateItemWithColor[] | null = null
-	editCategoryId: string | null = null
 
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
@@ -46,12 +48,6 @@ export class CategoriesTableComponent implements OnInit {
 				dataForUpdate: editedValue
 			})
 		)
-	}
-
-	closeCategoryEdit() {
-		if (this.editCategoryId !== null) {
-			this.editCategoryId = null
-		}
 	}
 
 	constructor(private store: Store<RootState>) {}

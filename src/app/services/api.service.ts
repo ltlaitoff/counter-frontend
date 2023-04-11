@@ -109,5 +109,15 @@ export class ApiService {
 		})
 	}
 
+	reorderCategory(data: ApiInputs.ReorderCategoryData) {
+		return this.http.put<ApiInputs.ReorderCategoryReturnData>(
+			`${API_BASE_URL}/category/reorder`,
+			data,
+			{
+				withCredentials: true
+			}
+		)
+	}
+
 	constructor(private http: HttpClient) {}
 }

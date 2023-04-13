@@ -21,6 +21,12 @@ export class HomePageComponent implements OnInit {
 
 	categories: CategoryStateItemWithColor[] | null = null
 
+	additionalSettingsShow = false
+	additinalOptions = {
+		doNotClearComment: false,
+		doNotClearCount: false
+	}
+
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
 			this.categories = value
@@ -37,8 +43,10 @@ export class HomePageComponent implements OnInit {
 		this.store.dispatch(StatisticActions.add(valueForSend))
 
 		this.addForm.reset({
-			count: 0,
-			comment: '',
+			count: this.additinalOptions.doNotClearCount ? valueForSend.count : 0,
+			comment: this.additinalOptions.doNotClearComment
+				? valueForSend.comment
+				: '',
 			category: valueForSend.category
 		})
 	}
@@ -61,6 +69,10 @@ export class HomePageComponent implements OnInit {
 		}
 
 		return valueForSend
+	}
+
+	toggleAdditionalOptionsShow() {
+		this.additionalSettingsShow = !this.additionalSettingsShow
 	}
 
 	constructor(private store: Store<RootState>) {}

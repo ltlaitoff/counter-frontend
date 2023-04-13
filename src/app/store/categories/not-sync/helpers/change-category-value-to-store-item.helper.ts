@@ -29,7 +29,7 @@ export function changeDeleteCategoryValueToStoreItem(
 
 export function changeUpdateCategoryValueToStoreItem(
 	oldCategoryData: SyncStateItem,
-	newCategoryData: CategoriesBasicSet
+	newCategoryData: Partial<CategoriesBasicSet>
 ): NotSyncStateItem {
 	return {
 		...oldCategoryData,

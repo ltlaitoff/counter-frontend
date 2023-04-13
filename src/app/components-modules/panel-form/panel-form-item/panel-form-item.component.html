@@ -3,9 +3,21 @@
 	[disabled]="disabled"
 	(click)="onButtonClick()"
 >
+	<ng-content></ng-content>
+
 	<img
+		*ngIf="imageType === 'image'"
 		class="w-6 group-disabled/form-item:opacity-50"
+		[class]="imageClass"
 		[src]="imageSrc"
 	/>
+
+	<svg-icon
+		*ngIf="imageType === 'svg'"
+		class="w-6 group-disabled/form-item:opacity-50"
+		[class]="imageClass"
+		[src]="imageSrc"
+	></svg-icon>
+
 	{{ text }}
 </button>

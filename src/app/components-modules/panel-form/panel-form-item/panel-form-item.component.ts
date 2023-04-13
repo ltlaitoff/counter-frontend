@@ -1,12 +1,14 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core'
 
 @Component({
-	selector: 'user-panel-form-item',
-	templateUrl: './user-panel-form-item.component.html'
+	selector: 'counter-panel-form-item',
+	templateUrl: './panel-form-item.component.html'
 })
-export class UserPanelFormItemComponent {
+export class PanelFormItemComponent {
 	@Input() text: string = ''
 	@Input() imageSrc: string = ''
+	@Input() imageType: 'image' | 'svg' = 'image'
+	@Input() imageClass: string = ''
 	@Input() disabled: boolean = false
 
 	@Output() onClick = new EventEmitter()

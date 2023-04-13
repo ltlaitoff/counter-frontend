@@ -24,6 +24,8 @@ export class ApiService {
 		return initialize
 	}
 
+	/* Authorization */
+
 	authorization(JWTGoogleAuthorizationToken: string) {
 		return this.http.post<User>(`${API_BASE_URL}/authorization`, null, {
 			withCredentials: true,
@@ -45,12 +47,7 @@ export class ApiService {
 		)
 	}
 
-	getAllCategories() {
-		return this.http.get<Category[]>(`${API_BASE_URL}/category/all`, {
-			withCredentials: true,
-			responseType: 'json'
-		})
-	}
+	/* Statistic */
 
 	getAllStatisticRecords() {
 		return this.http.get<Statistic[]>(`${API_BASE_URL}/statistic/all`, {
@@ -77,9 +74,20 @@ export class ApiService {
 		})
 	}
 
+	/* Color */
+
 	getAllColors() {
 		return this.http.get<Color[]>(`${API_BASE_URL}/color/all`, {
 			withCredentials: true
+		})
+	}
+
+	/* Category */
+
+	getAllCategories() {
+		return this.http.get<Category[]>(`${API_BASE_URL}/category/all`, {
+			withCredentials: true,
+			responseType: 'json'
 		})
 	}
 
@@ -99,6 +107,16 @@ export class ApiService {
 		return this.http.put<Category>(`${API_BASE_URL}/category/${id}`, data, {
 			withCredentials: true
 		})
+	}
+
+	reorderCategory(data: ApiInputs.ReorderCategoryData) {
+		return this.http.put<ApiInputs.ReorderCategoryReturnData>(
+			`${API_BASE_URL}/category/reorder`,
+			data,
+			{
+				withCredentials: true
+			}
+		)
 	}
 
 	constructor(private http: HttpClient) {}

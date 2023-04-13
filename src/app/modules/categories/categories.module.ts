@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { DragDropModule } from '@angular/cdk/drag-drop'
+
 import { CategoriesPageComponent } from './categories-page/categories-page.component'
 import { AngularSvgIconModule } from 'angular-svg-icon'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -17,6 +19,8 @@ import { LottieModule } from 'ngx-lottie'
 import { TableControlsModule } from '../../components-modules/table-controls/table-controls.module'
 import { CategorySelectDropdownComponent } from './category-select/category-select-dropdown/category-select-dropdown.component'
 import { HighlightPipe } from './category-select/highlight.pipe'
+import { CategoriesTableControlComponent } from './categories-table-control/categories-table-control.component'
+import { PanelFormModule } from '../../components-modules/panel-form/panel-form.module'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -31,7 +35,8 @@ export function playerFactory() {
 		CategoriesFormComponent,
 		CategoriesTableColorHeadItemComponent,
 		CategorySelectDropdownComponent,
-		HighlightPipe
+		HighlightPipe,
+		CategoriesTableControlComponent
 	],
 	imports: [
 		CommonModule,
@@ -44,7 +49,9 @@ export function playerFactory() {
 		LoadStatusButtonModule,
 		NotSyncStatusIconModule,
 		LottieModule.forRoot({ player: playerFactory }),
-		TableControlsModule
+		TableControlsModule,
+		DragDropModule,
+		PanelFormModule
 	],
 	exports: [CategoriesPageComponent, CategorySelectComponent]
 })

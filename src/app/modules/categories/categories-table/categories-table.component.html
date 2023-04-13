@@ -14,19 +14,66 @@
 		<th class="font-medium p-2 border border-gray-300">Comment</th>
 		<th class="font-medium p-2 border border-gray-300">Dimension</th>
 	</tr>
-	<tbody class="w-full relative">
+	<tbody
+		class="w-full relative"
+		cdkDropList
+		(cdkDropListDropped)="drop($event)"
+	>
 		<tr
 			class="group drop-item table-row text-slate-600 relative transition-opacity"
 			*ngFor="let category of sortedByOrderCategories"
+			cdkDrag
+			[cdkDragData]="category"
+			[cdkDragDisabled]="category.status !== undefined"
 		>
-			<td>
+			<td class="">
 				<counter-categories-table-control
-					class="group-hover:opacity-100 opacity-0 transition-all duration-100 ease-out"
+					class="counter-categories-table-control group-hover:opacity-100 opacity-0 transition-all duration-100 ease-out"
 					[category]="category"
-				></counter-categories-table-control>
+					cdkDragHandle
+					(onClick)="onControlButtonClick(category._id)"
+					[class.opacity-100]="showMenu === category._id"
+					appClickedOutside
+					(clickedOutside)="onFormClickedOutside($event, category._id)"
+					[allowShowHint]="showMenu !== category._id"
+				>
+					<div
+						*ngIf="showMenu === category._id"
+						class="absolute z-50 flex flex-col mt-2 py-1 left-1/2 -translate-x-1/4 w-36 text-slate-600 rounded-lg border border-slate-200 bg-white"
+					>
+						<counter-panel-form-item
+							text="Edit"
+							imageSrc="assets/icons/pencil.svg"
+							imageType="svg"
+							imageClass="w-5"
+							(onClick)="setEditCategoryId(category._id)"
+						></counter-panel-form-item>
+
+						<counter-panel-form-item
+							imageSrc="assets/icons/trash-can.svg"
+							text="Delete"
+							imageType="svg"
+							imageClass="w-5"
+							(onClick)="deleteCategory(category)"
+						></counter-panel-form-item>
+
+						<counter-categories-form
+							*ngIf="editCategoryId === category._id"
+							class="absolute top-6"
+							[fromType]="'edit'"
+							[initialFormData]="{
+								name: category.name,
+								comment: category.comment,
+								color: category.color._id,
+								dimension: category.dimension || ''
+							}"
+							(onSubmit)="editCategory(category, $event)"
+						></counter-categories-form>
+					</div>
+				</counter-categories-table-control>
 			</td>
 
-			<td class="px-4 py-2 border border-gray-300 border-l-0">
+			<td class="px-4 py-2 border border-gray-300 border-l-0 z-0">
 				<div class="flex gap-x-3 items-center justify-center capitalize">
 					<div
 						class="w-4 h-4 rounded-full"

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, EventEmitter, Output } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { RootState } from 'src/app/store'
 import { CategoriesActions } from 'src/app/store/categories'
@@ -22,7 +22,11 @@ import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.
 })
 export class CategoriesTableControlComponent {
 	@Input() category: CategoryStateItemWithColor | null = null
+	@Input() allowShowHint: boolean = true
 
+	@Output() onClick = new EventEmitter()
+
+	showHint: boolean = false
 	editCategoryId: string | null = null
 
 	deleteCategory(category: CategoryStateItemWithColor) {
@@ -53,6 +57,26 @@ export class CategoriesTableControlComponent {
 		if (this.editCategoryId !== null) {
 			this.editCategoryId = null
 		}
+	}
+
+	onMouseEnter() {
+		this.showHint = true
+	}
+
+	onMouseLeave() {
+		this.showHint = false
+	}
+
+	onClickInner() {
+		console.log('onClick')
+		this.onClick.emit()
+
+		this.showHint = false
+	}
+
+	onMouseDown() {
+		console.log('onMouseDown')
+		this.showHint = false
 	}
 
 	constructor(private store: Store<RootState>) {}

@@ -20,6 +20,7 @@ import { TableControlsModule } from '../../components-modules/table-controls/tab
 import { CategorySelectDropdownComponent } from './category-select/category-select-dropdown/category-select-dropdown.component'
 import { HighlightPipe } from './category-select/highlight.pipe'
 import { CategoriesTableControlComponent } from './categories-table-control/categories-table-control.component'
+import { PanelFormModule } from '../../components-modules/panel-form/panel-form.module'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -49,7 +50,8 @@ export function playerFactory() {
 		NotSyncStatusIconModule,
 		LottieModule.forRoot({ player: playerFactory }),
 		TableControlsModule,
-		DragDropModule
+		DragDropModule,
+		PanelFormModule
 	],
 	exports: [CategoriesPageComponent, CategorySelectComponent]
 })

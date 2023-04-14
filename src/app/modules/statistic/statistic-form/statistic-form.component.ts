@@ -84,7 +84,7 @@ export class StatisticFormComponent {
 			count: value.count,
 			comment: value.comment,
 			category: value.category,
-			date: value.date,
+			date: new Date(value.date).toISOString(),
 			summ: -1
 		}
 

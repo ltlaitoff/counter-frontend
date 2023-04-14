@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Store } from '@ngrx/store'
+import { sortedByOrder } from 'src/app/helpers'
 import { CategoriesActions } from 'src/app/store/categories'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
@@ -23,15 +24,17 @@ export class CategorySelectDropdownComponent {
 	get categoriesList() {
 		if (!this.categories) return null
 
-		const result = this.categories.filter(item =>
+		const searchedCategories = this.categories.filter(item =>
 			item.name
 				.toLocaleLowerCase()
 				.includes(this.searchValue.toLocaleLowerCase())
 		)
 
-		if (result.length === 0) return null
+		if (searchedCategories.length === 0) return null
 
-		return result
+		const categoriesSortedByOrder = sortedByOrder(searchedCategories)
+
+		return categoriesSortedByOrder
 	}
 
 	constructor(private store: Store<RootState>) {}

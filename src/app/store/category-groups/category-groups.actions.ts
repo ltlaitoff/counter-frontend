@@ -15,8 +15,7 @@ export const CategoryGroupsActions = createActionGroup({
 		add: (props: AddCategoryGroupInputs) => props,
 		delete: (props: CategoryGroupsStateItem) => props,
 		update: props<{
-			oldCategory: CategoryGroupsStateItem
-
+			old: CategoryGroupsStateItem
 			dataForUpdate: AddCategoryGroupInputs
 		}>(),
 		reorder: props<{

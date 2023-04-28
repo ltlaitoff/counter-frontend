@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v1.0.2 - 07.04 - Hox fix
+
+Changed in production api-link from dev version to prod
+Pull request [#83](https://github.com/ltlaitoff/counter-frontend/pull/83)
+
+## v1.0.1 - 03.04 - Hot fix
+
+Removed 'no category' from category select
+Pull request [#78](https://github.com/ltlaitoff/counter-frontend/pull/78)
+
 ## v1.0.0 - 03.04
 
 Millestone [v1.0.0](https://github.com/ltlaitoff/counter-frontend/milestone/3)

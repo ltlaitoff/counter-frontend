@@ -22,7 +22,7 @@
 				{{ item.category.name }}
 				<span
 					*ngIf="item.category.dimension"
-					class="text-gray-400 font-normal"
+					class="text-gray-500 font-normal"
 				>
 					({{ item.category.dimension }})
 				</span>
@@ -37,11 +37,18 @@
 			>
 				comment
 			</div>
+
 			<div
 				*ngIf="item.comment"
 				class="text-slate-600 font-medium"
 			>
 				{{ item.comment }}
+			</div>
+
+			<div class="text-gray-400">date</div>
+
+			<div class="text-slate-600 font-medium">
+				{{ item.date | date : 'dd.MM.yy hh:mm' }}
 			</div>
 		</div>
 	</div>

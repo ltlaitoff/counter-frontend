@@ -18,7 +18,7 @@ import { StatisticSyncActions } from './sync/statistic-sync.actions'
 import { RootState } from '../rootTypes'
 import { NotSyncHelpers } from './not-sync'
 import { StatisticStatusActions, StatisticStatusTypes } from './status'
-import { NotSyncStateItem } from './statistic.types'
+import { NotSyncStateItem, SyncState } from './statistic.types'
 import { NotSyncStatus } from '../store.types'
 import { statisticStateItemWithCategoryToDefault } from './helpers/statistic-state-item-with-category-to-default.helper'
 
@@ -67,14 +67,18 @@ export class StatisticEffects {
 	add$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(StatisticActions.add),
+			withLatestFrom(this.store.pipe(select('statistic'))),
 			// TODO: Why using exhaustMap?
-			exhaustMap(statisticForAdd => {
+			exhaustMap(([statisticForAdd, storeStatisticData]) => {
 				const statisticAsNotSyncStateItem: NotSyncStateItem =
 					NotSyncHelpers.changeAddStatisticValueToStoreItem(statisticForAdd)
 
 				return of(
 					StatisticNotSyncActions.add(statisticAsNotSyncStateItem),
-					StatisticActions.addeffect(statisticAsNotSyncStateItem)
+					StatisticActions.addeffect({
+						statistic: statisticAsNotSyncStateItem,
+						storeStatisticData: storeStatisticData
+					})
 				)
 			})
 		)
@@ -145,11 +149,11 @@ export class StatisticEffects {
 	addStatistic$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(StatisticActions.addeffect),
-			mergeMap(inputStatistic => {
+			mergeMap(({ statistic, storeStatisticData }) => {
 				this.store.dispatch(
 					StatisticNotSyncActions.changestatus({
 						status: NotSyncStatus.SYNCHRONIZATION,
-						statistic: inputStatistic
+						statistic: statistic
 					})
 				)
 
@@ -159,24 +163,30 @@ export class StatisticEffects {
 					})
 				)
 
-				return this.api.addStatisticRecord(inputStatistic).pipe(
-					switchMap(resultStatistic => [
-						StatisticSyncActions.add({
-							statistic: resultStatistic
-						}),
+				return this.api.addStatisticRecord(statistic).pipe(
+					switchMap(resultStatistic => {
+						if (storeStatisticData.length === 0) {
+							this.store.dispatch(StatisticActions.load())
+						}
 
-						StatisticStatusActions.set({
-							status: StatisticStatusTypes.StatusState.SYNCHRONIZED
-						}),
+						return [
+							StatisticSyncActions.add({
+								statistic: resultStatistic
+							}),
 
-						StatisticNotSyncActions.delete(inputStatistic)
-					]),
+							StatisticStatusActions.set({
+								status: StatisticStatusTypes.StatusState.SYNCHRONIZED
+							}),
+
+							StatisticNotSyncActions.delete(statistic)
+						]
+					}),
 
 					catchError(() => {
 						this.store.dispatch(
 							StatisticNotSyncActions.changestatus({
 								status: NotSyncStatus.ERROR,
-								statistic: inputStatistic
+								statistic: statistic
 							})
 						)
 

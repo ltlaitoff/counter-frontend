@@ -4,7 +4,7 @@
 		[formGroup]="addForm"
 		(ngSubmit)="onSubmit()"
 	>
-		<div class="grid grid-rows-[auto_0.75fr_0.75fr_1fr]">
+		<div class="grid grid-rows-[auto_0.75fr_0.75fr_1fr_auto]">
 			<label
 				for="add-form-count"
 				class="ml-2 col-start-1 col-end-1 row-start-1 row-end-1 text-gray-400"
@@ -12,12 +12,25 @@
 				Count
 			</label>
 
+			<div class="col-start-3 col-end-3 row-start-1 row-end-1 text-gray-400">
+				Category
+			</div>
+
 			<input
 				id="add-form-count"
 				class="rounded-tl-md col-start-1 col-end-3 row-start-2 row-end-4 border border-gray-400 text-gray-600 row-span-2 h-full w-full px-5 text-xl"
 				type="number"
 				formControlName="count"
 			/>
+
+			<counter-category-select
+				class="-ml-[1px] rounded-r-md col-start-3 col-end-3 row-start-2 row-end-4 order-2 border row-span-2 border-gray-400"
+				[categories]="categories"
+				formControlName="category"
+				buttonClass="p-4"
+			></counter-category-select>
+
+			<!-- [class]="additinalOptions.showDatetimePicker" -->
 
 			<input
 				id="add-form-comment"
@@ -27,16 +40,13 @@
 				formControlName="comment"
 			/>
 
-			<div class="col-start-3 col-end-3 row-start-1 row-end-1 text-gray-400">
-				Category
-			</div>
-
-			<counter-category-select
-				class="-ml-[1px] rounded-r-md col-start-3 col-end-3 row-start-2 row-end-4 order-2 border row-span-2 border-gray-400"
-				[categories]="categories"
-				formControlName="category"
-				buttonClass="p-4"
-			></counter-category-select>
+			<input
+				*ngIf="additinalOptions.showDatetimePicker"
+				id="add-form-count"
+				class="mt-2 p-2 rounded-md col-start-1 col-end-3 row-start-5 row-end-5 border border-gray-400 text-gray-600 row-span-2 h-full w-full px-5"
+				formControlName="date"
+				type="datetime-local"
+			/>
 		</div>
 
 		<div class="ml-1">
@@ -71,6 +81,7 @@
 						Do not clear comment
 					</label>
 				</div>
+
 				<div class="ml-1 rounded">
 					<label
 						class="flex items-center gap-x-1 text-sm text-gray-500 dark:text-gray-300"
@@ -83,6 +94,37 @@
 						/>
 						Do not clear count
 					</label>
+				</div>
+
+				<div class="ml-1 rounded">
+					<label
+						class="flex items-center gap-x-1 text-sm text-gray-500 dark:text-gray-300"
+					>
+						<input
+							type="checkbox"
+							class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+							[(ngModel)]="additinalOptions.showDatetimePicker"
+							[ngModelOptions]="{ standalone: true }"
+						/>
+						Show datetime picker
+					</label>
+
+					<div
+						class="ml-5 rounded"
+						*ngIf="additinalOptions.showDatetimePicker"
+					>
+						<label
+							class="flex items-center gap-x-1 text-sm text-gray-500 dark:text-gray-300"
+						>
+							<input
+								type="checkbox"
+								class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+								[(ngModel)]="additinalOptions.doNotUpdateDateAfterSubmit"
+								[ngModelOptions]="{ standalone: true }"
+							/>
+							Do not update date after submit
+						</label>
+					</div>
 				</div>
 			</div>
 		</div>

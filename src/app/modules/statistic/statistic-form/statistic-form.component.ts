@@ -5,6 +5,7 @@ import { RootState } from 'src/app/store'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { AddStatisticInputs } from '../../../../types/ApiInputs'
 import { selectCategories } from '../../../store/categories/categories.select'
+import { formatDateToDateTimeLocalInput } from 'src/app/helpers'
 
 @Component({
 	selector: 'counter-statistic-form',
@@ -41,23 +42,11 @@ export class StatisticFormComponent {
 			throw new Error('initialFormData on edit stastistic required!')
 		}
 
-		this.initialFormData.date = this.formatDateToDateTimeLocalInput(
-			this.initialFormData.date
+		this.initialFormData.date = formatDateToDateTimeLocalInput(
+			new Date(this.initialFormData.date)
 		)
 
 		this.formData.setValue(this.initialFormData)
-	}
-
-	private formatDateToDateTimeLocalInput(input: string) {
-		const inputAsDate = new Date(input)
-
-		const dateWithTimezoneOffset = new Date(
-			inputAsDate.getTime() - inputAsDate.getTimezoneOffset() * 60000
-		)
-
-		const result = dateWithTimezoneOffset.toISOString().slice(0, -5)
-
-		return result
 	}
 
 	onSubmitAddForm() {

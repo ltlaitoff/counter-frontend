@@ -2,14 +2,7 @@ import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { EMPTY, of } from 'rxjs'
-import {
-	map,
-	switchMap,
-	exhaustMap,
-	catchError,
-	withLatestFrom,
-	mergeMap
-} from 'rxjs/operators'
+import { switchMap, catchError, withLatestFrom, mergeMap } from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
 import { CategoriesActions } from './categories.actions'
 import { CategoriesNotSyncActions } from './not-sync/categories-not-sync.actions'
@@ -29,8 +22,7 @@ export class CategoriesEffects {
 	add$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.add),
-			// TODO: Why using exhaustMap?
-			exhaustMap(categoryForAdd => {
+			mergeMap(categoryForAdd => {
 				const categoryAsNotSyncStateItem: NotSyncStateItem =
 					NotSyncHelpers.changeAddCategoryValueToStoreItem(categoryForAdd)
 
@@ -45,8 +37,7 @@ export class CategoriesEffects {
 	update$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.update),
-			// TODO: Why using exhaustMap?
-			exhaustMap(categoryForUpdate => {
+			mergeMap(categoryForUpdate => {
 				const oldCategory = categoryStateItemWithColorToDefault(
 					categoryForUpdate.oldCategory
 				)
@@ -78,8 +69,8 @@ export class CategoriesEffects {
 	reorder$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.reorder),
-			// TODO: Why using exhaustMap?
-			exhaustMap(({ category, previousIndex, currentIndex }) => {
+
+			mergeMap(({ category, previousIndex, currentIndex }) => {
 				const categoryAsStateItem =
 					categoryStateItemWithColorToDefault(category)
 
@@ -111,8 +102,7 @@ export class CategoriesEffects {
 	delete$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.delete),
-			// TODO: Why using exhaustMap?
-			exhaustMap(categoryForDeleteInput => {
+			mergeMap(categoryForDeleteInput => {
 				const categoryForDelete = categoryStateItemWithColorToDefault(
 					categoryForDeleteInput
 				)
@@ -139,8 +129,7 @@ export class CategoriesEffects {
 		this.actions$.pipe(
 			ofType(CategoriesActions.load),
 			withLatestFrom(this.store.pipe(select('categories'))),
-			// TODO: Why using exhaustMap?
-			exhaustMap(([params, categoriesValue]) => {
+			mergeMap(([params, categoriesValue]) => {
 				if (categoriesValue.length === 0 || params.force) {
 					this.store.dispatch(
 						CategoriesStatusActions.set({
@@ -173,8 +162,8 @@ export class CategoriesEffects {
 	addCategory$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.addeffect),
-			// TODO: Why using switchMap?
-			switchMap(inputCategory => {
+
+			mergeMap(inputCategory => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
 						status: NotSyncStatus.SYNCHRONIZATION,
@@ -224,8 +213,8 @@ export class CategoriesEffects {
 	deleteCategory$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.deleteeffect),
-			// TODO: Why using switchMap?
-			switchMap(inputCategory => {
+
+			mergeMap(inputCategory => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
 						status: NotSyncStatus.SYNCHRONIZATION,
@@ -270,8 +259,8 @@ export class CategoriesEffects {
 	updateCategory$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.updateeffect),
-			// TODO: Why using switchMap?
-			switchMap(inputCategory => {
+
+			mergeMap(inputCategory => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
 						status: NotSyncStatus.SYNCHRONIZATION,
@@ -321,8 +310,7 @@ export class CategoriesEffects {
 	reorderCategory$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoriesActions.reordereffect),
-			// TODO: Why using switchMap?
-			switchMap(({ category, previousIndex, currentIndex }) => {
+			mergeMap(({ category, previousIndex, currentIndex }) => {
 				this.store.dispatch(
 					CategoriesNotSyncActions.changestatus({
 						status: NotSyncStatus.SYNCHRONIZATION,

@@ -2,14 +2,7 @@ import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { EMPTY, of } from 'rxjs'
-import {
-	map,
-	exhaustMap,
-	catchError,
-	withLatestFrom,
-	mergeMap,
-	switchMap
-} from 'rxjs/operators'
+import { catchError, withLatestFrom, mergeMap, switchMap } from 'rxjs/operators'
 import { ApiService } from 'src/app/services/api.service'
 import { StatisticActions } from '.'
 import { StatisticNotSyncActions } from './not-sync/statistic-not-sync.actions'
@@ -18,7 +11,7 @@ import { StatisticSyncActions } from './sync/statistic-sync.actions'
 import { RootState } from '../rootTypes'
 import { NotSyncHelpers } from './not-sync'
 import { StatisticStatusActions, StatisticStatusTypes } from './status'
-import { NotSyncStateItem, SyncState } from './statistic.types'
+import { NotSyncStateItem } from './statistic.types'
 import { NotSyncStatus } from '../store.types'
 import { statisticStateItemWithCategoryToDefault } from './helpers/statistic-state-item-with-category-to-default.helper'
 
@@ -28,8 +21,7 @@ export class StatisticEffects {
 		this.actions$.pipe(
 			ofType(StatisticActions.load),
 			withLatestFrom(this.store.pipe(select('statistic'))),
-			// TODO: Why using exhaustMap?
-			exhaustMap(([params, statisticValue]) => {
+			mergeMap(([params, statisticValue]) => {
 				if (statisticValue.length === 0 || params.force) {
 					this.store.dispatch(
 						StatisticStatusActions.set({
@@ -68,8 +60,7 @@ export class StatisticEffects {
 		this.actions$.pipe(
 			ofType(StatisticActions.add),
 			withLatestFrom(this.store.pipe(select('statistic'))),
-			// TODO: Why using exhaustMap?
-			exhaustMap(([statisticForAdd, storeStatisticData]) => {
+			mergeMap(([statisticForAdd, storeStatisticData]) => {
 				const statisticAsNotSyncStateItem: NotSyncStateItem =
 					NotSyncHelpers.changeAddStatisticValueToStoreItem(statisticForAdd)
 
@@ -87,8 +78,7 @@ export class StatisticEffects {
 	update$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(StatisticActions.update),
-			// TODO: Why using exhaustMap?
-			exhaustMap(categoryForUpdate => {
+			mergeMap(categoryForUpdate => {
 				const oldStatistic = statisticStateItemWithCategoryToDefault(
 					categoryForUpdate.oldStatistic
 				)
@@ -120,8 +110,7 @@ export class StatisticEffects {
 	delete$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(StatisticActions.delete),
-			// TODO: Why using exhaustMap?
-			exhaustMap(statisticForDeleteInput => {
+			mergeMap(statisticForDeleteInput => {
 				const statisticForDelete = statisticStateItemWithCategoryToDefault(
 					statisticForDeleteInput
 				)

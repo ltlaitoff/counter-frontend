@@ -12,6 +12,7 @@ import { RootState } from '../rootTypes'
 import { NotSyncHelpers } from './not-sync'
 import { CategoryGroupsNotSyncStateItem } from './category-groups.types'
 import { NotSyncStatus } from '../store.types'
+import { categoryStateItemWithColorToDefault } from './helpers/category-state-item-with-color-to-default.helper'
 
 @Injectable()
 export class CategoryGroupsEffects {
@@ -35,10 +36,14 @@ export class CategoryGroupsEffects {
 		this.actions$.pipe(
 			ofType(CategoryGroupsActions.update),
 			mergeMap(payload => {
-				if (payload.old.status) {
+				const oldCategoryGroup = categoryStateItemWithColorToDefault(
+					payload.old
+				)
+
+				if (oldCategoryGroup.status) {
 					return [
 						CategoryGroupsNotSyncActions.update({
-							oldCategory: payload.old,
+							oldCategory: oldCategoryGroup,
 							dataForUpdate: payload.dataForUpdate
 						})
 					]
@@ -46,13 +51,13 @@ export class CategoryGroupsEffects {
 
 				const payloadAsNotSyncStateItem: CategoryGroupsNotSyncStateItem =
 					NotSyncHelpers.changeUpdateCategoryGroupValueToStoreItem(
-						payload.old,
+						oldCategoryGroup,
 						payload.dataForUpdate
 					)
 
 				return of(
 					CategoryGroupsNotSyncActions.add(payloadAsNotSyncStateItem),
-					CategoryGroupsSyncActions.delete(payload.old),
+					CategoryGroupsSyncActions.delete(oldCategoryGroup),
 					CategoryGroupsActions.updateeffect(payloadAsNotSyncStateItem)
 				)
 			})
@@ -97,7 +102,9 @@ export class CategoryGroupsEffects {
 	delete$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(CategoryGroupsActions.delete),
-			switchMap(payload => {
+			switchMap(payloadInput => {
+				const payload = categoryStateItemWithColorToDefault(payloadInput)
+
 				if (payload.status) {
 					return of(CategoryGroupsNotSyncActions.delete(payload))
 				}

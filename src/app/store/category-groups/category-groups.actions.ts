@@ -4,7 +4,9 @@ import { AddCategoryGroupInputs } from 'src/types/ApiInputs'
 import {
 	CategoryGroupsNotSyncStateItem,
 	CategoryGroupsStateItem,
-	CategoryGroupsSyncStateItem
+	CategoryGroupsStateItemWithColor,
+	CategoryGroupsSyncStateItem,
+	CategoryGroupsSyncStateItemWithColor
 } from './category-groups.types'
 
 export const CategoryGroupsActions = createActionGroup({
@@ -13,13 +15,13 @@ export const CategoryGroupsActions = createActionGroup({
 		load: (props: { force: boolean } = { force: false }) => props,
 
 		add: (props: AddCategoryGroupInputs) => props,
-		delete: (props: CategoryGroupsStateItem) => props,
+		delete: (props: CategoryGroupsStateItemWithColor) => props,
 		update: props<{
-			old: CategoryGroupsStateItem
+			old: CategoryGroupsStateItemWithColor
 			dataForUpdate: AddCategoryGroupInputs
 		}>(),
 		reorder: props<{
-			props: CategoryGroupsSyncStateItem
+			props: CategoryGroupsSyncStateItemWithColor
 			previousIndex: number
 			currentIndex: number
 		}>(),

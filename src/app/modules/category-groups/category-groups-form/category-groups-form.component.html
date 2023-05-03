@@ -18,10 +18,12 @@
 		<ul
 			class="flex flex-col"
 			cdkDropList
+			(cdkDropListDropped)="drop($event)"
 		>
 			<li
 				*ngFor="let categoryGroup of categoryGroupsList"
 				cdkDrag
+				[cdkDragData]="categoryGroup"
 			>
 				<button
 					class="w-full pl-2 pr-1 py-1 flex justify-between items-center hover:bg-slate-100"

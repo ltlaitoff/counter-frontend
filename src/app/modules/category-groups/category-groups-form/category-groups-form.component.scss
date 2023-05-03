@@ -23,7 +23,9 @@
 }
 
 .cdk-drag-placeholder {
-	@apply bg-gray-100;
+	button {
+		@apply bg-amber-100 #{!important};
+	}
 
 	.counter-categories-table-control {
 		@apply opacity-100;

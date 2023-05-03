@@ -75,7 +75,7 @@ export class CategoryGroupsCellComponent implements OnInit {
 	isFormShowed: boolean = false
 
 	get categoryGroupsChoiced() {
-		return sortedByOrder(this.choicedCategoryGroups)
+		return this.choicedCategoryGroups
 	}
 
 	addChoicedCategoryGroup(categoryGroup: any) {

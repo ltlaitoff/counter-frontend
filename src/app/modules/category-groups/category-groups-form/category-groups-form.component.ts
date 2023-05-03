@@ -1,10 +1,14 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { sortedByOrder } from 'src/app/helpers'
 import { RootState } from 'src/app/store'
 import { CategoryGroupsActions } from 'src/app/store/category-groups/category-groups.actions'
 import { AddCategoryGroupInputs } from 'src/types/ApiInputs'
-import { CategoryGroupsStateItemWithColor } from '../../../store/category-groups/category-groups.types'
+import {
+	CategoryGroupsStateItemWithColor,
+	CategoryGroupsSyncStateItemWithColor
+} from '../../../store/category-groups/category-groups.types'
 
 @Component({
 	selector: 'counter-category-groups-form',
@@ -33,7 +37,7 @@ export class CategoryGroupsFormComponent {
 	}
 
 	get categoryGroupsChoiced(): any {
-		return sortedByOrder(this.choicedCategoryGroups)
+		return this.choicedCategoryGroups
 	}
 
 	onDeleteClick(categoryGroup: any) {
@@ -100,4 +104,31 @@ export class CategoryGroupsFormComponent {
 
 		this.addNewCategoryGroup.emit(categoryForAdd)
 	}
+
+	drop(
+		event: CdkDragDrop<
+			CategoryGroupsSyncStateItemWithColor[],
+			CategoryGroupsSyncStateItemWithColor[],
+			CategoryGroupsSyncStateItemWithColor
+		>
+	) {
+		if (this.categoryGroupsList === null) return
+		if (event.previousIndex === event.currentIndex) return
+
+		console.log(event.item.data)
+
+		const categoryData = event.item.data
+		const previousIndex = categoryData.order
+		const currentIndex = this.categoryGroupsList[event.currentIndex].order
+
+		this.store.dispatch(
+			CategoryGroupsActions.reorder({
+				props: categoryData,
+				previousIndex: previousIndex,
+				currentIndex: currentIndex
+			})
+		)
+	}
+
+	constructor(private store: Store<RootState>) {}
 }

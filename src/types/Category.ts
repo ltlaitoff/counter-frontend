@@ -5,4 +5,5 @@ export interface Category {
 	color: string
 	order: number
 	dimension?: string
+	group: string[]
 }

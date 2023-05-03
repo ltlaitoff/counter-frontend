@@ -1,0 +1,21 @@
+<div
+	class="px-2 py-[2px] rounded text-sm flex items-center"
+	[ngClass]="{
+		'pl-2 pr-0': showDeleteButton
+	}"
+	[style]="{
+		background: color + '4C',
+		color: color
+	}"
+>
+	<div class="brightness-50">
+		{{ name }}
+	</div>
+	<button
+		class="pl-1 pr-2 brightness-[75%]"
+		*ngIf="showDeleteButton"
+		(click)="onDeleteButtonClick($event)"
+	>
+		x
+	</button>
+</div>

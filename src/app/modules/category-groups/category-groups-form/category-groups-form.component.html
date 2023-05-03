@@ -1,0 +1,98 @@
+<div
+	class="absolute top-2 left-0 rounded-lg border border-slate-200 bg-white w-64 z-20"
+	(click)="clickInsideForm($event)"
+>
+	<div
+		class="min-h-[41px] py-2 px-2 bg-gray-100 flex gap-x-2 gap-y-1 flex-wrap rounded-t-lg border-b border-inherit"
+	>
+		<counter-category-groups-item
+			*ngFor="let categoryGroup of categoryGroupsChoiced"
+			[name]="categoryGroup.name"
+			[color]="categoryGroup.color.colorHEX"
+			[showDeleteButton]="true"
+			(onDelete)="onDeleteClick(categoryGroup)"
+		></counter-category-groups-item>
+	</div>
+
+	<div class="py-2">
+		<ul
+			class="flex flex-col"
+			cdkDropList
+		>
+			<li
+				*ngFor="let categoryGroup of categoryGroupsList"
+				cdkDrag
+			>
+				<button
+					class="w-full pl-2 pr-1 py-1 flex justify-between items-center hover:bg-slate-100"
+					(click)="onAddClick(categoryGroup)"
+					[ngClass]="{
+						'bg-gray-100 cursor-default hover:!bg-gray-100':
+							checkIsCategoryGroupChecked(categoryGroup._id)
+					}"
+				>
+					<div class="flex gap-x-2 items-center">
+						<button
+							class="fill-gray-400 hover:bg-slate-200 py-2 px-1 rounded"
+							(mousedown)="closeForms()"
+							cdkDragHandle
+						>
+							<svg-icon
+								class="fill-inherit"
+								src="assets/icons/move.svg"
+							></svg-icon>
+						</button>
+
+						<counter-category-groups-item
+							class="inline-block"
+							[color]="categoryGroup.color.colorHEX"
+							[name]="categoryGroup.name"
+						></counter-category-groups-item>
+					</div>
+
+					<button
+						class="h-full px-2 py-3 flex items-center gap-x-[2px] rounded hover:bg-slate-200 relative"
+						(click)="toggleEditCategoryGroupForm($event, categoryGroup)"
+					>
+						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
+						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
+						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
+
+						<counter-category-groups-add-change-form
+							*ngIf="isEditCategoryGroupFormShowed === categoryGroup._id"
+							class="absolute top-6"
+							[fromType]="'edit'"
+							[initialFormData]="{
+								name: categoryGroup.name,
+								color: categoryGroup.color._id
+							}"
+							(onSubmit)="editCategoryGroupInner(categoryGroup, $event)"
+							(onDelete)="deleteCategoryGroupInner(categoryGroup)"
+						></counter-category-groups-add-change-form>
+					</button>
+				</button>
+			</li>
+		</ul>
+	</div>
+
+	<footer class="w-full relative">
+		<button
+			class="py-1 px-2 w-full border-t border-inherit rounded-b-lg text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
+			type="button"
+			(click)="toggleAddForm()"
+			[class.bg-slate-200]="isAddFormOpened"
+			[class.fill-sky-500]="isAddFormOpened"
+		>
+			<svg-icon
+				class="inline-block w-5 h-5 fill-inherit"
+				src="assets/icons/plus.svg"
+			></svg-icon>
+			Create new group
+		</button>
+
+		<counter-category-groups-add-change-form
+			*ngIf="isAddFormOpened"
+			(onSubmit)="addNewCategoryGroupInner($event)"
+		></counter-category-groups-add-change-form>
+	</footer>
+</div>

@@ -21,6 +21,7 @@ import { CategorySelectDropdownComponent } from './category-select/category-sele
 import { HighlightPipe } from './category-select/highlight.pipe'
 import { CategoriesTableControlComponent } from './categories-table-control/categories-table-control.component'
 import { PanelFormModule } from '../../components-modules/panel-form/panel-form.module'
+import { CategoryGroupsModule } from '../category-groups/category-groups.module'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -51,7 +52,8 @@ export function playerFactory() {
 		LottieModule.forRoot({ player: playerFactory }),
 		TableControlsModule,
 		DragDropModule,
-		PanelFormModule
+		PanelFormModule,
+		CategoryGroupsModule
 	],
 	exports: [CategoriesPageComponent, CategorySelectComponent]
 })

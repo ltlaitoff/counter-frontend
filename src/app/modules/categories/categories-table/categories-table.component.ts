@@ -13,6 +13,8 @@ import {
 	CategoryStateItemWithColor,
 	CategorySyncStateItemWithColor
 } from 'src/app/store/categories/categories.types'
+import { selectCategoryGroups } from 'src/app/store/category-groups/category-groups.select'
+import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
 
 @Component({
 	selector: 'counter-categories-table',
@@ -23,10 +25,19 @@ export class CategoriesTableComponent implements OnInit {
 	categories: CategoryStateItemWithColor[] | null = null
 	showMenu: string | null = null
 	editCategoryId: string | null = null
+	allCategoryGroups: CategoryGroupsStateItemWithColor[] = []
 
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
-			this.categories = value
+			if (JSON.stringify(value) !== JSON.stringify(this.categories)) {
+				this.categories = value
+			}
+		})
+
+		this.store.select(selectCategoryGroups).subscribe(value => {
+			if (JSON.stringify(value) !== JSON.stringify(this.allCategoryGroups)) {
+				this.allCategoryGroups = value
+			}
 		})
 	}
 
@@ -100,6 +111,22 @@ export class CategoriesTableComponent implements OnInit {
 
 	deleteCategory(category: CategoryStateItemWithColor) {
 		this.store.dispatch(CategoriesActions.delete(category))
+	}
+
+	changeCategoryGroups(
+		category: CategoryStateItemWithColor,
+		categoryGroups: any
+	) {
+		this.store.dispatch(
+			CategoriesActions.update({
+				oldCategory: category,
+				dataForUpdate: {
+					...category,
+					color: category.color._id,
+					group: categoryGroups
+				}
+			})
+		)
 	}
 
 	constructor(private store: Store<RootState>) {}

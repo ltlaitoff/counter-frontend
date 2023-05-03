@@ -1,5 +1,5 @@
 <table
-	class="drop-table table-auto w-full mt-4 border-white border-2"
+	class="drop-table table-auto w-full h-full mt-4 border-white border-2"
 	*ngIf="categories"
 >
 	<tr class="text-slate-700">
@@ -13,9 +13,10 @@
 		<th class="font-medium p-2 border border-gray-300">Name</th>
 		<th class="font-medium p-2 border border-gray-300">Comment</th>
 		<th class="font-medium p-2 border border-gray-300">Dimension</th>
+		<th class="font-medium p-2 border border-gray-300">Group</th>
 	</tr>
 	<tbody
-		class="w-full relative"
+		class="w-full h-full relative"
 		cdkDropList
 		(cdkDropListDropped)="drop($event)"
 	>
@@ -101,6 +102,14 @@
 				<div class="break-all">
 					{{ category.dimension }}
 				</div>
+			</td>
+
+			<td class="border border-gray-300 max-w-[50%] relative p-0">
+				<counter-category-groups-cell
+					[allCategoryGroups]="allCategoryGroups"
+					[categoryGroups]="category.group"
+					(changeCategoryGroups)="changeCategoryGroups(category, $event)"
+				></counter-category-groups-cell>
 			</td>
 		</tr>
 	</tbody>

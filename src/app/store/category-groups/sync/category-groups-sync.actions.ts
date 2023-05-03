@@ -1,5 +1,5 @@
 import { props, createActionGroup } from '@ngrx/store'
-import { ReorderCategoryData } from 'src/types/ApiInputs'
+import { ReorderCategoryGroupData } from 'src/types/ApiInputs'
 import {
 	CategoryGroupsSyncState,
 	CategoryGroupsSyncStateItem
@@ -12,6 +12,6 @@ export const CategoryGroupsSyncActions = createActionGroup({
 		add: props<{ payload: CategoryGroupsSyncStateItem }>(),
 		delete: props<CategoryGroupsSyncStateItem>(),
 		update: props<{ payload: CategoryGroupsSyncStateItem }>(),
-		orderUpdate: props<{ payload: ReorderCategoryData }>()
+		orderUpdate: props<{ payload: ReorderCategoryGroupData }>()
 	}
 })

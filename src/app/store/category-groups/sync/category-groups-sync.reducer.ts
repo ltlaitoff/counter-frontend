@@ -21,7 +21,7 @@ export const categoryGroupsSyncReducer = createReducer(
 	on(CategoryGroupsSyncActions.orderupdate, (state, { payload }) => {
 		return [
 			...state.map(item => {
-				if (item._id === payload.categoryId) {
+				if (item._id === payload.categoryGroupId) {
 					return {
 						...item,
 						order: payload.currentIndex

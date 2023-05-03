@@ -64,40 +64,45 @@ export class CategoryGroupsEffects {
 		)
 	)
 
-	// reorder$ = createEffect(() =>
-	// 	this.actions$.pipe(
-	// 		ofType(CategoryGroupsActions.reorder),
-	// 		switchMap(({ props, previousIndex, currentIndex }) => {
-	// 			const categoryAsStateItem = props
+	reorder$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(CategoryGroupsActions.reorder),
+			switchMap(({ props, previousIndex, currentIndex }) => {
+				const categoryAsStateItem = props
 
-	// 			if (categoryAsStateItem.status) {
-	// 				return of()
-	// 			}
+				if (categoryAsStateItem.status) {
+					return of()
+				}
 
-	// 			const oldCategoryAsCategoryGroupsNotSyncStateItem: CategoryGroupsNotSyncStateItem =
-	// 				{
-	// 					...NotSyncHelpers.changeUpdateCategoryGroupValueToStoreItem(
-	// 						categoryAsStateItem,
-	// 						{}
-	// 					),
-	// 					order:
-	// 						previousIndex < currentIndex ? currentIndex + 1 : currentIndex
-	// 				}
+				const categoryGroupWithoutColor = {
+					...categoryAsStateItem,
+					color: categoryAsStateItem.color._id
+				}
 
-	// 			return of(
-	// 				CategoryGroupsNotSyncActions.add(
-	// 					oldCategoryAsCategoryGroupsNotSyncStateItem
-	// 				),
-	// 				CategoryGroupsSyncActions.delete(categoryAsStateItem),
-	// 				CategoryGroupsActions.reordereffect({
-	// 					props: oldCategoryAsCategoryGroupsNotSyncStateItem,
-	// 					previousIndex,
-	// 					currentIndex
-	// 				})
-	// 			)
-	// 		})
-	// 	)
-	// )
+				const oldCategoryAsCategoryGroupsNotSyncStateItem: CategoryGroupsNotSyncStateItem =
+					{
+						...NotSyncHelpers.changeUpdateCategoryGroupValueToStoreItem(
+							categoryGroupWithoutColor,
+							{}
+						),
+						order:
+							previousIndex < currentIndex ? currentIndex + 1 : currentIndex
+					}
+
+				return of(
+					CategoryGroupsNotSyncActions.add(
+						oldCategoryAsCategoryGroupsNotSyncStateItem
+					),
+					CategoryGroupsSyncActions.delete(categoryGroupWithoutColor),
+					CategoryGroupsActions.reordereffect({
+						props: oldCategoryAsCategoryGroupsNotSyncStateItem,
+						previousIndex,
+						currentIndex
+					})
+				)
+			})
+		)
+	)
 
 	delete$ = createEffect(() =>
 		this.actions$.pipe(
@@ -236,73 +241,67 @@ export class CategoryGroupsEffects {
 		)
 	)
 
-	// reorderCategory$ = createEffect(() =>
-	// 	this.actions$.pipe(
-	// 		ofType(CategoryGroupsActions.reordereffect),
+	reorderCategory$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(CategoryGroupsActions.reordereffect),
 
-	// 		switchMap(({ category, previousIndex, currentIndex }) => {
-	// 			this.store.dispatch(
-	// 				CategoryGroupsNotSyncActions.changestatus({
-	// 					status: NotSyncStatus.SYNCHRONIZATION,
-	// 					category: category
-	// 				})
-	// 			)
+			switchMap(({ props, previousIndex, currentIndex }) => {
+				this.store.dispatch(
+					CategoryGroupsNotSyncActions.changestatus({
+						status: NotSyncStatus.SYNCHRONIZATION,
+						payload: props
+					})
+				)
 
-	// 			console.log('data for reorder:', {
-	// 				categoryId: category._id,
-	// 				previousIndex,
-	// 				currentIndex
-	// 			})
+				console.log('data for reorder:', {
+					categoryId: props._id,
+					previousIndex,
+					currentIndex
+				})
 
-	// 			return this.api
-	// 				.reorderCategory({
-	// 					categoryId: category._id,
-	// 					previousIndex,
-	// 					currentIndex
-	// 				})
-	// 				.pipe(
-	// 					switchMap(resultValue =>
-	// 						of(
-	// 							...resultValue.map(value => {
-	// 								if (value.categoryId === category._id) {
-	// 									return CategoryGroupsSyncActions.add({
-	// 										category: {
-	// 											...category,
-	// 											order: value.currentIndex,
-	// 											status: undefined,
-	// 											action: undefined
-	// 										}
-	// 									})
-	// 								}
+				return this.api
+					.reorderCategoryGroups({
+						categoryGroupId: props._id,
+						previousIndex,
+						currentIndex
+					})
+					.pipe(
+						switchMap(resultValue =>
+							of(
+								...resultValue.map(value => {
+									if (value.categoryGroupId === props._id) {
+										return CategoryGroupsSyncActions.add({
+											payload: {
+												...props,
+												order: value.currentIndex,
+												status: undefined,
+												action: undefined
+											}
+										})
+									}
 
-	// 								return CategoryGroupsSyncActions.orderupdate({ data: value })
-	// 							}),
-	// 							CategoryGroupsStatusActions.set({
-	// 								status: CategoryGroupsStatusTypes.StatusState.SYNCHRONIZED
-	// 							}),
-	// 							CategoryGroupsNotSyncActions.delete(category)
-	// 						)
-	// 					),
-	// 					catchError(() => {
-	// 						this.store.dispatch(
-	// 							CategoryGroupsNotSyncActions.changestatus({
-	// 								status: NotSyncStatus.ERROR,
-	// 								category: category
-	// 							})
-	// 						)
+									return CategoryGroupsSyncActions.orderupdate({
+										payload: value
+									})
+								}),
 
-	// 						this.store.dispatch(
-	// 							CategoryGroupsStatusActions.set({
-	// 								status: CategoryGroupsStatusTypes.StatusState.ERROR
-	// 							})
-	// 						)
+								CategoryGroupsNotSyncActions.delete(props)
+							)
+						),
+						catchError(() => {
+							this.store.dispatch(
+								CategoryGroupsNotSyncActions.changestatus({
+									status: NotSyncStatus.ERROR,
+									payload: props
+								})
+							)
 
-	// 						return EMPTY
-	// 					})
-	// 				)
-	// 		})
-	// 	)
-	// )
+							return EMPTY
+						})
+					)
+			})
+		)
+	)
 
 	/* Main effects end */
 

@@ -147,15 +147,15 @@ export class ApiService {
 		})
 	}
 
-	// reorderCategoryGroups(data: ApiInputs.ReorderCategoryData) {
-	// 	return this.http.put<ApiInputs.ReorderCategoryReturnData>(
-	// 		`${API_BASE_URL}/group/reorder`,
-	// 		data,
-	// 		{
-	// 			withCredentials: true
-	// 		}
-	// 	)
-	// }
+	reorderCategoryGroups(data: ApiInputs.ReorderCategoryGroupData) {
+		return this.http.put<ApiInputs.ReorderCategoryGroupReturnData>(
+			`${API_BASE_URL}/group/reorder`,
+			data,
+			{
+				withCredentials: true
+			}
+		)
+	}
 
 	constructor(private http: HttpClient) {}
 }

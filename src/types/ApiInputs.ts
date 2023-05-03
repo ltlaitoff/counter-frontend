@@ -10,7 +10,7 @@ export type CategoriesBasicSet = Omit<Category, 'color' | 'order' | '_id'> & {
 
 export type AddStatisticInputs = Omit<Statistic, '_id'>
 
-export type AddCategoryGroupInputs = Omit<CategoryGroup, '_id'>
+export type AddCategoryGroupInputs = Omit<CategoryGroup, '_id' | 'order'>
 
 export type InitializeSuccess = User
 export type InitializeFailed = {

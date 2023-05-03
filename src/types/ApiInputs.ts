@@ -23,4 +23,11 @@ export interface ReorderCategoryData {
 	currentIndex: number
 }
 
+export interface ReorderCategoryGroupData {
+	categoryGroupId: string
+	previousIndex: number
+	currentIndex: number
+}
+
 export type ReorderCategoryReturnData = ReorderCategoryData[]
+export type ReorderCategoryGroupReturnData = ReorderCategoryGroupData[]

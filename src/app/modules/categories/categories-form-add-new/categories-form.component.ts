@@ -71,7 +71,8 @@ export class CategoriesFormComponent implements OnInit {
 			name: value.name,
 			comment: value.comment,
 			color: value.color,
-			dimension: value.dimension
+			dimension: value.dimension,
+			group: []
 		}
 
 		return valueForSend

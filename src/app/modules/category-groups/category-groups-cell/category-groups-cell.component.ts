@@ -13,6 +13,7 @@ import { RootState } from 'src/app/store'
 import { CategoryGroupsActions } from 'src/app/store/category-groups/category-groups.actions'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
 import { AddCategoryGroupInputs } from 'src/types/ApiInputs'
+import { arraysEqual } from '../helpers/arrays-equal.helper'
 
 @Component({
 	selector: 'counter-category-groups-cell',
@@ -73,10 +74,6 @@ export class CategoryGroupsCellComponent implements OnInit {
 
 	isFormShowed: boolean = false
 
-	get categoryGroupsChoiced() {
-		return this.choicedCategoryGroups
-	}
-
 	addChoicedCategoryGroup(categoryGroup: CategoryGroupsStateItemWithColor) {
 		this.choicedCategoryGroups.push(categoryGroup)
 
@@ -93,27 +90,11 @@ export class CategoryGroupsCellComponent implements OnInit {
 		this.isFormShowed = true
 	}
 
-	private arraysEqual(a: string[], b: string[]) {
-		if (a === b) return true
-		if (a == null || b == null) return false
-		if (a.length !== b.length) return false
-		if (a.length === b.length && b.length === 0) return true
-
-		const resultAInB = a.reduce((acc, item) => {
-			return acc || b.includes(item)
-		}, false)
-
-		const resultBInA = b.reduce((acc, item) => {
-			return acc || a.includes(item)
-		}, false)
-
-		return resultAInB || resultBInA
-	}
-
 	private updateCategoryGroup() {
+		// TODO: Renamed `tmp`
 		const tmp = this.choicedCategoryGroups.map(item => item._id)
 
-		if (this.arraysEqual(this.categoryGroups, tmp)) {
+		if (arraysEqual(this.categoryGroups, tmp)) {
 			return
 		}
 

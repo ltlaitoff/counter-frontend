@@ -10,7 +10,7 @@
 		(click)="showForm()"
 	>
 		<counter-category-groups-item
-			*ngFor="let categoryGroup of categoryGroupsChoiced"
+			*ngFor="let categoryGroup of choicedCategoryGroups"
 			[name]="categoryGroup.name"
 			[color]="categoryGroup.color.colorHEX"
 		></counter-category-groups-item>

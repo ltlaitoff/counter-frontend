@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { Store } from '@ngrx/store'
 import { sortedByOrder } from 'src/app/helpers'
-import { CategoriesActions } from 'src/app/store/categories'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
-import { CategoriesBasicSet } from 'src/types/ApiInputs'
-import { RootState } from '../../../../store/rootTypes'
 import { HighlightPipe } from '../highlight.pipe'
 
 @Component({
@@ -37,31 +33,7 @@ export class CategorySelectDropdownComponent {
 		return categoriesSortedByOrder
 	}
 
-	constructor(private store: Store<RootState>) {}
-
 	onItemClick(id: string | null) {
 		this.itemClick.emit(id)
-	}
-
-	/* Add form */
-	isAddFormOpened: boolean = false
-
-	closeAddFormWithCheck() {
-		if (!this.isAddFormOpened) return
-
-		this.closeAddForm()
-	}
-
-	toggleAddForm() {
-		this.isAddFormOpened = !this.isAddFormOpened
-	}
-
-	closeAddForm() {
-		this.isAddFormOpened = false
-	}
-
-	addNewCategory(data: CategoriesBasicSet) {
-		this.store.dispatch(CategoriesActions.add(data))
-		this.closeAddFormWithCheck()
 	}
 }

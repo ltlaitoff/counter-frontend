@@ -12,39 +12,20 @@
 		/>
 	</header>
 
-	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
+	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
 
+	<!-- counter-category-select-dropdown-body -->
 	<div
 		class="py-2 overflow-y-auto flex flex-col gap-y-[2px]"
 		*ngIf="categoriesList"
 	>
-		<ng-container>
-			<button
-				type="button"
-				class="flex gap-x-2 justify-start items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
-				*ngFor="let category of categoriesList"
-				(click)="onItemClick(category._id)"
-				[style]="{
-					color: category.color.colorHEX
-				}"
-				[class.bg-slate-200]="currentCategory?._id === category._id"
-				[class.cursor-default]="currentCategory?._id === category._id"
-			>
-				<div
-					class="min-w-[0.5rem] max-w-[0.5rem] w-full h-2 rounded-full"
-					[style]="{ background: category.color.colorHEX }"
-				></div>
-				<div
-					class="text-left text-ellipsis overflow-hidden whitespace-nowrap"
-					[innerHTML]="category.name | highlight : searchValue"
-				></div>
-				<span
-					class="text-gray-400 font-normal text-sm max-w-[6rem] text-ellipsis overflow-hidden whitespace-nowrap"
-				>
-					{{ category.dimension }}
-				</span>
-			</button>
-		</ng-container>
+		<counter-category-select-dropdown-category-item
+			*ngFor="let category of categoriesList"
+			[category]="category"
+			[choiced]="currentCategory?._id === category._id"
+			[searchValue]="searchValue"
+			(itemClick)="onItemClick($event)"
+		></counter-category-select-dropdown-category-item>
 	</div>
 
 	<div
@@ -54,26 +35,6 @@
 		Not found
 	</div>
 
-	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
-
-	<footer class="w-full relative">
-		<button
-			class="py-1 px-2 w-full rounded-md text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
-			type="button"
-			(click)="toggleAddForm()"
-			[class.bg-slate-200]="isAddFormOpened"
-			[class.fill-sky-500]="isAddFormOpened"
-		>
-			<svg-icon
-				class="inline-block w-6 h-6 fill-inherit"
-				src="assets/icons/plus.svg"
-			></svg-icon>
-			Add new category
-		</button>
-
-		<counter-categories-form
-			*ngIf="isAddFormOpened"
-			(onSubmit)="addNewCategory($event)"
-		></counter-categories-form>
-	</footer>
+	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
+	<counter-category-select-dropdown-footer></counter-category-select-dropdown-footer>
 </div>

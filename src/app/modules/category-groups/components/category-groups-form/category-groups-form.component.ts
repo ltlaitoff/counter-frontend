@@ -8,7 +8,7 @@ import { AddCategoryGroupInputs } from 'src/types/ApiInputs'
 import {
 	CategoryGroupsStateItemWithColor,
 	CategoryGroupsSyncStateItemWithColor
-} from '../../../store/category-groups/category-groups.types'
+} from 'src/app/store/category-groups/category-groups.types'
 
 @Component({
 	selector: 'counter-category-groups-form',

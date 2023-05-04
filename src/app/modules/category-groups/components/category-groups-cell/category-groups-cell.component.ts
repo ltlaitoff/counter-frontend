@@ -11,7 +11,7 @@ import { RootState } from 'src/app/store'
 import { CategoryGroupsActions } from 'src/app/store/category-groups/category-groups.actions'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
 import { AddCategoryGroupInputs } from 'src/types/ApiInputs'
-import { arraysEqual } from '../helpers/arrays-equal.helper'
+import { arraysEqual } from '../../helpers/arrays-equal.helper'
 
 @Component({
 	selector: 'counter-category-groups-cell',

@@ -78,13 +78,13 @@ export class CategoryGroupsCellComponent implements OnInit {
 		return this.choicedCategoryGroups
 	}
 
-	addChoicedCategoryGroup(categoryGroup: any) {
+	addChoicedCategoryGroup(categoryGroup: CategoryGroupsStateItemWithColor) {
 		this.choicedCategoryGroups.push(categoryGroup)
 
 		this.choicedCategoryGroups = [...this.choicedCategoryGroups]
 	}
 
-	deleteChoicedCategoryGroup(categoryGroup: any) {
+	deleteChoicedCategoryGroup(categoryGroup: CategoryGroupsStateItemWithColor) {
 		this.choicedCategoryGroups = this.choicedCategoryGroups.filter(item => {
 			return item._id !== categoryGroup._id
 		})
@@ -129,7 +129,7 @@ export class CategoryGroupsCellComponent implements OnInit {
 
 	editCategoryGroup([currentValue, editedValue]: [
 		CategoryGroupsStateItemWithColor,
-		any
+		AddCategoryGroupInputs
 	]) {
 		this.store.dispatch(
 			CategoryGroupsActions.update({

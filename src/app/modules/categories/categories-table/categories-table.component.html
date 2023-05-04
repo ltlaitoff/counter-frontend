@@ -35,7 +35,7 @@
 					(onClick)="onControlButtonClick(category._id)"
 					[class.opacity-100]="showMenu === category._id"
 					appClickedOutside
-					(clickedOutside)="onFormClickedOutside($event, category._id)"
+					(clickedOutside)="onFormClickedOutside(category._id)"
 					[allowShowHint]="showMenu !== category._id"
 				>
 					<div

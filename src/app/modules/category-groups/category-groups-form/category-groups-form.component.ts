@@ -16,35 +16,39 @@ import {
 	styleUrls: ['./category-groups-form.component.scss']
 })
 export class CategoryGroupsFormComponent {
-	@Input() categoryGroups: any | null = null
-	@Input() choicedCategoryGroups: any | null = null
+	@Input() categoryGroups: CategoryGroupsStateItemWithColor[] | null = null
+	@Input() choicedCategoryGroups: CategoryGroupsStateItemWithColor[] | null =
+		null
 
-	@Output() addChoicedCategoryGroup = new EventEmitter<any>()
-	@Output() deleteChoicedCategoryGroup = new EventEmitter<any>()
+	@Output() addChoicedCategoryGroup =
+		new EventEmitter<CategoryGroupsStateItemWithColor>()
+	@Output() deleteChoicedCategoryGroup =
+		new EventEmitter<CategoryGroupsStateItemWithColor>()
 
 	@Output() editCategoryGroup = new EventEmitter<
-		[CategoryGroupsStateItemWithColor, any]
+		[CategoryGroupsStateItemWithColor, AddCategoryGroupInputs]
 	>()
 	@Output() deleteCategoryGroup =
 		new EventEmitter<CategoryGroupsStateItemWithColor>()
-	@Output() addNewCategoryGroup = new EventEmitter<any>()
+
+	@Output() addNewCategoryGroup = new EventEmitter<AddCategoryGroupInputs>()
 
 	isEditCategoryGroupFormShowed: string | null = null
 	isAddFormOpened: boolean = false
 
-	get categoryGroupsList(): any {
+	get categoryGroupsList() {
 		return sortedByOrder(this.categoryGroups)
 	}
 
-	get categoryGroupsChoiced(): any {
+	get categoryGroupsChoiced() {
 		return this.choicedCategoryGroups
 	}
 
-	onDeleteClick(categoryGroup: any) {
+	onDeleteClick(categoryGroup: CategoryGroupsStateItemWithColor) {
 		this.deleteChoicedCategoryGroup.emit(categoryGroup)
 	}
 
-	onAddClick(categoryGroup: any) {
+	onAddClick(categoryGroup: CategoryGroupsStateItemWithColor) {
 		if (this.checkIsCategoryGroupChecked(categoryGroup._id)) {
 			return
 		}
@@ -57,7 +61,10 @@ export class CategoryGroupsFormComponent {
 		this.isEditCategoryGroupFormShowed = null
 	}
 
-	toggleEditCategoryGroupForm(event: MouseEvent, categoryGroup: any) {
+	toggleEditCategoryGroupForm(
+		event: MouseEvent,
+		categoryGroup: CategoryGroupsStateItemWithColor
+	) {
 		event.stopPropagation()
 
 		if (this.isEditCategoryGroupFormShowed === null) {
@@ -78,16 +85,19 @@ export class CategoryGroupsFormComponent {
 	}
 
 	checkIsCategoryGroupChecked(categoryGroupId: string) {
+		if (this.choicedCategoryGroups === null) {
+			return false
+		}
+
 		return (
-			this.choicedCategoryGroups.find(
-				(item: any) => item._id === categoryGroupId
-			) !== undefined
+			this.choicedCategoryGroups.find(item => item._id === categoryGroupId) !==
+			undefined
 		)
 	}
 
 	editCategoryGroupInner(
 		currentValue: CategoryGroupsStateItemWithColor,
-		editedValue: any
+		editedValue: AddCategoryGroupInputs
 	) {
 		this.isEditCategoryGroupFormShowed = null
 		this.isAddFormOpened = false
@@ -114,8 +124,6 @@ export class CategoryGroupsFormComponent {
 	) {
 		if (this.categoryGroupsList === null) return
 		if (event.previousIndex === event.currentIndex) return
-
-		console.log(event.item.data)
 
 		const categoryData = event.item.data
 		const previousIndex = categoryData.order

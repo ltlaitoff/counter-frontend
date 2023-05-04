@@ -15,6 +15,7 @@ import {
 } from 'src/app/store/categories/categories.types'
 import { selectCategoryGroups } from 'src/app/store/category-groups/category-groups.select'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
+import { AddCategoryGroupInputs, CategoriesBasicSet } from 'src/types/ApiInputs'
 
 @Component({
 	selector: 'counter-categories-table',
@@ -79,7 +80,7 @@ export class CategoriesTableComponent implements OnInit {
 		this.showMenu = null
 	}
 
-	onFormClickedOutside(event: any, categoryId: string) {
+	onFormClickedOutside(categoryId: string) {
 		if (this.showMenu !== categoryId) {
 			return
 		}
@@ -88,7 +89,10 @@ export class CategoriesTableComponent implements OnInit {
 		this.editCategoryId = null
 	}
 
-	editCategory(currentValue: CategoryStateItemWithColor, editedValue: any) {
+	editCategory(
+		currentValue: CategoryStateItemWithColor,
+		editedValue: CategoriesBasicSet
+	) {
 		this.editCategoryId = null
 		this.showMenu = null
 
@@ -115,7 +119,7 @@ export class CategoriesTableComponent implements OnInit {
 
 	changeCategoryGroups(
 		category: CategoryStateItemWithColor,
-		categoryGroups: any
+		categoryGroups: string[]
 	) {
 		this.store.dispatch(
 			CategoriesActions.update({

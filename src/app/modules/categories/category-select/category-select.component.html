@@ -37,6 +37,7 @@
 	<counter-category-select-dropdown
 		*ngIf="isDropDownOpened"
 		[categories]="categories"
+		[categoryGroups]="categoryGroups"
 		[currentCategory]="currentCategory"
 		(itemClick)="onItemClick($event)"
 	></counter-category-select-dropdown>

@@ -7,6 +7,7 @@ import {
 } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
+import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
 
 @Component({
 	selector: 'counter-category-select',
@@ -21,9 +22,14 @@ import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.
 })
 export class CategorySelectComponent implements ControlValueAccessor {
 	@Input() categories: CategoryStateItemWithColor[] | null = null
+	@Input() categoryGroups: CategoryGroupsStateItemWithColor[] | null = null
 	@Input() buttonClass: string = ''
 
-	isDropDownOpened = false
+	ngOnInit() {
+		console.log('rerender')
+	}
+
+	isDropDownOpened = true
 
 	disabled = false
 	currentId: string | null = null
@@ -33,6 +39,8 @@ export class CategorySelectComponent implements ControlValueAccessor {
 	onTouched: any = () => {}
 
 	onItemClick(id: string | null) {
+		console.log('onItemClick')
+
 		this.currentId = id
 
 		this.onChange(id)

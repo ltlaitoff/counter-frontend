@@ -6,6 +6,8 @@ import { formatDateToDateTimeLocalInput } from 'src/app/helpers'
 import { RootState } from 'src/app/store'
 import { selectCategories } from 'src/app/store/categories'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
+import { selectCategoryGroups } from 'src/app/store/category-groups/category-groups.select'
+import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
 import { StatisticActions } from 'src/app/store/statistic'
 
 @Component({
@@ -22,6 +24,7 @@ export class HomePageComponent implements OnInit {
 	})
 
 	categories: CategoryStateItemWithColor[] | null = null
+	categoryGroups: CategoryGroupsStateItemWithColor[] | null = null
 
 	additionalSettingsShow = false
 	additinalOptions = {
@@ -34,6 +37,10 @@ export class HomePageComponent implements OnInit {
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
 			this.categories = value
+		})
+
+		this.store.select(selectCategoryGroups).subscribe(value => {
+			this.categoryGroups = value
 		})
 
 		this.resetAddFormDate()

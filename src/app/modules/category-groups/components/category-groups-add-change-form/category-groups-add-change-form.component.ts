@@ -77,7 +77,7 @@ export class CategoryGroupsAddChangeFormComponent {
 		return this.fromType === 'edit'
 	}
 
-	stopPropagation(event: MouseEvent) {
+	stopPropagation(event: Event) {
 		event.stopPropagation()
 	}
 

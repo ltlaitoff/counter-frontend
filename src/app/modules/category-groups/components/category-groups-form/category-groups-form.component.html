@@ -24,55 +24,57 @@
 				*ngFor="let categoryGroup of categoryGroupsList"
 				cdkDrag
 				[cdkDragData]="categoryGroup"
+				class="w-full pl-2 pr-1 py-1 flex justify-between items-center hover:bg-slate-100 cursor-pointer"
+				(click)="addNewCheckedCategoryGroup($event, categoryGroup)"
+				(keyup.space)="addNewCheckedCategoryGroup($event, categoryGroup)"
+				(keyup.enter)="addNewCheckedCategoryGroup($event, categoryGroup)"
+				[ngClass]="{
+					'bg-gray-100 cursor-default hover:!bg-gray-100':
+						checkIsCategoryGroupChecked(categoryGroup._id)
+				}"
+				tabindex="0"
 			>
-				<button
-					class="w-full pl-2 pr-1 py-1 flex justify-between items-center hover:bg-slate-100"
-					(click)="onAddClick(categoryGroup)"
-					[ngClass]="{
-						'bg-gray-100 cursor-default hover:!bg-gray-100':
-							checkIsCategoryGroupChecked(categoryGroup._id)
-					}"
-				>
-					<div class="flex gap-x-2 items-center">
-						<button
-							class="fill-gray-400 hover:bg-slate-200 py-2 px-1 rounded"
-							(mousedown)="closeForms()"
-							cdkDragHandle
-						>
-							<svg-icon
-								class="fill-inherit"
-								src="assets/icons/move.svg"
-							></svg-icon>
-						</button>
-
-						<counter-category-groups-item
-							class="inline-block"
-							[color]="categoryGroup.color.colorHEX"
-							[name]="categoryGroup.name"
-						></counter-category-groups-item>
-					</div>
-
+				<div class="flex gap-x-2 items-center">
 					<button
-						class="h-full px-2 py-3 flex items-center gap-x-[2px] rounded hover:bg-slate-200 relative"
+						class="fill-gray-400 hover:bg-slate-200 py-2 px-1 rounded"
+						(mousedown)="closeForms()"
+						cdkDragHandle
+					>
+						<svg-icon
+							class="fill-inherit"
+							src="assets/icons/move.svg"
+						></svg-icon>
+					</button>
+
+					<counter-category-groups-item
+						class="inline-block"
+						[color]="categoryGroup.color.colorHEX"
+						[name]="categoryGroup.name"
+					></counter-category-groups-item>
+				</div>
+
+				<div class="relative">
+					<button
+						class="h-full px-2 py-3 flex items-center gap-x-[2px] rounded hover:bg-slate-200"
 						(click)="toggleEditCategoryGroupForm($event, categoryGroup)"
 					>
 						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
 						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
 						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
-
-						<counter-category-groups-add-change-form
-							*ngIf="isEditCategoryGroupFormShowed === categoryGroup._id"
-							class="absolute top-6"
-							[fromType]="'edit'"
-							[initialFormData]="{
-								name: categoryGroup.name,
-								color: categoryGroup.color._id
-							}"
-							(onSubmit)="editCategoryGroupInner(categoryGroup, $event)"
-							(onDelete)="deleteCategoryGroupInner(categoryGroup)"
-						></counter-category-groups-add-change-form>
 					</button>
-				</button>
+
+					<counter-category-groups-add-change-form
+						*ngIf="isEditCategoryGroupFormShowed === categoryGroup._id"
+						class="absolute top-6"
+						[fromType]="'edit'"
+						[initialFormData]="{
+							name: categoryGroup.name,
+							color: categoryGroup.color._id
+						}"
+						(onSubmit)="editCategoryGroupInner(categoryGroup, $event)"
+						(onDelete)="deleteCategoryGroupInner(categoryGroup)"
+					></counter-category-groups-add-change-form>
+				</div>
 			</li>
 		</ul>
 	</div>

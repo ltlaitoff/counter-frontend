@@ -48,7 +48,12 @@ export class CategoryGroupsFormComponent {
 		this.deleteChoicedCategoryGroup.emit(categoryGroup)
 	}
 
-	onAddClick(categoryGroup: CategoryGroupsStateItemWithColor) {
+	addNewCheckedCategoryGroup(
+		event: Event,
+		categoryGroup: CategoryGroupsStateItemWithColor
+	) {
+		event.preventDefault()
+
 		if (this.checkIsCategoryGroupChecked(categoryGroup._id)) {
 			return
 		}
@@ -58,6 +63,7 @@ export class CategoryGroupsFormComponent {
 
 	clickInsideForm(event: MouseEvent) {
 		event.stopPropagation()
+
 		this.isEditCategoryGroupFormShowed = null
 	}
 

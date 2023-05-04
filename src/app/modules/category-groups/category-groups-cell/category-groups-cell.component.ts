@@ -16,8 +16,7 @@ import { AddCategoryGroupInputs } from 'src/types/ApiInputs'
 
 @Component({
 	selector: 'counter-category-groups-cell',
-	templateUrl: './category-groups-cell.component.html',
-	styleUrls: ['./category-groups-cell.component.scss']
+	templateUrl: './category-groups-cell.component.html'
 })
 export class CategoryGroupsCellComponent implements OnInit {
 	@Input() categoryGroups: Array<string> = []

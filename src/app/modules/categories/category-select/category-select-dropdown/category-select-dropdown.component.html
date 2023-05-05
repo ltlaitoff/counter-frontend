@@ -24,104 +24,34 @@
 		></counter-category-select-dropdown-tab>
 	</div>
 
-	<!-- counter-category-select-dropdown-body -->
-	<div class="py-2 overflow-y-auto flex flex-col gap-y-[2px]">
-		<div
-			*ngIf="activeTab === 'group'"
-			class=""
-		>
-			<div
-				class=""
-				*ngFor="let category of testGroups | keyvalue : mySortingFunction"
-			>
-				<div
-					class=""
-					*ngIf="category.key !== ''"
-				>
-					<button
-						type="button"
-						class="w-full flex justify-start items-center gap-x-2"
-						(click)="toggleGroupOpened(categoryGroupsLocal[category.key])"
-					>
-						<svg-icon
-							class="w-3 h-3"
-							[class.rotate-90]="categoryGroupsLocal[category.key].opened"
-							src="assets/icons/soft-arrow.svg"
-						></svg-icon>
-
-						<div
-							class="my-1 px-2 py-1 rounded inline-block"
-							[style]="{
-								background:
-									categoryGroupsLocal[category.key].color.colorHEX + '4C',
-								color: categoryGroupsLocal[category.key].color.colorHEX
-							}"
-						>
-							<div class="brightness-50">
-								{{ categoryGroupsLocal[category.key].name }}
-							</div>
-						</div>
-					</button>
-
-					<div
-						class="ml-3"
-						*ngIf="categoryGroupsLocal[category.key].opened"
-					>
-						<counter-category-select-dropdown-category-item
-							class="text-sm"
-							*ngFor="let innerCategory of category.value"
-							[category]="innerCategory"
-							[choiced]="currentCategory?._id === innerCategory._id"
-							[searchValue]="searchValue"
-							(itemClick)="onItemClick($event)"
-						></counter-category-select-dropdown-category-item>
-					</div>
-				</div>
-
-				<div
-					class="mt-2"
-					*ngIf="category.key === ''"
-				>
-					<counter-category-select-dropdown-category-item
-						*ngFor="let innerCategory of category.value"
-						[category]="innerCategory"
-						[choiced]="currentCategory?._id === innerCategory._id"
-						[searchValue]="searchValue"
-						(itemClick)="onItemClick($event)"
-					></counter-category-select-dropdown-category-item>
-				</div>
-			</div>
-
-			<!-- <div
-			class=""
-			*ngFor="let group of categoryGroups"
-		>
-			{{ group.name }}
-			
-		</div> -->
-		</div>
-
-		<div
-			class=""
-			*ngIf="categoriesList && activeTab === 'category'"
-		>
-			<counter-category-select-dropdown-category-item
-				*ngFor="let category of categoriesList"
-				[category]="category"
-				[choiced]="currentCategory?._id === category._id"
-				[searchValue]="searchValue"
-				(itemClick)="onItemClick($event)"
-			></counter-category-select-dropdown-category-item>
-		</div>
-	</div>
-
 	<div
-		*ngIf="categoriesList === null"
-		class="p-2"
+		class="py-2 overflow-y-auto flex flex-col gap-y-[2px]"
+		*ngIf="categories; else notFound"
 	>
-		Not found
+		<div *ngIf="activeTab === 'group'">
+			<counter-category-select-dropdown-group-tab
+				*ngIf="categoryGroups; else notFound"
+				[categories]="categories"
+				[categoryGroups]="categoryGroups"
+				[currentCategory]="currentCategory"
+				[searchValue]="searchValue"
+				(onSubmit)="onItemClick($event)"
+			></counter-category-select-dropdown-group-tab>
+		</div>
+
+		<counter-category-select-dropdown-category-tab
+			*ngIf="activeTab === 'category'"
+			[categories]="categories"
+			[currentCategory]="currentCategory"
+			[searchValue]="searchValue"
+			(onSubmit)="onItemClick($event)"
+		></counter-category-select-dropdown-category-tab>
 	</div>
 
 	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
 	<counter-category-select-dropdown-footer></counter-category-select-dropdown-footer>
 </div>
+
+<ng-template #notFound>
+	<div class="p-2">Not found</div>
+</ng-template>

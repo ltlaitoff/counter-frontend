@@ -1,7 +1,7 @@
 <div class="">
 	<div
 		class=""
-		*ngFor="let group of categoryGroups"
+		*ngFor="let group of categoryGroupsForOutput"
 	>
 		<button
 			type="button"
@@ -33,9 +33,9 @@
 		>
 			<counter-category-select-dropdown-category-item
 				class="text-sm"
-				*ngFor="let innerCategory of testGroups(group._id)"
-				[category]="innerCategory"
-				[choiced]="currentCategory?._id === innerCategory._id"
+				*ngFor="let category of categoriesByGroupIdForOutput(group._id)"
+				[category]="category"
+				[choiced]="currentCategory?._id === category._id"
 				[searchValue]="searchValue"
 				(itemClick)="onItemClick($event)"
 			></counter-category-select-dropdown-category-item>
@@ -44,9 +44,9 @@
 
 	<div class="mt-2">
 		<counter-category-select-dropdown-category-item
-			*ngFor="let innerCategory of categoriesWithoutGroups"
-			[category]="innerCategory"
-			[choiced]="currentCategory?._id === innerCategory._id"
+			*ngFor="let category of categoriesWithoutGroups"
+			[category]="category"
+			[choiced]="currentCategory?._id === category._id"
 			[searchValue]="searchValue"
 			(itemClick)="onItemClick($event)"
 		></counter-category-select-dropdown-category-item>

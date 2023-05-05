@@ -26,56 +26,51 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 
 	categoriesAndGroupsForOutput: Record<string, CategoryStateItemWithColor[]> =
 		{}
+
 	openedGroupIds: string[] = []
 
 	categoriesWithoutGroups: CategoryStateItemWithColor[] = []
 
 	ngOnInit() {
-		console.log('ngOnInit')
-
 		this.transformCategoriesAndGroupsForOutput()
-		this.setCategoryGroupsLocal()
 	}
 
-	setCategoryGroupsLocal() {
-		if (!this.categoryGroups) return
+	get categoryGroupsForOutput() {
+		const result = sortedByOrder(this.categoryGroups)
 
-		const sortedCategoryGroups = sortedByOrder(this.categoryGroups)
+		if (result === null) {
+			throw new Error('Something gonna wrong')
+		}
 
-		if (!sortedCategoryGroups) return
+		return result
 	}
 
 	transformCategoriesAndGroupsForOutput() {
-		console.log('transformCategoriesAndGroupsForOutput')
-
-		const result: Record<string, CategoryStateItemWithColor[]> = {}
+		this.categoriesAndGroupsForOutput = {}
 		this.categoriesWithoutGroups = []
 
-		this.categories?.forEach(category => {
+		sortedByOrder(this.categories)?.forEach(category => {
 			if (category.group.length === 0) {
 				this.categoriesWithoutGroups.push(category)
 
 				return
 			}
 
-			category.group.forEach(group => {
-				const currentCategoriesInResult = result[group] || []
+			category.group.forEach(groupId => {
+				if (!this.categoriesAndGroupsForOutput[groupId]) {
+					this.categoriesAndGroupsForOutput[groupId] = []
+				}
 
-				result[group] = [...currentCategoriesInResult, category]
+				this.categoriesAndGroupsForOutput[groupId].push(category)
 			})
 		})
-
-		this.categoriesAndGroupsForOutput = result
 	}
 
-	testGroups(id: string) {
-		const value = this.categoriesAndGroupsForOutput[id]
-
-		const searchedCategories = filterCategoriesBySearch(value, this.searchValue)
-
-		if (filterCategoriesBySearch === null) return []
-
-		return searchedCategories
+	categoriesByGroupIdForOutput(groupId: string) {
+		return filterCategoriesBySearch(
+			this.categoriesAndGroupsForOutput[groupId],
+			this.searchValue
+		)
 	}
 
 	toggleGroupOpened(group: CategoryGroupsStateItemWithColor) {

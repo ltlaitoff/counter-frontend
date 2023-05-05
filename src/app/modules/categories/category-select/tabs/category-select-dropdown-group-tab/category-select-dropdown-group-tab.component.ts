@@ -26,10 +26,8 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 
 	categoriesAndGroupsForOutput: Record<string, CategoryStateItemWithColor[]> =
 		{}
-	categoryGroupsForOutput: Record<
-		string,
-		CategoryGroupsStateItemWithColor & { opened: boolean }
-	> = {}
+	openedGroupIds: string[] = []
+
 	categoriesWithoutGroups: CategoryStateItemWithColor[] = []
 
 	ngOnInit() {
@@ -45,22 +43,6 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 		const sortedCategoryGroups = sortedByOrder(this.categoryGroups)
 
 		if (!sortedCategoryGroups) return
-
-		this.categoryGroupsForOutput = sortedCategoryGroups.reduce(
-			(
-				acc: Record<
-					string,
-					CategoryGroupsStateItemWithColor & { opened: boolean }
-				>,
-				categoryGroup
-			) => {
-				return {
-					...acc,
-					[categoryGroup._id]: { ...categoryGroup, opened: false }
-				}
-			},
-			{}
-		)
 	}
 
 	transformCategoriesAndGroupsForOutput() {
@@ -86,34 +68,24 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 		this.categoriesAndGroupsForOutput = result
 	}
 
-	get testGroups() {
-		console.log('first')
+	testGroups(id: string) {
+		const value = this.categoriesAndGroupsForOutput[id]
 
-		const finalResult: Record<string, CategoryStateItemWithColor[]> =
-			Object.fromEntries(
-				Object.entries(this.categoriesAndGroupsForOutput)
-					.map(([key, value]) => {
-						const searchedCategories = filterCategoriesBySearch(
-							value,
-							this.searchValue
-						)
+		const searchedCategories = filterCategoriesBySearch(value, this.searchValue)
 
-						return [key, searchedCategories]
-					})
-					.filter(([key, value]) => {
-						return value !== null
-					})
-			)
+		if (filterCategoriesBySearch === null) return []
 
-		console.log(finalResult)
-
-		return finalResult
+		return searchedCategories
 	}
 
-	toggleGroupOpened(
-		group: CategoryGroupsStateItemWithColor & { opened: boolean }
-	) {
-		group.opened = !group.opened
+	toggleGroupOpened(group: CategoryGroupsStateItemWithColor) {
+		if (!this.openedGroupIds.includes(group._id)) {
+			this.openedGroupIds.push(group._id)
+
+			return
+		}
+
+		this.openedGroupIds = this.openedGroupIds.filter(item => item !== group._id)
 	}
 
 	onItemClick(value: string | null) {

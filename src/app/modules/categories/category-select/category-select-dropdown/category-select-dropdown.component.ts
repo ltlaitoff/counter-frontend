@@ -10,7 +10,12 @@ import {
 import { sortedByOrder } from 'src/app/helpers'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
+import { CategorySelectTab } from '../category-select.types'
 import { HighlightPipe } from '../highlight.pipe'
+import {
+	TABS_DEFAULT,
+	ACTIVE_TAB_DEFAULT
+} from './category-select-dropdown.config'
 
 @Component({
 	selector: 'counter-category-select-dropdown',
@@ -28,7 +33,8 @@ export class CategorySelectDropdownComponent implements OnInit {
 
 	searchValue: string = ''
 
-	activeTab: 'category' | 'group' = 'category'
+	tabs: CategorySelectTab[] = TABS_DEFAULT
+	activeTab: CategorySelectTab = ACTIVE_TAB_DEFAULT
 
 	categoriesAndGroupsForOutput: Record<string, CategoryStateItemWithColor[]> =
 		{}
@@ -151,7 +157,7 @@ export class CategorySelectDropdownComponent implements OnInit {
 		this.itemClick.emit(id)
 	}
 
-	setActiveTab(newActiveTab: 'category' | 'group') {
+	setActiveTab(newActiveTab: CategorySelectTab) {
 		this.activeTab = newActiveTab
 	}
 

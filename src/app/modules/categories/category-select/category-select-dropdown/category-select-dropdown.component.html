@@ -16,26 +16,12 @@
 	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
 
 	<div class="flex gap-x-2">
-		<button
-			type="button"
-			class="px-3 py-1 rounded"
-			(click)="setActiveTab('category')"
-			[ngClass]="{
-				'bg-sky-200': activeTab === 'category'
-			}"
-		>
-			Category
-		</button>
-		<button
-			type="button"
-			class="px-3 py-1 rounded"
-			(click)="setActiveTab('group')"
-			[ngClass]="{
-				'bg-sky-200': activeTab === 'group'
-			}"
-		>
-			Group
-		</button>
+		<counter-category-select-dropdown-tab
+			*ngFor="let tab of tabs"
+			[tab]="tab"
+			[active]="activeTab === tab"
+			(onClick)="setActiveTab($event)"
+		></counter-category-select-dropdown-tab>
 	</div>
 
 	<!-- counter-category-select-dropdown-body -->

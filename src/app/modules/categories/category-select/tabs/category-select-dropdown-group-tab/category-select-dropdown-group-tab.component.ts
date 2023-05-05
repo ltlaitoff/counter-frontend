@@ -1,12 +1,20 @@
-import { KeyValue } from '@angular/common'
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output
+} from '@angular/core'
 import { sortedByOrder } from 'src/app/helpers'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
+import { filterCategoriesBySearch } from '../../helpers/filter-by-search.helper'
 
 @Component({
 	selector: 'counter-category-select-dropdown-group-tab',
-	templateUrl: './category-select-dropdown-group-tab.component.html'
+	templateUrl: './category-select-dropdown-group-tab.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategorySelectDropdownGroupTabComponent implements OnInit {
 	@Input() categories: CategoryStateItemWithColor[] = []
@@ -18,17 +26,11 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 
 	categoriesAndGroupsForOutput: Record<string, CategoryStateItemWithColor[]> =
 		{}
-	categoryGroupsLocal: Record<
+	categoryGroupsForOutput: Record<
 		string,
 		CategoryGroupsStateItemWithColor & { opened: boolean }
 	> = {}
-
-	mySortingFunction(
-		a: KeyValue<string, CategoryStateItemWithColor[]>,
-		b: KeyValue<string, CategoryStateItemWithColor[]>
-	): number {
-		return b.key.length - a.key.length
-	}
+	categoriesWithoutGroups: CategoryStateItemWithColor[] = []
 
 	ngOnInit() {
 		console.log('ngOnInit')
@@ -37,31 +39,25 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 		this.setCategoryGroupsLocal()
 	}
 
-	ngOnChanges() {
-		console.log('ngOnChanges')
-
-		this.transformCategoriesAndGroupsForOutput()
-		this.setCategoryGroupsLocal()
-	}
-
 	setCategoryGroupsLocal() {
-		console.log(
-			'🚀 ~ file: category-select-dropdown.component.ts:73 ~ CategorySelectDropdownComponent ~ setCategoryGroupsLocal ~ setCategoryGroupsLocal'
-		)
-
 		if (!this.categoryGroups) return
 
-		this.categoryGroupsLocal = this.categoryGroups.reduce(
+		const sortedCategoryGroups = sortedByOrder(this.categoryGroups)
+
+		if (!sortedCategoryGroups) return
+
+		this.categoryGroupsForOutput = sortedCategoryGroups.reduce(
 			(
 				acc: Record<
 					string,
 					CategoryGroupsStateItemWithColor & { opened: boolean }
 				>,
-				item
+				categoryGroup
 			) => {
-				acc[item._id] = { ...item, opened: false }
-
-				return acc
+				return {
+					...acc,
+					[categoryGroup._id]: { ...categoryGroup, opened: false }
+				}
 			},
 			{}
 		)
@@ -71,12 +67,12 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 		console.log('transformCategoriesAndGroupsForOutput')
 
 		const result: Record<string, CategoryStateItemWithColor[]> = {}
+		this.categoriesWithoutGroups = []
 
 		this.categories?.forEach(category => {
 			if (category.group.length === 0) {
-				const currentCategoriesInResult = result[''] || []
+				this.categoriesWithoutGroups.push(category)
 
-				result[''] = [...currentCategoriesInResult, category]
 				return
 			}
 
@@ -97,12 +93,19 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 			Object.fromEntries(
 				Object.entries(this.categoriesAndGroupsForOutput)
 					.map(([key, value]) => {
-						return [key, this.filterBySearchAndSorting(value)]
+						const searchedCategories = filterCategoriesBySearch(
+							value,
+							this.searchValue
+						)
+
+						return [key, searchedCategories]
 					})
 					.filter(([key, value]) => {
 						return value !== null
 					})
 			)
+
+		console.log(finalResult)
 
 		return finalResult
 	}
@@ -111,22 +114,6 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 		group: CategoryGroupsStateItemWithColor & { opened: boolean }
 	) {
 		group.opened = !group.opened
-	}
-
-	private filterBySearchAndSorting(value: CategoryStateItemWithColor[] | null) {
-		if (!value) return null
-
-		const searchedCategories = value.filter(item =>
-			item.name
-				.toLocaleLowerCase()
-				.includes(this.searchValue.toLocaleLowerCase())
-		)
-
-		if (searchedCategories.length === 0) return null
-
-		const categoriesSortedByOrder = sortedByOrder(searchedCategories)
-
-		return categoriesSortedByOrder
 	}
 
 	onItemClick(value: string | null) {

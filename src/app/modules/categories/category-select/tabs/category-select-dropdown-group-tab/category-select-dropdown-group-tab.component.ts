@@ -6,8 +6,7 @@ import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/
 
 @Component({
 	selector: 'counter-category-select-dropdown-group-tab',
-	templateUrl: './category-select-dropdown-group-tab.component.html',
-	styleUrls: ['./category-select-dropdown-group-tab.component.scss']
+	templateUrl: './category-select-dropdown-group-tab.component.html'
 })
 export class CategorySelectDropdownGroupTabComponent implements OnInit {
 	@Input() categories: CategoryStateItemWithColor[] = []

@@ -4,8 +4,7 @@ import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.
 
 @Component({
 	selector: 'counter-category-select-dropdown-category-tab',
-	templateUrl: './category-select-dropdown-category-tab.component.html',
-	styleUrls: ['./category-select-dropdown-category-tab.component.scss']
+	templateUrl: './category-select-dropdown-category-tab.component.html'
 })
 export class CategorySelectDropdownCategoryTabComponent {
 	@Input() categories: CategoryStateItemWithColor[] = []

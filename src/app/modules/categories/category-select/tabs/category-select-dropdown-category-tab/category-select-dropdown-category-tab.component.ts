@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { sortedByOrder } from 'src/app/helpers'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
+import { filterCategoriesBySearch } from '../../helpers/filter-by-search.helper'
 
 @Component({
 	selector: 'counter-category-select-dropdown-category-tab',
@@ -14,23 +15,14 @@ export class CategorySelectDropdownCategoryTabComponent {
 	@Output() onSubmit = new EventEmitter<string | null>()
 
 	get categoriesList() {
-		return this.filterBySearchAndSorting(this.categories)
-	}
-
-	private filterBySearchAndSorting(value: CategoryStateItemWithColor[] | null) {
-		if (!value) return null
-
-		const searchedCategories = value.filter(item =>
-			item.name
-				.toLocaleLowerCase()
-				.includes(this.searchValue.toLocaleLowerCase())
+		const searchedCategories = filterCategoriesBySearch(
+			this.categories,
+			this.searchValue
 		)
 
-		if (searchedCategories.length === 0) return null
+		if (!searchedCategories) return null
 
-		const categoriesSortedByOrder = sortedByOrder(searchedCategories)
-
-		return categoriesSortedByOrder
+		return sortedByOrder(searchedCategories)
 	}
 
 	onItemClick(value: string | null) {

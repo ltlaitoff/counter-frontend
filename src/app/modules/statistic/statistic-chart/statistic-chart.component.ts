@@ -1,27 +1,32 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-moment'
 import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statistic.types'
+import { CHART_OPTIONS } from './statistic-chat.config'
 
 @Component({
 	selector: 'counter-statistic-chart',
 	templateUrl: './statistic-chart.component.html',
 	styleUrls: ['./statistic-chart.component.scss']
 })
-export class StatisticChartComponent implements OnInit {
+export class StatisticChartComponent implements OnChanges {
 	@Input() statistics: StatisticStateItemWithCategory[] = []
 	currentChartType: 'day' | 'record' = 'day'
 
-	// @ts-expect-error
-	private chart: Chart
+	private chart!: Chart
+
+	ngOnInit() {
+		this.chart = new Chart('statistic-chart-canvas', {
+			type: 'line',
+			data: this.chartData(this.statistics, this.currentChartType),
+			options: CHART_OPTIONS
+		})
+	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		console.log(changes)
-		if (!changes['statistics'].firstChange) {
-			this.chart.data = this.chartData(this.statistics, this.currentChartType)
+		if (changes['statistics'].firstChange) return
 
-			this.chart.update()
-		}
+		this.updateChartData()
 	}
 
 	changeChartType() {
@@ -31,8 +36,11 @@ export class StatisticChartComponent implements OnInit {
 			this.currentChartType = 'day'
 		}
 
+		this.updateChartData()
+	}
+
+	private updateChartData() {
 		this.chart.data = this.chartData(this.statistics, this.currentChartType)
-		console.log(this.chart.data)
 
 		this.chart.update()
 	}
@@ -104,33 +112,5 @@ export class StatisticChartComponent implements OnInit {
 		return {
 			datasets
 		}
-	}
-
-	ngOnInit(): void {
-		this.chart = new Chart('statistic-chart-canvas', {
-			type: 'line',
-			data: this.chartData(this.statistics, this.currentChartType),
-			options: {
-				responsive: true,
-				spanGaps: true,
-				interaction: {
-					intersect: false
-				},
-				scales: {
-					x: {
-						type: 'time',
-						time: {
-							unit: 'day'
-						}
-					}
-				},
-				animation: {
-					duration: 400
-				},
-				animations: {
-					y: { duration: 0 }
-				}
-			}
-		})
 	}
 }

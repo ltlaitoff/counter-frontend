@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v1.1.0 - 06.05
+
+Millestone [v1.1.0]https://github.com/ltlaitoff/counter-frontend/milestone/4)
+
+- Change `exhaustMap` to `mergeMap` in all effects [#99](https://github.com/ltlaitoff/counter-frontend/issues/99)
+- Bug: On add statistic item and go to statistic page, page show only 1 item [#94](https://github.com/ltlaitoff/counter-frontend/issues/94)
+- On home page form create additional flag for show datetime input [#93](https://github.com/ltlaitoff/counter-frontend/issues/93)
+- Fix reorder in category-select [#90](https://github.com/ltlaitoff/counter-frontend/issues/90)
+- Fix change statistic bug [#87](https://github.com/ltlaitoff/counter-frontend/issues/87)
+- Changelog: Add v1.0.1 and v1.0.2 to changelog [#86](https://github.com/ltlaitoff/counter-frontend/issues/86)
+- Change footer [#84](https://github.com/ltlaitoff/counter-frontend/issues/84)
+- Create category-groups [#75](https://github.com/ltlaitoff/counter-frontend/issues/75)
+- Create checkbox for not-clean main form after submit [#74](https://github.com/ltlaitoff/counter-frontend/issues/74)
+- Remove no-category from category-select [#73](https://github.com/ltlaitoff/counter-frontend/issues/73)
+- Add dimension field to category [#64](https://github.com/ltlaitoff/counter-frontend/issues/64)
+- Remove populating data from store [#62](https://github.com/ltlaitoff/counter-frontend/issues/62)
+- Create categories reorder [#20](https://github.com/ltlaitoff/counter-frontend/issues/20)
+
 ## v1.0.2 - 07.04 - Hox fix
 
 Changed in production api-link from dev version to prod

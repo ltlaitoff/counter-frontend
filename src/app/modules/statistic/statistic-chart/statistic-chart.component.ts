@@ -19,7 +19,9 @@ export class StatisticChartComponent implements OnChanges {
 	ngOnInit() {
 		this.chart = new Chart('statistic-chart-canvas', {
 			type: 'line',
-			data: this.chartData(this.statistics, this.chartDataInterval),
+			data: {
+				datasets: this.getChartDataset(this.statistics, this.chartDataInterval)
+			},
 			options: CHART_OPTIONS
 		})
 	}
@@ -41,16 +43,34 @@ export class StatisticChartComponent implements OnChanges {
 	}
 
 	private updateChartData() {
-		this.chart.data = this.chartData(this.statistics, this.chartDataInterval)
+		this.chart.data.datasets = this.getChartDataset(
+			this.statistics,
+			this.chartDataInterval
+		)
 
 		this.chart.update()
 	}
 
-	chartData(
+	getChartDataset(
 		statistics: StatisticStateItemWithCategory[],
 		type: 'day' | 'record' = 'day'
 	) {
-		const temp: {
+		const rawDatasets = this.getRawDatasets(statistics, type)
+
+		return rawDatasets.map(item => ({
+			label: item.name,
+			data: item.data,
+			tension: 0.4,
+			borderColor: item.colorHEX,
+			backgroundColor: item.colorHEX
+		}))
+	}
+
+	private getRawDatasets(
+		statistics: StatisticStateItemWithCategory[],
+		type: 'day' | 'record' = 'day'
+	) {
+		const rawDatasets: {
 			id: string
 			name: string
 			data: Array<any>
@@ -60,63 +80,88 @@ export class StatisticChartComponent implements OnChanges {
 		statistics.forEach(record => {
 			if (!record.category) return
 
-			const id = record.category._id
-
-			let findedRecord = temp.find(item => item.id === id)
-
-			if (findedRecord === undefined) {
-				const index = temp.push({
-					id: id,
+			const rawDataset = this.findOrCreateRawDataset(
+				{
+					id: record.category._id,
 					name: record.category.name,
-					colorHEX: record.category.color.colorHEX,
-					data: []
-				})
+					colorHEX: record.category.color.colorHEX
+				},
+				rawDatasets
+			)
 
-				findedRecord = temp[index - 1]
-			}
+			this.updateDatasetData(
+				type,
+				{ date: record.date, count: record.count },
+				rawDataset
+			)
+		})
 
-			//===
-			if (type === 'day') {
-				const date = new Date(new Date(record.date).toDateString()).getTime()
+		return rawDatasets
+	}
 
-				const findedRecordData = findedRecord.data.find(item => item.x === date)
+	private findOrCreateRawDataset(
+		data: {
+			id: string
+			name: string
+			colorHEX: string
+		},
+		rawDatasets: {
+			id: string
+			name: string
+			data: Array<any>
+			colorHEX: string
+		}[]
+	) {
+		const rawDataset = rawDatasets.find(item => item.id === data.id)
 
-				if (findedRecordData === undefined) {
-					findedRecord.data.push({
-						x: date,
-						y: record.count
-					})
-					return
-				}
+		if (rawDataset !== undefined) return rawDataset
 
-				findedRecordData.y += record.count
-				return
-			}
+		const index = rawDatasets.push({
+			id: data.id,
+			name: data.name,
+			colorHEX: data.colorHEX,
+			data: []
+		})
 
-			if (type === 'record') {
-				const date = new Date(record.date).getTime()
+		return rawDatasets[index - 1]
+	}
 
-				findedRecord.data.push({
+	updateDatasetData(
+		type: 'day' | 'record',
+		record: { date: string; count: number },
+		rawDataset: {
+			id: string
+			name: string
+			data: Array<any>
+			colorHEX: string
+		}
+	) {
+		if (type === 'day') {
+			const date = new Date(new Date(record.date).toDateString()).getTime()
+
+			const findedRecordData = rawDataset.data.find(item => item.x === date)
+
+			if (findedRecordData === undefined) {
+				rawDataset.data.push({
 					x: date,
 					y: record.count
 				})
-
 				return
 			}
-		})
 
-		const datasets = temp.map(item => {
-			return {
-				label: item.name,
-				data: item.data,
-				tension: 0.4,
-				borderColor: item.colorHEX,
-				backgroundColor: item.colorHEX
-			}
-		})
+			findedRecordData.y += record.count
+			return
+		}
 
-		return {
-			datasets
+		if (type === 'record') {
+			const date = new Date(record.date).getTime()
+
+			rawDataset.data.push({
+				x: date,
+				y: record.count
+			})
+
+			return
 		}
 	}
 }

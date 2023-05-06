@@ -11,14 +11,14 @@ import { CHART_OPTIONS } from './statistic-chat.config'
 })
 export class StatisticChartComponent implements OnChanges {
 	@Input() statistics: StatisticStateItemWithCategory[] = []
-	currentChartType: 'day' | 'record' = 'day'
+	chartDataInterval: 'day' | 'record' = 'day'
 
 	private chart!: Chart
 
 	ngOnInit() {
 		this.chart = new Chart('statistic-chart-canvas', {
 			type: 'line',
-			data: this.chartData(this.statistics, this.currentChartType),
+			data: this.chartData(this.statistics, this.chartDataInterval),
 			options: CHART_OPTIONS
 		})
 	}
@@ -30,17 +30,17 @@ export class StatisticChartComponent implements OnChanges {
 	}
 
 	changeChartType() {
-		if (this.currentChartType === 'day') {
-			this.currentChartType = 'record'
+		if (this.chartDataInterval === 'day') {
+			this.chartDataInterval = 'record'
 		} else {
-			this.currentChartType = 'day'
+			this.chartDataInterval = 'day'
 		}
 
 		this.updateChartData()
 	}
 
 	private updateChartData() {
-		this.chart.data = this.chartData(this.statistics, this.currentChartType)
+		this.chart.data = this.chartData(this.statistics, this.chartDataInterval)
 
 		this.chart.update()
 	}

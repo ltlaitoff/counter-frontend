@@ -12,6 +12,7 @@ import { CHART_OPTIONS } from './statistic-chat.config'
 export class StatisticChartComponent implements OnChanges {
 	@Input() statistics: StatisticStateItemWithCategory[] = []
 	chartDataInterval: 'day' | 'record' = 'day'
+	chartDataBy: 'category' | 'group' = 'category'
 
 	private chart!: Chart
 
@@ -49,19 +50,24 @@ export class StatisticChartComponent implements OnChanges {
 		statistics: StatisticStateItemWithCategory[],
 		type: 'day' | 'record' = 'day'
 	) {
-		const temp: { categoryName: string; data: Array<any>; colorHEX: string }[] =
-			[]
+		const temp: {
+			id: string
+			name: string
+			data: Array<any>
+			colorHEX: string
+		}[] = []
 
 		statistics.forEach(record => {
 			if (!record.category) return
 
-			const categoryName = record.category.name
+			const id = record.category._id
 
-			let findedRecord = temp.find(item => item.categoryName === categoryName)
+			let findedRecord = temp.find(item => item.id === id)
 
 			if (findedRecord === undefined) {
 				const index = temp.push({
-					categoryName: categoryName,
+					id: id,
+					name: record.category.name,
 					colorHEX: record.category.color.colorHEX,
 					data: []
 				})
@@ -101,7 +107,7 @@ export class StatisticChartComponent implements OnChanges {
 
 		const datasets = temp.map(item => {
 			return {
-				label: item.categoryName,
+				label: item.name,
 				data: item.data,
 				tension: 0.4,
 				borderColor: item.colorHEX,

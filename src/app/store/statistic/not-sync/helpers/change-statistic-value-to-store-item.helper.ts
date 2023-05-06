@@ -1,41 +1,40 @@
-import { NotSyncTypes } from '..'
-import { StatisticTypes } from '../..'
 import { generateNotSyncStatisticId } from './generate-not-sync-statistic-id.helper'
 import { AddStatisticInputs } from 'src/types/ApiInputs'
+import { NotSyncStateItem, SyncStateItem } from '../../statistic.types'
+import { NotSyncStatus, NotSyncAction } from 'src/app/store/store.types'
 
 export function changeAddStatisticValueToStoreItem(
 	data: AddStatisticInputs
-): NotSyncTypes.StateItem {
+): NotSyncStateItem {
 	const forAdd = {
 		...data,
 		_id: generateNotSyncStatisticId(),
-		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
-		action: NotSyncTypes.Action.CREATED
+		status: NotSyncStatus.NOT_SYNCHRONIZED,
+		action: NotSyncAction.CREATED
 	}
 
 	return forAdd
 }
 
 export function changeDeleteStatisticValueToStoreItem(
-	data: StatisticTypes.SyncTypes.StateItem
-): NotSyncTypes.StateItem {
+	data: SyncStateItem
+): NotSyncStateItem {
 	return {
 		...data,
-		category: data.category._id,
-		date: new Date(data.date).getTime(),
-		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
-		action: NotSyncTypes.Action.DELETED
+		date: new Date(data.date).toISOString(),
+		status: NotSyncStatus.NOT_SYNCHRONIZED,
+		action: NotSyncAction.DELETED
 	}
 }
 
 export function changeUpdateStatisticValueToStoreItem(
-	data: StatisticTypes.SyncTypes.StateItem,
+	data: SyncStateItem,
 	newData: AddStatisticInputs
-): NotSyncTypes.StateItem {
+): NotSyncStateItem {
 	return {
 		...data,
-		status: NotSyncTypes.Status.NOT_SYNCHRONIZED,
-		action: NotSyncTypes.Action.DELETED,
+		status: NotSyncStatus.NOT_SYNCHRONIZED,
+		action: NotSyncAction.DELETED,
 		...newData
 	}
 }

@@ -1,0 +1,65 @@
+<form
+	[formGroup]="formData"
+	(ngSubmit)="onSubmitAddForm($event)"
+	(click)="stopPropagation($event)"
+	(keypress)="stopPropagation($event)"
+	(keydown)="stopPropagation($event)"
+	(keyup)="stopPropagation($event)"
+	class="z-20 mt-2 ml-3 p-4 absolute border border-gray-400 rounded-lg flex flex-col gap-y-5 shadow bg-white"
+>
+	<label class="flex gap-x-5 justify-between items-center">
+		Name
+		<input
+			formControlName="name"
+			class="px-2 py-1 border border-gray-300 rounded"
+			type="text"
+		/>
+	</label>
+
+	<!-- TODO: Move to colors module (#101) -->
+	<fieldset
+		class="flex gap-x-3 items-center justify-center flex-wrap max-w-sm"
+		*ngIf="colors"
+	>
+		<div
+			class=""
+			*ngFor="let color of sortedByOrderColors"
+		>
+			<input
+				[value]="color._id"
+				formControlName="color"
+				[id]="'category-color-' + color._id"
+				class="category-color-input absolute top-0 left-0 cursor-pointer opacity-0 w-0 h-0"
+				type="radio"
+				name="color"
+			/>
+			<label
+				[for]="'category-color-' + color._id"
+				class="category-color-label inline-block w-5 h-5 rounded-full border-gray-800"
+				[style]="{ background: color.colorHEX }"
+			></label>
+		</div>
+	</fieldset>
+
+	<div class="flex gap-x-2">
+		<button
+			*ngIf="formTypeIsEdit"
+			type="button"
+			class="w-full border py-2 rounded-md border-red-500 bg-red-100"
+			(click)="deleteButtonClick()"
+		>
+			Delete
+		</button>
+
+		<button
+			type="submit"
+			class="w-full border py-2 rounded-md"
+			[ngClass]="{
+				'border-green-500 bg-green-100': formTypeIsAdd,
+				'border-sky-500 bg-sky-100': formTypeIsEdit
+			}"
+		>
+			{{ formTypeIsAdd ? 'Add' : 'Save' }}
+		</button>
+	</div>
+</form>

@@ -1,6 +1,7 @@
 <div
 	class="absolute -left-5 mt-2 px-2 py-1 flex flex-col bg-white border border-gray-400 rounded w-[440px] max-h-[400px]"
 	*ngIf="categories"
+	(click)="stopPropagination($event)"
 >
 	<header class="px-2 pt-2 pb-1">
 		<input
@@ -12,63 +13,45 @@
 		/>
 	</header>
 
-	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
+	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
+
+	<div class="flex gap-x-2">
+		<counter-category-select-dropdown-tab
+			*ngFor="let tab of tabs"
+			[tab]="tab"
+			[active]="activeTab === tab"
+			(onClick)="setActiveTab($event)"
+		></counter-category-select-dropdown-tab>
+	</div>
 
 	<div
 		class="py-2 overflow-y-auto flex flex-col gap-y-[2px]"
-		*ngIf="categoriesList"
+		*ngIf="categories; else notFound"
 	>
-		<ng-container>
-			<button
-				type="button"
-				class="flex gap-x-2 items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
-				*ngFor="let category of categoriesList"
-				(click)="onItemClick(category._id)"
-				[style]="{
-					color: category.color.colorHEX
-				}"
-				[class.bg-slate-200]="currentCategory?._id === category._id"
-				[class.cursor-default]="currentCategory?._id === category._id"
-			>
-				<div
-					class="min-w-[0.5rem] max-w-[0.5rem] w-full h-2 rounded-full"
-					[style]="{ background: category.color.colorHEX }"
-				></div>
-				<div
-					class="text-left w-full text-ellipsis overflow-hidden whitespace-nowrap"
-					[innerHTML]="category.name | highlight : searchValue"
-				></div>
-			</button>
-		</ng-container>
+		<div *ngIf="activeTab === 'group'">
+			<counter-category-select-dropdown-group-tab
+				*ngIf="categoryGroups; else notFound"
+				[categories]="categories"
+				[categoryGroups]="categoryGroups"
+				[currentCategory]="currentCategory"
+				[searchValue]="searchValue"
+				(onSubmit)="onItemClick($event)"
+			></counter-category-select-dropdown-group-tab>
+		</div>
+
+		<counter-category-select-dropdown-category-tab
+			*ngIf="activeTab === 'category'"
+			[categories]="categories"
+			[currentCategory]="currentCategory"
+			[searchValue]="searchValue"
+			(onSubmit)="onItemClick($event)"
+		></counter-category-select-dropdown-category-tab>
 	</div>
 
-	<div
-		*ngIf="categoriesList === null"
-		class="p-2"
-	>
-		Not found
-	</div>
-
-	<div class="my-1 w-full h-[2px] bg-slate-300 rounded-full"></div>
-
-	<footer class="w-full relative">
-		<button
-			class="py-1 px-2 w-full rounded-md text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
-			type="button"
-			(click)="toggleAddForm()"
-			[class.bg-slate-200]="isAddFormOpened"
-			[class.fill-sky-500]="isAddFormOpened"
-		>
-			<svg-icon
-				class="inline-block w-6 h-6 fill-inherit"
-				src="assets/icons/plus.svg"
-			></svg-icon>
-			Add new category
-		</button>
-
-		<counter-categories-form
-			*ngIf="isAddFormOpened"
-			(onSubmit)="addNewCategory($event)"
-		></counter-categories-form>
-	</footer>
+	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
+	<counter-category-select-dropdown-footer></counter-category-select-dropdown-footer>
 </div>
+
+<ng-template #notFound>
+	<div class="p-2">Not found</div>
+</ng-template>

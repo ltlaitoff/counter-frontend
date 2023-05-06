@@ -1,7 +1,10 @@
 import { createActionGroup, props } from '@ngrx/store'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
-import { NotSyncTypes } from './not-sync'
-import { CategoriesTypes } from '.'
+import {
+	NotSyncStateItem,
+	CategoryStateItemWithColor,
+	CategorySyncStateItemWithColor
+} from './categories.types'
 
 export const CategoriesActions = createActionGroup({
 	source: 'Categories',
@@ -9,15 +12,25 @@ export const CategoriesActions = createActionGroup({
 		load: (props: { force: boolean } = { force: false }) => props,
 
 		add: (category: CategoriesBasicSet) => category,
-		delete: (category: CategoriesTypes.CategoryStateItem) => category,
+		delete: (category: CategoryStateItemWithColor) => category,
 		update: props<{
-			oldCategory: CategoriesTypes.CategoryStateItem
+			oldCategory: CategoryStateItemWithColor
 
 			dataForUpdate: CategoriesBasicSet
 		}>(),
+		reorder: props<{
+			category: CategorySyncStateItemWithColor
+			previousIndex: number
+			currentIndex: number
+		}>(),
 
-		addEffect: (category: NotSyncTypes.StateItem) => category,
-		deleteEffect: (category: NotSyncTypes.StateItem) => category,
-		updateEffect: (category: NotSyncTypes.StateItem) => category
+		addEffect: (category: NotSyncStateItem) => category,
+		deleteEffect: (category: NotSyncStateItem) => category,
+		updateEffect: (category: NotSyncStateItem) => category,
+		reorderEffect: props<{
+			category: NotSyncStateItem
+			previousIndex: number
+			currentIndex: number
+		}>()
 	}
 })

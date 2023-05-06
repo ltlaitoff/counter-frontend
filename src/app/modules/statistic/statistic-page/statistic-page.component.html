@@ -59,16 +59,6 @@
 							></counter-statistic-form>
 						</counter-table-controls>
 
-						<!-- <div
-							class="table-row--contol-buttons opacity-0 absolute -left-8 top-[50%] -translate-y-1/2 transition-all duration-300"
-						>
-							<button (click)="deleteStatisticRecord(record)">
-								<svg-icon
-									class="inline-block w-6 h-6 fill-gray-300 hover:fill-red-400 transition-all duration-500"
-									src="assets/icons/trash-can.svg"
-								></svg-icon>
-							</button>
-						</div> -->
 						{{ record.count }}
 					</td>
 
@@ -85,6 +75,12 @@
 							></div>
 							<div class="break-all">
 								{{ record.category.name }}
+								<span
+									*ngIf="record.category.dimension"
+									class="text-gray-400"
+								>
+									({{ record.category.dimension }})
+								</span>
 							</div>
 						</div>
 					</td>

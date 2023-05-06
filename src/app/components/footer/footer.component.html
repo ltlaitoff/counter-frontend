@@ -1,24 +1,45 @@
 <footer class="w-full px-6 py-4 flex justify-between items-center">
-	<div class="text-slate-400">v{{ version }}</div>
-	<nav class="text-slate-500">
-		<ul>
-			<li>
-				<a
-					class="px-2 py-1 hover:text-slate-300 transition-colors"
-					href="https://github.com/ltlaitoff"
-				>
-					Github
-				</a>
-			</li>
+	<div class="text-slate-400 flex gap-x-2">
+		v{{ version }}
 
-			<li>
-				<a
-					class="px-2 py-1 hover:text-slate-300 transition-colors"
-					href="icons8.com"
-				>
-					Icons
-				</a>
-			</li>
-		</ul>
-	</nav>
+		<div class="">
+			<div
+				*ngIf="type === 'next'"
+				class="px-2 rounded-xl bg-lime-500 text-white"
+			>
+				next
+			</div>
+			<div
+				*ngIf="type === 'dev'"
+				class="px-2 rounded-xl bg-blue-400 text-white"
+			>
+				dev
+			</div>
+		</div>
+	</div>
+
+	<div class="text-slate-400 font-light">
+		Created by
+		<a
+			class="text-slate-400 hover:text-fuchsia-400 font-medium"
+			[href]="config.creatorLink"
+		>
+			ltlaitoff
+		</a>
+	</div>
+
+	<div class="flex items-center gap-x-1">
+		<a
+			*ngFor="let item of config.sourceLinks"
+			[href]="item.link"
+			class="px-1 inline-block w-8 hover:bg-fuchsia-200 rounded"
+			target="_blank"
+		>
+			<svg-icon
+				[src]="item.icon"
+				class="w-full"
+				[applyClass]="true"
+			></svg-icon>
+		</a>
+	</div>
 </footer>

@@ -20,6 +20,12 @@
 					[style]="{ background: item.category.color.colorHEX }"
 				></div>
 				{{ item.category.name }}
+				<span
+					*ngIf="item.category.dimension"
+					class="text-gray-500 font-normal"
+				>
+					({{ item.category.dimension }})
+				</span>
 			</div>
 
 			<div class="text-gray-400">count</div>
@@ -31,11 +37,18 @@
 			>
 				comment
 			</div>
+
 			<div
 				*ngIf="item.comment"
 				class="text-slate-600 font-medium"
 			>
 				{{ item.comment }}
+			</div>
+
+			<div class="text-gray-400">date</div>
+
+			<div class="text-slate-600 font-medium">
+				{{ item.date | date : 'dd.MM.yy hh:mm:ss' }}
 			</div>
 		</div>
 	</div>

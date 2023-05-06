@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { selectStatistic, StatisticActions } from 'src/app/store/statistic'
 import { RootState } from 'src/app/store/rootTypes'
-import { LoadStatus } from 'src/app/store/store.types'
-import { selectStatisticState } from 'src/app/store/statistic/statistic.select'
-import { StatisticStateItem } from 'src/app/store/statistic/statistic.types'
-import { Status } from 'src/app/store/statistic/not-sync/statistic-not-sync.types'
+import { LoadStatus, NotSyncStatus } from 'src/app/store/store.types'
+import { selectStatisticStatus } from 'src/app/store/statistic/statistic.select'
+import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statistic.types'
 import { sortByDate } from '../helpers/sort-by-date.helper'
 
 @Component({
@@ -14,7 +13,7 @@ import { sortByDate } from '../helpers/sort-by-date.helper'
 	styleUrls: ['./statistic-page.component.scss']
 })
 export class StatisticComponent implements OnInit {
-	statistics: StatisticStateItem[] | null = null
+	statistics: StatisticStateItemWithCategory[] | null = null
 	currentStatus: LoadStatus | null = null
 	editStatisticRecordId: string | null = null
 
@@ -23,7 +22,7 @@ export class StatisticComponent implements OnInit {
 			this.statistics = newStatistic.sort(sortByDate)
 		})
 
-		this.store.select(selectStatisticState).subscribe(value => {
+		this.store.select(selectStatisticStatus).subscribe(value => {
 			this.currentStatus = value
 		})
 	}
@@ -35,24 +34,24 @@ export class StatisticComponent implements OnInit {
 	}
 
 	checkStatusIs(
-		status: Status | undefined,
+		status: NotSyncStatus | undefined,
 		value: 'not-synchronized' | 'synchronization' | 'error'
 	) {
 		if (!status) return
 
 		switch (value) {
 			case 'not-synchronized':
-				return status === Status.NOT_SYNCHRONIZED
+				return status === NotSyncStatus.NOT_SYNCHRONIZED
 
 			case 'synchronization':
-				return status === Status.SYNCHRONIZATION
+				return status === NotSyncStatus.SYNCHRONIZATION
 
 			case 'error':
-				return status === Status.ERROR
+				return status === NotSyncStatus.ERROR
 		}
 	}
 
-	deleteStatisticRecord(statisticRecord: StatisticStateItem) {
+	deleteStatisticRecord(statisticRecord: StatisticStateItemWithCategory) {
 		this.store.dispatch(StatisticActions.delete(statisticRecord))
 	}
 
@@ -60,7 +59,7 @@ export class StatisticComponent implements OnInit {
 		this.editStatisticRecordId = null
 	}
 
-	editStastisitcStatus(category: StatisticStateItem) {
+	editStastisitcStatus(category: StatisticStateItemWithCategory) {
 		if (this.editStatisticRecordId === null) {
 			this.editStatisticRecordId = category._id
 			return
@@ -69,7 +68,10 @@ export class StatisticComponent implements OnInit {
 		this.editStatisticRecordId = null
 	}
 
-	editStastistic(currentValue: StatisticStateItem, editedValue: any) {
+	editStastistic(
+		currentValue: StatisticStateItemWithCategory,
+		editedValue: any
+	) {
 		this.editStatisticRecordId = null
 
 		this.store.dispatch(

@@ -1,0 +1,34 @@
+<ng-container *ngIf="category">
+	<div class="relative">
+		<button
+			class="hover:fill-gray-500 transition-all duration-100 fill-gray-400/90 hover:bg-gray-100 py-2 px-1 rounded-md inline-block z-0"
+			cdkDragRootElement="counter-categories-table"
+			(mouseenter)="onMouseEnter()"
+			(mousedown)="onMouseDown()"
+			(mouseleave)="onMouseLeave()"
+			(click)="onClickInner()"
+		>
+			<svg-icon
+				class="fill-inherit"
+				src="assets/icons/move.svg"
+			></svg-icon>
+		</button>
+
+		<div
+			*ngIf="showHint && allowShowHint"
+			class="opacity-0 absolute left-1/2 -translate-x-1/2 p-2 bg-gray-600 rounded-md text-xs text-gray-300 z-10 text-center transition-all delay-150 animate-fade"
+			[class.opacity-100]="showHint"
+		>
+			<div class="whitespace-nowrap">
+				<span class="font-medium text-gray-100">Drag</span>
+				to move
+			</div>
+			<div class="whitespace-nowrap">
+				<span class="font-medium text-gray-100">Click</span>
+				to open menu
+			</div>
+		</div>
+
+		<ng-content></ng-content>
+	</div>
+</ng-container>

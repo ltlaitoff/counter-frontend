@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"scripts": {
 		"ng": "ng",
-		"start": "TEST_VAR='test' ng serve --ssl",
+		"start": "ng serve --ssl",
 		"build": "ng build",
 		"build:next": "ng build --configuration next",
 		"watch": "ng build --watch --configuration development",
@@ -13,6 +13,7 @@
 	"dependencies": {
 		"@abacritt/angularx-social-login": "^1.2.5",
 		"@angular/animations": "^15.1.0",
+		"@angular/cdk": "15.2.6",
 		"@angular/common": "^15.1.0",
 		"@angular/compiler": "^15.1.0",
 		"@angular/core": "^15.1.0",

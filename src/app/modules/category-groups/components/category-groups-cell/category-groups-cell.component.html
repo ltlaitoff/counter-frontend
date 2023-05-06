@@ -1,0 +1,31 @@
+<div
+	class="h-full w-full"
+	appClickedOutside
+	(clickedOutside)="closeForm()"
+	appKeydown
+	(escapePress)="closeForm()"
+>
+	<div
+		class="flex px-4 py-2 h-full w-full gap-x-2 gap-y-1 flex-wrap cursor-pointer"
+		(click)="showForm()"
+	>
+		<counter-category-groups-item
+			*ngFor="let categoryGroup of choicedCategoryGroups"
+			[name]="categoryGroup.name"
+			[color]="categoryGroup.color.colorHEX"
+		></counter-category-groups-item>
+	</div>
+
+	<div *ngIf="isFormShowed">
+		<counter-category-groups-form
+			*ngIf="isFormShowed"
+			[categoryGroups]="allCategoryGroups"
+			[choicedCategoryGroups]="choicedCategoryGroups"
+			(addChoicedCategoryGroup)="addChoicedCategoryGroup($event)"
+			(deleteChoicedCategoryGroup)="deleteChoicedCategoryGroup($event)"
+			(editCategoryGroup)="editCategoryGroup($event)"
+			(deleteCategoryGroup)="deleteCategoryGroup($event)"
+			(addNewCategoryGroup)="addNewCategoryGroup($event)"
+		></counter-category-groups-form>
+	</div>
+</div>

@@ -17,6 +17,7 @@ export class CategoriesFormComponent implements OnInit {
 		name: string
 		comment: string
 		color: string
+		dimension: string
 	} | null = null
 	@Input() fromType: 'add' | 'edit' = 'add'
 
@@ -27,7 +28,8 @@ export class CategoriesFormComponent implements OnInit {
 	formData = new FormGroup({
 		name: new FormControl<string>(this.initialFormData?.name || ''),
 		comment: new FormControl<string>(this.initialFormData?.comment || ''),
-		color: new FormControl<string | null>(this.initialFormData?.color || null)
+		color: new FormControl<string | null>(this.initialFormData?.color || null),
+		dimension: new FormControl<string>(this.initialFormData?.dimension || '')
 	})
 
 	ngOnInit() {
@@ -56,14 +58,21 @@ export class CategoriesFormComponent implements OnInit {
 	}
 
 	private prepareSubmitData(value: typeof this.formData.value) {
-		if (!value.name || value.comment == null || !value.color) {
+		if (
+			!value.name ||
+			value.comment == null ||
+			!value.color ||
+			value.dimension == null
+		) {
 			return null
 		}
 
 		const valueForSend = {
 			name: value.name,
 			comment: value.comment,
-			color: value.color
+			color: value.color,
+			dimension: value.dimension,
+			group: []
 		}
 
 		return valueForSend

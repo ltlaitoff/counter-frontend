@@ -2,9 +2,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { RootState } from 'src/app/store'
-import { Category } from 'src/types/Category'
+import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { AddStatisticInputs } from '../../../../types/ApiInputs'
 import { selectCategories } from '../../../store/categories/categories.select'
+import { formatDateToDateTimeLocalInput } from 'src/app/helpers'
 
 @Component({
 	selector: 'counter-statistic-form',
@@ -29,7 +30,7 @@ export class StatisticFormComponent {
 		category: new FormControl<string | null>(null)
 	})
 
-	categories: Category[] | null = null
+	categories: CategoryStateItemWithColor[] | null = null
 	localSelectCategoriesDropDownStatus: boolean = false
 
 	ngOnInit() {
@@ -41,23 +42,11 @@ export class StatisticFormComponent {
 			throw new Error('initialFormData on edit stastistic required!')
 		}
 
-		this.initialFormData.date = this.formatDateToDateTimeLocalInput(
-			this.initialFormData.date
+		this.initialFormData.date = formatDateToDateTimeLocalInput(
+			new Date(this.initialFormData.date)
 		)
 
 		this.formData.setValue(this.initialFormData)
-	}
-
-	private formatDateToDateTimeLocalInput(input: string) {
-		const inputAsDate = new Date(input)
-
-		const dateWithTimezoneOffset = new Date(
-			inputAsDate.getTime() - inputAsDate.getTimezoneOffset() * 60000
-		)
-
-		const result = dateWithTimezoneOffset.toISOString().slice(0, -5)
-
-		return result
 	}
 
 	onSubmitAddForm() {
@@ -80,13 +69,11 @@ export class StatisticFormComponent {
 			return null
 		}
 
-		const dateAsTimeStamp = new Date(value.date).getTime()
-
 		const valueForSend = {
 			count: value.count,
 			comment: value.comment,
 			category: value.category,
-			date: dateAsTimeStamp,
+			date: new Date(value.date).toISOString(),
 			summ: -1
 		}
 

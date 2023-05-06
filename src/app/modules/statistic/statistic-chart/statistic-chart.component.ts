@@ -1,6 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { Store } from '@ngrx/store'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-moment'
+import { RootState } from 'src/app/store'
+import { selectCategoryGroups } from 'src/app/store/category-groups/category-groups.select'
+import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
 import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statistic.types'
 import { ChartDataInterval, ChartDataset } from './statistic-chart.types'
 import { CHART_OPTIONS } from './statistic-chat.config'
@@ -12,12 +16,22 @@ import { CHART_OPTIONS } from './statistic-chat.config'
 })
 export class StatisticChartComponent implements OnChanges {
 	@Input() statistics: StatisticStateItemWithCategory[] = []
+	categoryGroups: Record<string, CategoryGroupsStateItemWithColor> = {}
+
 	chartDataInterval: ChartDataInterval = 'day'
 	chartDataBy: 'category' | 'group' = 'category'
 
 	private chart!: Chart
 
+	constructor(private store: Store<RootState>) {}
+
 	ngOnInit() {
+		this.store.select(selectCategoryGroups).subscribe(value => {
+			this.categoryGroups = value.reduce((acc, item) => {
+				return { ...acc, [item._id]: item }
+			}, {})
+		})
+
 		this.chart = new Chart('statistic-chart-canvas', {
 			type: 'line',
 			data: {
@@ -45,6 +59,20 @@ export class StatisticChartComponent implements OnChanges {
 		}
 
 		this.chartDataInterval = 'day'
+	}
+
+	toggleChartBy() {
+		this.updateChartBy()
+		this.updateChartData()
+	}
+
+	private updateChartBy() {
+		if (this.chartDataBy === 'category') {
+			this.chartDataBy = 'group'
+			return
+		}
+
+		this.chartDataBy = 'category'
 	}
 
 	private updateChartData() {
@@ -84,6 +112,29 @@ export class StatisticChartComponent implements OnChanges {
 
 		statistics.forEach(record => {
 			if (!record.category) return
+
+			if (this.chartDataBy === 'group') {
+				record.category.group.forEach(groupId => {
+					const group = this.categoryGroups[groupId]
+
+					const rawDataset = this.findOrCreateRawDataset(
+						{
+							id: this.categoryGroups[groupId]._id,
+							name: group.name,
+							colorHEX: group.color.colorHEX
+						},
+						rawDatasets
+					)
+
+					this.updateDatasetData(
+						type,
+						{ date: record.date, count: record.count },
+						rawDataset
+					)
+				})
+
+				return
+			}
 
 			const rawDataset = this.findOrCreateRawDataset(
 				{

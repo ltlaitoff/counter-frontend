@@ -1,10 +1,4 @@
-import {
-	Component,
-	forwardRef,
-	Input,
-	Output,
-	EventEmitter
-} from '@angular/core'
+import { Component, forwardRef, Input } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
@@ -29,7 +23,7 @@ export class CategorySelectComponent implements ControlValueAccessor {
 		console.log('rerender')
 	}
 
-	isDropDownOpened = true
+	isDropDownOpened = false
 
 	disabled = false
 	currentId: string | null = null

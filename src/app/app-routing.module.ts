@@ -9,25 +9,31 @@ import { PerfComponent } from './pages/perf/perf.component'
 import { CategoryResolver } from './resolvers/category.resolver'
 import { ColorResolver } from './resolvers/color.resolver'
 import { StatisticResolver } from './resolvers/statistic.resolver'
+import { CategoryGroupsResolver } from './resolvers/category-groups.resolver'
 
 const routes: Routes = [
 	{
 		path: '',
 		component: HomePageComponent,
 		canActivate: [AuthGuardService],
-		resolve: [ColorResolver, CategoryResolver]
+		resolve: [ColorResolver, CategoryGroupsResolver, CategoryResolver]
 	},
 	{
 		path: 'categories',
 		component: CategoriesPageComponent,
 		canActivate: [AuthGuardService],
-		resolve: [ColorResolver, CategoryResolver]
+		resolve: [ColorResolver, CategoryGroupsResolver, CategoryResolver]
 	},
 	{
 		path: 'statistic',
 		component: StatisticComponent,
 		canActivate: [AuthGuardService],
-		resolve: [ColorResolver, CategoryResolver, StatisticResolver]
+		resolve: [
+			ColorResolver,
+			CategoryGroupsResolver,
+			CategoryResolver,
+			StatisticResolver
+		]
 	},
 	{
 		path: 'authorization',

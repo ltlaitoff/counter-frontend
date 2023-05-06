@@ -6,6 +6,7 @@ import { Statistic } from '../../types/Statistic'
 import { Color } from 'src/types/Color'
 import { environment } from 'src/environments/environment'
 import * as ApiInputs from 'src/types/ApiInputs'
+import { CategoryGroup } from '../../types/CategoryGroup'
 
 const API_BASE_URL = environment.API_HOST
 
@@ -112,6 +113,43 @@ export class ApiService {
 	reorderCategory(data: ApiInputs.ReorderCategoryData) {
 		return this.http.put<ApiInputs.ReorderCategoryReturnData>(
 			`${API_BASE_URL}/category/reorder`,
+			data,
+			{
+				withCredentials: true
+			}
+		)
+	}
+
+	/* Category Groups */
+
+	getAllCategoryGroups() {
+		return this.http.get<CategoryGroup[]>(`${API_BASE_URL}/group/all`, {
+			withCredentials: true,
+			responseType: 'json'
+		})
+	}
+
+	addCategoryGroups(data: ApiInputs.AddCategoryGroupInputs) {
+		return this.http.post<CategoryGroup>(`${API_BASE_URL}/group/add`, data, {
+			withCredentials: true
+		})
+	}
+
+	deleteCategoryGroups(id: string) {
+		return this.http.delete(`${API_BASE_URL}/group/${id}`, {
+			withCredentials: true
+		})
+	}
+
+	updateCategoryGroups(id: string, data: ApiInputs.AddCategoryGroupInputs) {
+		return this.http.put<CategoryGroup>(`${API_BASE_URL}/group/${id}`, data, {
+			withCredentials: true
+		})
+	}
+
+	reorderCategoryGroups(data: ApiInputs.ReorderCategoryGroupData) {
+		return this.http.put<ApiInputs.ReorderCategoryGroupReturnData>(
+			`${API_BASE_URL}/group/reorder`,
 			data,
 			{
 				withCredentials: true

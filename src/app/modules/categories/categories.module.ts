@@ -21,6 +21,13 @@ import { CategorySelectDropdownComponent } from './category-select/category-sele
 import { HighlightPipe } from './category-select/highlight.pipe'
 import { CategoriesTableControlComponent } from './categories-table-control/categories-table-control.component'
 import { PanelFormModule } from '../../components-modules/panel-form/panel-form.module'
+import { CategoryGroupsModule } from '../category-groups/category-groups.module';
+import { CategorySelectDropdownDividerComponent } from './category-select/category-select-dropdown-divider/category-select-dropdown-divider.component';
+import { CategorySelectDropdownCategoryItemComponent } from './category-select/category-select-dropdown-category-item/category-select-dropdown-category-item.component';
+import { CategorySelectDropdownFooterComponent } from './category-select/category-select-dropdown-footer/category-select-dropdown-footer.component';
+import { CategorySelectDropdownTabComponent } from './category-select/category-select-dropdown-tab/category-select-dropdown-tab.component';
+import { CategorySelectDropdownCategoryTabComponent } from './category-select/tabs/category-select-dropdown-category-tab/category-select-dropdown-category-tab.component';
+import { CategorySelectDropdownGroupTabComponent } from './category-select/tabs/category-select-dropdown-group-tab/category-select-dropdown-group-tab.component'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -36,7 +43,13 @@ export function playerFactory() {
 		CategoriesTableColorHeadItemComponent,
 		CategorySelectDropdownComponent,
 		HighlightPipe,
-		CategoriesTableControlComponent
+		CategoriesTableControlComponent,
+  CategorySelectDropdownDividerComponent,
+  CategorySelectDropdownCategoryItemComponent,
+  CategorySelectDropdownFooterComponent,
+  CategorySelectDropdownTabComponent,
+  CategorySelectDropdownCategoryTabComponent,
+  CategorySelectDropdownGroupTabComponent
 	],
 	imports: [
 		CommonModule,
@@ -51,7 +64,8 @@ export function playerFactory() {
 		LottieModule.forRoot({ player: playerFactory }),
 		TableControlsModule,
 		DragDropModule,
-		PanelFormModule
+		PanelFormModule,
+		CategoryGroupsModule
 	],
 	exports: [CategoriesPageComponent, CategorySelectComponent]
 })

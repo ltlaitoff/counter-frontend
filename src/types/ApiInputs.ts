@@ -1,6 +1,7 @@
 import { Category } from './Category'
 import { Statistic } from './Statistic'
 import { User } from './User'
+import { CategoryGroup } from './CategoryGroup'
 
 // TODO: Using CategoryColorString
 export type CategoriesBasicSet = Omit<Category, 'color' | 'order' | '_id'> & {
@@ -8,6 +9,8 @@ export type CategoriesBasicSet = Omit<Category, 'color' | 'order' | '_id'> & {
 }
 
 export type AddStatisticInputs = Omit<Statistic, '_id'>
+
+export type AddCategoryGroupInputs = Omit<CategoryGroup, '_id' | 'order'>
 
 export type InitializeSuccess = User
 export type InitializeFailed = {
@@ -20,4 +23,11 @@ export interface ReorderCategoryData {
 	currentIndex: number
 }
 
+export interface ReorderCategoryGroupData {
+	categoryGroupId: string
+	previousIndex: number
+	currentIndex: number
+}
+
 export type ReorderCategoryReturnData = ReorderCategoryData[]
+export type ReorderCategoryGroupReturnData = ReorderCategoryGroupData[]

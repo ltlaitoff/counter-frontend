@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-moment'
 import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statistic.types'
+import { ChartDataInterval, ChartDataset } from './statistic-chart.types'
 import { CHART_OPTIONS } from './statistic-chat.config'
 
 @Component({
@@ -11,7 +12,7 @@ import { CHART_OPTIONS } from './statistic-chat.config'
 })
 export class StatisticChartComponent implements OnChanges {
 	@Input() statistics: StatisticStateItemWithCategory[] = []
-	chartDataInterval: 'day' | 'record' = 'day'
+	chartDataInterval: ChartDataInterval = 'day'
 	chartDataBy: 'category' | 'group' = 'category'
 
 	private chart!: Chart
@@ -32,14 +33,18 @@ export class StatisticChartComponent implements OnChanges {
 		this.updateChartData()
 	}
 
-	changeChartType() {
+	toggleChartInterval() {
+		this.updateChartInterval()
+		this.updateChartData()
+	}
+
+	private updateChartInterval() {
 		if (this.chartDataInterval === 'day') {
 			this.chartDataInterval = 'record'
-		} else {
-			this.chartDataInterval = 'day'
+			return
 		}
 
-		this.updateChartData()
+		this.chartDataInterval = 'day'
 	}
 
 	private updateChartData() {
@@ -53,7 +58,7 @@ export class StatisticChartComponent implements OnChanges {
 
 	getChartDataset(
 		statistics: StatisticStateItemWithCategory[],
-		type: 'day' | 'record' = 'day'
+		type: ChartDataInterval
 	) {
 		const rawDatasets = this.getRawDatasets(statistics, type)
 
@@ -68,7 +73,7 @@ export class StatisticChartComponent implements OnChanges {
 
 	private getRawDatasets(
 		statistics: StatisticStateItemWithCategory[],
-		type: 'day' | 'record' = 'day'
+		type: ChartDataInterval
 	) {
 		const rawDatasets: {
 			id: string
@@ -105,12 +110,7 @@ export class StatisticChartComponent implements OnChanges {
 			name: string
 			colorHEX: string
 		},
-		rawDatasets: {
-			id: string
-			name: string
-			data: Array<any>
-			colorHEX: string
-		}[]
+		rawDatasets: ChartDataset[]
 	) {
 		const rawDataset = rawDatasets.find(item => item.id === data.id)
 
@@ -127,14 +127,9 @@ export class StatisticChartComponent implements OnChanges {
 	}
 
 	updateDatasetData(
-		type: 'day' | 'record',
+		type: ChartDataInterval,
 		record: { date: string; count: number },
-		rawDataset: {
-			id: string
-			name: string
-			data: Array<any>
-			colorHEX: string
-		}
+		rawDataset: ChartDataset
 	) {
 		if (type === 'day') {
 			const date = new Date(new Date(record.date).toDateString()).getTime()

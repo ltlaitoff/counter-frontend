@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core'
-import {
-	ActivatedRouteSnapshot,
-	CanActivate,
-	Router,
-	RouterStateSnapshot
-} from '@angular/router'
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router'
 import { Observable, ReplaySubject, first } from 'rxjs'
 
 import { ApiService } from './api.service'
@@ -16,7 +11,7 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login'
 @Injectable({
 	providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService  {
 	public authGuardData = new ReplaySubject<ApiInputs.InitializeFailed | User>(1)
 	private socialAuthServiceUser: SocialUser | null = null
 

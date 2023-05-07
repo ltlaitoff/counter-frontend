@@ -29,30 +29,7 @@
 		/>
 	</label>
 
-	<!-- TODO: Move to colors module (#101) -->
-	<fieldset
-		class="flex gap-x-3 items-center justify-center flex-wrap max-w-sm"
-		*ngIf="colors"
-	>
-		<div
-			class=""
-			*ngFor="let color of sortedByOrderColors"
-		>
-			<input
-				[value]="color._id"
-				formControlName="color"
-				[id]="'category-color-' + color._id"
-				class="category-color-input absolute top-0 left-0 cursor-pointer opacity-0 w-0 h-0"
-				type="radio"
-				name="color"
-			/>
-			<label
-				[for]="'category-color-' + color._id"
-				class="category-color-label inline-block w-5 h-5 rounded-full border-gray-800"
-				[style]="{ background: color.colorHEX }"
-			></label>
-		</div>
-	</fieldset>
+	<counter-color-select formControlName="color"></counter-color-select>
 
 	<button
 		type="submit"

@@ -1,16 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
-import { Store } from '@ngrx/store'
-import { Color } from 'src/types/Color'
-import { sortedByOrder } from 'src/app/helpers'
-import { RootState } from 'src/app/store'
-import { selectColors } from 'src/app/store/colors'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
 
 @Component({
 	selector: 'counter-categories-form',
-	templateUrl: './categories-form.component.html',
-	styleUrls: ['./categories-form.component.scss']
+	templateUrl: './categories-form.component.html'
 })
 export class CategoriesFormComponent implements OnInit {
 	@Input() initialFormData: {
@@ -23,8 +17,6 @@ export class CategoriesFormComponent implements OnInit {
 
 	@Output() onSubmit = new EventEmitter<CategoriesBasicSet>()
 
-	colors: Color[] | null = null
-
 	formData = new FormGroup({
 		name: new FormControl<string>(this.initialFormData?.name || ''),
 		comment: new FormControl<string>(this.initialFormData?.comment || ''),
@@ -33,10 +25,6 @@ export class CategoriesFormComponent implements OnInit {
 	})
 
 	ngOnInit() {
-		this.store.select(selectColors).subscribe(newColors => {
-			this.colors = newColors
-		})
-
 		if (this.initialFormData) {
 			this.formData.setValue(this.initialFormData)
 		}
@@ -51,10 +39,6 @@ export class CategoriesFormComponent implements OnInit {
 
 		this.onSubmit.emit(valueForSend)
 		this.formData.reset()
-	}
-
-	get sortedByOrderColors() {
-		return sortedByOrder(this.colors)
 	}
 
 	private prepareSubmitData(value: typeof this.formData.value) {
@@ -85,6 +69,4 @@ export class CategoriesFormComponent implements OnInit {
 	get formTypeIsEdit() {
 		return this.fromType === 'edit'
 	}
-
-	constructor(private store: Store<RootState>) {}
 }

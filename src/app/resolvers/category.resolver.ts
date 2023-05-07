@@ -1,22 +1,13 @@
-import { Injectable } from '@angular/core'
-import {
-	Resolve,
-	RouterStateSnapshot,
-	ActivatedRouteSnapshot
-} from '@angular/router'
+import { ResolveFn } from '@angular/router'
+import { inject } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { RootState } from '../store/rootTypes'
 import { CategoriesActions } from '../store/categories/categories.actions'
 
-@Injectable({
-	providedIn: 'root'
-})
-export class CategoryResolver implements Resolve<boolean> {
-	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		this.store.dispatch(CategoriesActions.load())
+export const categoriesResolver: ResolveFn<boolean> = (route, state) => {
+	const store = inject(Store<RootState>)
 
-		return true
-	}
+	store.dispatch(CategoriesActions.load())
 
-	constructor(private store: Store<RootState>) {}
+	return true
 }

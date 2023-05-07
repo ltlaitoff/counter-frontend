@@ -4,30 +4,30 @@ import { HomePageComponent } from './modules/home/home-page/home-page.component'
 import { CategoriesPageComponent } from './modules/categories/categories-page/categories-page.component'
 import { StatisticComponent } from './modules/statistic/statistic-page/statistic-page.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
-import { AuthGuardService } from './services/auth-guard.service'
 import { PerfComponent } from './pages/perf/perf.component'
 import { CategoryResolver } from './resolvers/category.resolver'
 import { ColorResolver } from './resolvers/color.resolver'
 import { StatisticResolver } from './resolvers/statistic.resolver'
 import { CategoryGroupsResolver } from './resolvers/category-groups.resolver'
+import { authGuard } from './guards/auth.guard'
 
 const routes: Routes = [
 	{
 		path: '',
 		component: HomePageComponent,
-		canActivate: [AuthGuardService],
+		canActivate: [authGuard],
 		resolve: [ColorResolver, CategoryGroupsResolver, CategoryResolver]
 	},
 	{
 		path: 'categories',
 		component: CategoriesPageComponent,
-		canActivate: [AuthGuardService],
+		canActivate: [authGuard],
 		resolve: [ColorResolver, CategoryGroupsResolver, CategoryResolver]
 	},
 	{
 		path: 'statistic',
 		component: StatisticComponent,
-		canActivate: [AuthGuardService],
+		canActivate: [authGuard],
 		resolve: [
 			ColorResolver,
 			CategoryGroupsResolver,
@@ -37,7 +37,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'authorization',
-		canActivate: [AuthGuardService],
+		canActivate: [authGuard],
 		component: AuthorizationComponent
 	},
 	{

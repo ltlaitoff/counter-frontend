@@ -1,18 +1,13 @@
-import { Injectable } from '@angular/core'
-import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router'
+import { ResolveFn } from '@angular/router'
+import { inject } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { RootState } from '../store/rootTypes'
 import { StatisticActions } from '../store/statistic'
 
-@Injectable({
-	providedIn: 'root'
-})
-export class StatisticResolver  {
-	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		this.store.dispatch(StatisticActions.load())
+export const statisticResolver: ResolveFn<boolean> = (route, state) => {
+	const store = inject(Store<RootState>)
 
-		return true
-	}
+	store.dispatch(StatisticActions.load())
 
-	constructor(private store: Store<RootState>) {}
+	return true
 }

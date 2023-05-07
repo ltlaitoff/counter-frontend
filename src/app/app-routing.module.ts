@@ -5,10 +5,10 @@ import { CategoriesPageComponent } from './modules/categories/categories-page/ca
 import { StatisticComponent } from './modules/statistic/statistic-page/statistic-page.component'
 import { AuthorizationComponent } from './pages/authorization/authorization.component'
 import { PerfComponent } from './pages/perf/perf.component'
-import { CategoryResolver } from './resolvers/category.resolver'
-import { ColorResolver } from './resolvers/color.resolver'
-import { StatisticResolver } from './resolvers/statistic.resolver'
-import { CategoryGroupsResolver } from './resolvers/category-groups.resolver'
+import { categoriesResolver } from './resolvers/category.resolver'
+import { colorResolver } from './resolvers/color.resolver'
+import { statisticResolver } from './resolvers/statistic.resolver'
+import { categoryGroupsResolver } from './resolvers/category-groups.resolver'
 import { authGuard } from './guards/auth.guard'
 
 const routes: Routes = [
@@ -16,23 +16,23 @@ const routes: Routes = [
 		path: '',
 		component: HomePageComponent,
 		canActivate: [authGuard],
-		resolve: [ColorResolver, CategoryGroupsResolver, CategoryResolver]
+		resolve: [colorResolver, categoryGroupsResolver, categoriesResolver]
 	},
 	{
 		path: 'categories',
 		component: CategoriesPageComponent,
 		canActivate: [authGuard],
-		resolve: [ColorResolver, CategoryGroupsResolver, CategoryResolver]
+		resolve: [colorResolver, categoryGroupsResolver, categoriesResolver]
 	},
 	{
 		path: 'statistic',
 		component: StatisticComponent,
 		canActivate: [authGuard],
 		resolve: [
-			ColorResolver,
-			CategoryGroupsResolver,
-			CategoryResolver,
-			StatisticResolver
+			colorResolver,
+			categoryGroupsResolver,
+			categoriesResolver,
+			statisticResolver
 		]
 	},
 	{

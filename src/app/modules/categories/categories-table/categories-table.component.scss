@@ -29,3 +29,7 @@
 		@apply opacity-100;
 	}
 }
+
+.counter-categories-table-control:focus-within {
+	opacity: 100% !important;
+}

@@ -1,6 +1,7 @@
 <div
 	class="absolute top-2 left-0 rounded-lg border border-slate-200 bg-white w-64 z-20"
-	(click)="clickInsideForm($event)"
+	(click)="closeFormsWithStopPropagation($event)"
+	(keypress)="closeFormsWithStopPropagation($event)"
 >
 	<div
 		class="min-h-[41px] py-2 px-2 bg-gray-100 flex gap-x-2 gap-y-1 flex-wrap rounded-t-lg border-b border-inherit"
@@ -26,8 +27,7 @@
 				[cdkDragData]="categoryGroup"
 				class="w-full pl-2 pr-1 py-1 flex justify-between items-center hover:bg-slate-100 cursor-pointer"
 				(click)="addNewCheckedCategoryGroup($event, categoryGroup)"
-				(keyup.space)="addNewCheckedCategoryGroup($event, categoryGroup)"
-				(keyup.enter)="addNewCheckedCategoryGroup($event, categoryGroup)"
+				(keypress)="addNewCheckedCategoryGroup($event, categoryGroup)"
 				[ngClass]="{
 					'bg-gray-100 cursor-default hover:!bg-gray-100':
 						checkIsCategoryGroupChecked(categoryGroup._id)
@@ -57,6 +57,7 @@
 					<button
 						class="h-full px-2 py-3 flex items-center gap-x-[2px] rounded hover:bg-slate-200"
 						(click)="toggleEditCategoryGroupForm($event, categoryGroup)"
+						(keypress)="toggleEditCategoryGroupFormKeyboard($event)"
 					>
 						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
 						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>

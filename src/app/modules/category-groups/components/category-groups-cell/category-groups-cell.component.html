@@ -4,6 +4,8 @@
 	(clickedOutside)="closeForm()"
 	appKeydown
 	(escapePress)="closeForm()"
+	tabindex="0"
+	(keypress)="toggleFormOnKeyPress($event)"
 >
 	<div
 		class="flex px-4 py-2 h-full w-full gap-x-2 gap-y-1 flex-wrap cursor-pointer"

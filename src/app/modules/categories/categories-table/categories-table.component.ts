@@ -99,7 +99,7 @@ export class CategoriesTableComponent implements OnInit {
 		this.store.dispatch(
 			CategoriesActions.update({
 				oldCategory: currentValue,
-				dataForUpdate: editedValue
+				dataForUpdate: { ...editedValue, group: currentValue.group }
 			})
 		)
 	}

@@ -5,3 +5,7 @@
 .table-row:hover .table-row--contol-buttons {
 	@apply opacity-100;
 }
+
+.table-row--contol-buttons:focus-within {
+	opacity: 100% !important;
+}

@@ -72,7 +72,8 @@
 								name: category.name,
 								comment: category.comment,
 								color: category.color._id,
-								dimension: category.dimension || ''
+								dimension: category.dimension || '',
+								mode: category.mode
 							}"
 							(onSubmit)="editCategory(category, $event)"
 						></counter-categories-form>

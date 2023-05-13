@@ -12,6 +12,7 @@ export class CategoriesFormComponent implements OnInit {
 		comment: string
 		color: string
 		dimension: string
+		mode?: string
 	} | null = null
 	@Input() fromType: 'add' | 'edit' = 'add'
 
@@ -21,12 +22,16 @@ export class CategoriesFormComponent implements OnInit {
 		name: new FormControl<string>(this.initialFormData?.name || ''),
 		comment: new FormControl<string>(this.initialFormData?.comment || ''),
 		color: new FormControl<string | null>(this.initialFormData?.color || null),
+		mode: new FormControl<string>(this.initialFormData?.mode || 'number'),
 		dimension: new FormControl<string>(this.initialFormData?.dimension || '')
 	})
 
 	ngOnInit() {
 		if (this.initialFormData) {
-			this.formData.setValue(this.initialFormData)
+			this.formData.setValue({
+				...this.initialFormData,
+				mode: this.initialFormData?.mode || 'number'
+			})
 		}
 	}
 
@@ -38,7 +43,14 @@ export class CategoriesFormComponent implements OnInit {
 		}
 
 		this.onSubmit.emit(valueForSend)
-		this.formData.reset()
+
+		this.formData.reset({
+			name: '',
+			comment: '',
+			color: null,
+			mode: this.formData.value.mode || 'number',
+			dimension: ''
+		})
 	}
 
 	private prepareSubmitData(value: typeof this.formData.value) {
@@ -46,17 +58,22 @@ export class CategoriesFormComponent implements OnInit {
 			!value.name ||
 			value.comment == null ||
 			!value.color ||
-			value.dimension == null
+			value.dimension == null ||
+			!value.mode
 		) {
 			return null
 		}
+
+		const mode: 'number' | 'time' =
+			value.mode !== 'number' && value.mode !== 'time' ? 'number' : value.mode
 
 		const valueForSend = {
 			name: value.name,
 			comment: value.comment,
 			color: value.color,
 			dimension: value.dimension,
-			group: []
+			group: [],
+			mode: mode
 		}
 
 		return valueForSend

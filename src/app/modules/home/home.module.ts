@@ -5,9 +5,10 @@ import { CategoriesModule } from '../categories/categories.module'
 import { StatisticModule } from '../statistic/statistic.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AngularSvgIconModule } from 'angular-svg-icon'
+import { HomeMainInputComponent } from './home-main-input/home-main-input.component'
 
 @NgModule({
-	declarations: [HomePageComponent],
+	declarations: [HomePageComponent, HomeMainInputComponent],
 	imports: [
 		CommonModule,
 		CategoriesModule,

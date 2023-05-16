@@ -23,7 +23,8 @@ type LocalStateItemNotSync = StatisticNotSyncStateItemWithCategory & {
 export class StatisticLogComponent {
 	constructor(private store: Store<RootState>) {}
 
-	notSyncStatistic: LocalStateItem[] | null = null
+	notSyncStatistic: LocalStateItem[] | null = []
+
 	notSyncStatisticSuccessesItems: LocalStateItemNotSync[] = []
 
 	statusColors = {
@@ -36,7 +37,30 @@ export class StatisticLogComponent {
 	ngOnInit() {
 		this.store.select(selectNotSyncStatisticWithCategory).subscribe(value => {
 			this.updateNoSyncLocalState(value)
+			console.log(JSON.stringify(value))
 		})
+	}
+
+	getTimeForOutput(value: number) {
+		const absNumberValue = Math.abs(value)
+
+		let hours = Math.floor(absNumberValue / 60)
+		const minutes = absNumberValue - hours * 60
+
+		if (hours > 23) {
+			hours = 23
+		}
+
+		const hoursAsString = this.tranformNumberToTwoDigit(hours)
+		const minutesAsString = this.tranformNumberToTwoDigit(minutes)
+
+		return `${hoursAsString}:${minutesAsString}`
+	}
+
+	private tranformNumberToTwoDigit(value: number) {
+		const valueAsString = String(value)
+
+		return `${valueAsString.length === 1 ? '0' : ''}${valueAsString}`
 	}
 
 	private updateNoSyncLocalState(newState: LocalStateItem[]) {

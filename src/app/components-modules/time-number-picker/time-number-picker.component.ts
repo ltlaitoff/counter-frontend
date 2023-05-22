@@ -5,21 +5,20 @@ import {
 	Input
 } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 
 @Component({
-	selector: 'counter-home-main-input',
-	templateUrl: './home-main-input.component.html',
+	selector: 'counter-time-number-picker',
+	templateUrl: './time-number-picker.component.html',
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => HomeMainInputComponent),
+			useExisting: forwardRef(() => TimeNumberPickerComponent),
 			multi: true
 		}
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeMainInputComponent implements ControlValueAccessor {
+export class TimeNumberPickerComponent implements ControlValueAccessor {
 	@Input() inputClass = ''
 	@Input() inputId = ''
 	@Input() inputTimeShow = false

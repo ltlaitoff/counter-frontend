@@ -5,17 +5,18 @@ import { CategoriesModule } from '../categories/categories.module'
 import { StatisticModule } from '../statistic/statistic.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AngularSvgIconModule } from 'angular-svg-icon'
-import { HomeMainInputComponent } from './home-main-input/home-main-input.component'
+import { TimeNumberPickerModule } from 'src/app/components-modules/time-number-picker/time-number-picker.module'
 
 @NgModule({
-	declarations: [HomePageComponent, HomeMainInputComponent],
+	declarations: [HomePageComponent],
 	imports: [
 		CommonModule,
 		CategoriesModule,
 		StatisticModule,
 		ReactiveFormsModule,
 		AngularSvgIconModule,
-		FormsModule
+		FormsModule,
+		TimeNumberPickerModule
 	],
 	exports: [HomePageComponent]
 })

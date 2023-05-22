@@ -16,7 +16,7 @@
 				Category
 			</div>
 
-			<counter-home-main-input
+			<counter-time-number-picker
 				class="col-start-1 col-end-3 row-start-2 row-end-4 row-span-2 h-full w-full text-xl"
 				[inputClass]="
 					'rounded-tl-md border border-gray-400 text-gray-600 h-full w-full px-5 text-lg'
@@ -29,7 +29,7 @@
 					this.choicedCategory !== null && this.choicedCategory.mode === 'time'
 				"
 				formControlName="count"
-			></counter-home-main-input>
+			></counter-time-number-picker>
 
 			<counter-category-select
 				class="-ml-[1px] rounded-r-md col-start-3 col-end-3 row-start-2 row-end-4 order-2 border row-span-2 border-gray-400"

@@ -1,24 +1,8 @@
 <canvas id="statistic-chart-canvas"></canvas>
 
-<div class="mt-2 ml-4 flex gap-x-2">
-	<button
-		class="px-2 py-1 rounded-md border text-slate-700 border-gray-300 capitalize hover:bg-purple-200"
-		(click)="toggleChartInterval()"
-	>
-		{{ chartDataInterval }}
-	</button>
-
-	<button
-		class="px-2 py-1 rounded-md border text-slate-700 border-gray-300 capitalize hover:bg-purple-200"
-		(click)="toggleChartBy()"
-	>
-		{{ chartDataBy }}
-	</button>
-
-	<button
-		class="px-2 py-1 rounded-md border text-slate-700 border-gray-300 capitalize hover:bg-purple-200"
-		(click)="toggleChartDataCategoryMode()"
-	>
-		{{ chartDataCategoryMode }}
-	</button>
-</div>
+<counter-statistic-chart-options
+	[(interval)]="chartDataInterval"
+	[(by)]="chartDataBy"
+	[(categoryMode)]="chartDataCategoryMode"
+	(update)="updateChartData()"
+></counter-statistic-chart-options>

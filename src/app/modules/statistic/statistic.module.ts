@@ -11,14 +11,16 @@ import { StatisticFormComponent } from './statistic-form/statistic-form.componen
 import { ReactiveFormsModule } from '@angular/forms'
 import { CategoriesModule } from '../categories/categories.module'
 import { ClickedOutsideDirectiveModule } from '../../directives/clicked-outside-directive.module'
-import { KeydownDirectiveModule } from '../../directives/keydown-directive.module'
+import { KeydownDirectiveModule } from '../../directives/keydown-directive.module';
+import { StatisticChartOptionsComponent } from './statistic-chart-options/statistic-chart-options.component'
 
 @NgModule({
 	declarations: [
 		StatisticComponent,
 		StatisticChartComponent,
 		StatisticLogComponent,
-		StatisticFormComponent
+		StatisticFormComponent,
+  StatisticChartOptionsComponent
 	],
 	imports: [
 		CommonModule,

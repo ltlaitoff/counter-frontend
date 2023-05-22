@@ -7,21 +7,25 @@ import { RootState } from 'src/app/store'
 import { selectCategoryGroups } from 'src/app/store/category-groups/category-groups.select'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
 import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statistic.types'
-import { ChartDataInterval, ChartDataset } from './statistic-chart.types'
+import {
+	ChartDataBy,
+	ChartDataCategoryMode,
+	ChartDataInterval,
+	ChartDataset
+} from './statistic-chart.types'
 import { CHART_OPTIONS } from './statistic-chat.config'
 
 @Component({
 	selector: 'counter-statistic-chart',
-	templateUrl: './statistic-chart.component.html',
-	styleUrls: ['./statistic-chart.component.scss']
+	templateUrl: './statistic-chart.component.html'
 })
 export class StatisticChartComponent implements OnChanges {
 	@Input() statistics: StatisticStateItemWithCategory[] = []
 	categoryGroups: Record<string, CategoryGroupsStateItemWithColor> = {}
 
 	chartDataInterval: ChartDataInterval = 'day'
-	chartDataBy: 'category' | 'group' = 'category'
-	chartDataCategoryMode: 'time' | 'number' | 'all' = 'all'
+	chartDataBy: ChartDataBy = 'category'
+	chartDataCategoryMode: ChartDataCategoryMode = 'all'
 
 	private chart!: Chart
 
@@ -49,57 +53,7 @@ export class StatisticChartComponent implements OnChanges {
 		this.updateChartData()
 	}
 
-	toggleChartDataCategoryMode() {
-		this.updateChartDataCategoryMode()
-		this.updateChartData()
-	}
-
-	private updateChartDataCategoryMode() {
-		if (this.chartDataCategoryMode === 'time') {
-			this.chartDataCategoryMode = 'number'
-			return
-		}
-
-		if (this.chartDataCategoryMode === 'number') {
-			this.chartDataCategoryMode = 'all'
-			return
-		}
-
-		if (this.chartDataCategoryMode === 'all') {
-			this.chartDataCategoryMode = 'time'
-			return
-		}
-	}
-
-	toggleChartInterval() {
-		this.updateChartInterval()
-		this.updateChartData()
-	}
-
-	private updateChartInterval() {
-		if (this.chartDataInterval === 'day') {
-			this.chartDataInterval = 'record'
-			return
-		}
-
-		this.chartDataInterval = 'day'
-	}
-
-	toggleChartBy() {
-		this.updateChartBy()
-		this.updateChartData()
-	}
-
-	private updateChartBy() {
-		if (this.chartDataBy === 'category') {
-			this.chartDataBy = 'group'
-			return
-		}
-
-		this.chartDataBy = 'category'
-	}
-
-	private updateChartData() {
+	updateChartData() {
 		this.chart.data.datasets = this.getChartDataset(
 			this.statistics,
 			this.chartDataInterval
@@ -147,7 +101,7 @@ export class StatisticChartComponent implements OnChanges {
 			name: string
 			data: Array<any>
 			colorHEX: string
-			mode: 'number' | 'time'
+			mode: Exclude<ChartDataCategoryMode, 'all'>
 		}[] = []
 
 		statistics.forEach(record => {
@@ -206,7 +160,7 @@ export class StatisticChartComponent implements OnChanges {
 			id: string
 			name: string
 			colorHEX: string
-			mode: 'number' | 'time'
+			mode: Exclude<ChartDataCategoryMode, 'all'>
 		},
 		rawDatasets: ChartDataset[]
 	) {
@@ -228,7 +182,11 @@ export class StatisticChartComponent implements OnChanges {
 
 	updateDatasetData(
 		type: ChartDataInterval,
-		record: { date: string; count: number; type: 'number' | 'time' },
+		record: {
+			date: string
+			count: number
+			type: Exclude<ChartDataCategoryMode, 'all'>
+		},
 		rawDataset: ChartDataset
 	) {
 		if (this.chartDataCategoryMode !== 'all') {

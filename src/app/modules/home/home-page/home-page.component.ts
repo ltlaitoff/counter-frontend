@@ -12,8 +12,7 @@ import { StatisticActions } from 'src/app/store/statistic'
 
 @Component({
 	selector: 'counter-home-page',
-	templateUrl: './home-page.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush
+	templateUrl: './home-page.component.html'
 })
 export class HomePageComponent implements OnInit {
 	addForm = new FormGroup({

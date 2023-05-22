@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { Store } from '@ngrx/store'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-moment'
+import 'chartjs-adapter-luxon'
 import { RootState } from 'src/app/store'
 import { selectCategoryGroups } from 'src/app/store/category-groups/category-groups.select'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
@@ -20,6 +21,7 @@ export class StatisticChartComponent implements OnChanges {
 
 	chartDataInterval: ChartDataInterval = 'day'
 	chartDataBy: 'category' | 'group' = 'category'
+	chartDataCategoryMode: 'time' | 'number' | 'all' = 'all'
 
 	private chart!: Chart
 
@@ -45,6 +47,28 @@ export class StatisticChartComponent implements OnChanges {
 		if (changes['statistics'].firstChange) return
 
 		this.updateChartData()
+	}
+
+	toggleChartDataCategoryMode() {
+		this.updateChartDataCategoryMode()
+		this.updateChartData()
+	}
+
+	private updateChartDataCategoryMode() {
+		if (this.chartDataCategoryMode === 'time') {
+			this.chartDataCategoryMode = 'number'
+			return
+		}
+
+		if (this.chartDataCategoryMode === 'number') {
+			this.chartDataCategoryMode = 'all'
+			return
+		}
+
+		if (this.chartDataCategoryMode === 'all') {
+			this.chartDataCategoryMode = 'time'
+			return
+		}
 	}
 
 	toggleChartInterval() {
@@ -81,6 +105,20 @@ export class StatisticChartComponent implements OnChanges {
 			this.chartDataInterval
 		)
 
+		if (this.chart.options.scales?.['yTime']) {
+			this.chart.options.scales['yTime'].display =
+				this.chartDataCategoryMode === 'all' ||
+				this.chartDataCategoryMode === 'time'
+		}
+
+		if (this.chart.options.scales?.['yNumber']) {
+			this.chart.options.scales['yNumber'].display =
+				this.chartDataCategoryMode === 'all' ||
+				this.chartDataCategoryMode === 'number'
+		}
+
+		console.log(this.chart.data.datasets)
+
 		this.chart.update()
 	}
 
@@ -95,7 +133,8 @@ export class StatisticChartComponent implements OnChanges {
 			data: item.data,
 			tension: 0.4,
 			borderColor: item.colorHEX,
-			backgroundColor: item.colorHEX
+			backgroundColor: item.colorHEX,
+			yAxisID: item.mode === 'number' ? 'yNumber' : 'yTime'
 		}))
 	}
 
@@ -108,6 +147,7 @@ export class StatisticChartComponent implements OnChanges {
 			name: string
 			data: Array<any>
 			colorHEX: string
+			mode: 'number' | 'time'
 		}[] = []
 
 		statistics.forEach(record => {
@@ -121,14 +161,19 @@ export class StatisticChartComponent implements OnChanges {
 						{
 							id: this.categoryGroups[groupId]._id,
 							name: group.name,
-							colorHEX: group.color.colorHEX
+							colorHEX: group.color.colorHEX,
+							mode: record.category.mode
 						},
 						rawDatasets
 					)
 
 					this.updateDatasetData(
 						type,
-						{ date: record.date, count: record.count },
+						{
+							date: record.date,
+							count: record.count,
+							type: record.category.mode
+						},
 						rawDataset
 					)
 				})
@@ -140,14 +185,15 @@ export class StatisticChartComponent implements OnChanges {
 				{
 					id: record.category._id,
 					name: record.category.name,
-					colorHEX: record.category.color.colorHEX
+					colorHEX: record.category.color.colorHEX,
+					mode: record.category.mode
 				},
 				rawDatasets
 			)
 
 			this.updateDatasetData(
 				type,
-				{ date: record.date, count: record.count },
+				{ date: record.date, count: record.count, type: record.category.mode },
 				rawDataset
 			)
 		})
@@ -160,6 +206,7 @@ export class StatisticChartComponent implements OnChanges {
 			id: string
 			name: string
 			colorHEX: string
+			mode: 'number' | 'time'
 		},
 		rawDatasets: ChartDataset[]
 	) {
@@ -171,7 +218,9 @@ export class StatisticChartComponent implements OnChanges {
 			id: data.id,
 			name: data.name,
 			colorHEX: data.colorHEX,
-			data: []
+			data: [],
+			// @ts-expect-error
+			mode: data.mode
 		})
 
 		return rawDatasets[index - 1]
@@ -179,9 +228,19 @@ export class StatisticChartComponent implements OnChanges {
 
 	updateDatasetData(
 		type: ChartDataInterval,
-		record: { date: string; count: number },
+		record: { date: string; count: number; type: 'number' | 'time' },
 		rawDataset: ChartDataset
 	) {
+		if (this.chartDataCategoryMode !== 'all') {
+			if (this.chartDataCategoryMode === 'time' && record.type !== 'time')
+				return
+			if (this.chartDataCategoryMode === 'number' && record.type !== 'number')
+				return
+		}
+
+		const recordCount =
+			record.type === 'number' ? record.count : record.count * 60000
+
 		if (type === 'day') {
 			const date = new Date(new Date(record.date).toDateString()).getTime()
 
@@ -190,12 +249,12 @@ export class StatisticChartComponent implements OnChanges {
 			if (findedRecordData === undefined) {
 				rawDataset.data.push({
 					x: date,
-					y: record.count
+					y: recordCount
 				})
 				return
 			}
 
-			findedRecordData.y += record.count
+			findedRecordData.y += recordCount
 			return
 		}
 
@@ -204,7 +263,7 @@ export class StatisticChartComponent implements OnChanges {
 
 			rawDataset.data.push({
 				x: date,
-				y: record.count
+				y: recordCount
 			})
 
 			return

@@ -20,8 +20,10 @@ import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeMainInputComponent implements ControlValueAccessor {
-	@Input({ required: true })
-	choicedCategory: CategoryStateItemWithColor | null = null
+	@Input() inputClass = ''
+	@Input() inputId = ''
+	@Input() inputTimeShow = false
+	@Input() inputNumberShow = true
 
 	numberValue: number | null = null
 

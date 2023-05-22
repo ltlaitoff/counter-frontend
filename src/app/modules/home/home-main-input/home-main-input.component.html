@@ -1,18 +1,18 @@
 <input
-	*ngIf="choicedCategory == null || choicedCategory.mode === 'number'"
-	id="add-form-count"
-	class="rounded-tl-md border border-gray-400 text-gray-600 h-full w-full px-5 text-xl"
+	*ngIf="inputNumberShow"
 	type="number"
+	[id]="inputId"
+	[class]="inputClass"
 	[disabled]="disabled"
 	[(ngModel)]="numberValue"
 	(ngModelChange)="onNumberValueChange()"
 />
 
 <input
-	*ngIf="choicedCategory !== null && choicedCategory.mode === 'time'"
-	id="add-form-count"
-	class="rounded-tl-md border border-gray-400 text-gray-600 h-full w-full px-5 text-lg"
+	*ngIf="inputTimeShow"
 	type="time"
+	[id]="inputId"
+	[class]="inputClass"
 	[disabled]="disabled"
 	[(ngModel)]="timeValue"
 />

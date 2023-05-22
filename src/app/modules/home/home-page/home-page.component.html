@@ -18,7 +18,16 @@
 
 			<counter-home-main-input
 				class="col-start-1 col-end-3 row-start-2 row-end-4 row-span-2 h-full w-full text-xl"
-				[choicedCategory]="choicedCategory"
+				[inputClass]="
+					'rounded-tl-md border border-gray-400 text-gray-600 h-full w-full px-5 text-lg'
+				"
+				[inputId]="'add-form-count'"
+				[inputTimeShow]="
+					this.choicedCategory == null || this.choicedCategory.mode === 'number'
+				"
+				[inputNumberShow]="
+					this.choicedCategory !== null && this.choicedCategory.mode === 'time'
+				"
 				formControlName="count"
 			></counter-home-main-input>
 

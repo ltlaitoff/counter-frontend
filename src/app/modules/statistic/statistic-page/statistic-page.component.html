@@ -59,7 +59,14 @@
 							></counter-statistic-form>
 						</counter-table-controls>
 
-						{{ record.count }}
+						<span [ngSwitch]="record.category.mode">
+							<span *ngSwitchCase="'number'">
+								{{ record.count }}
+							</span>
+							<span *ngSwitchCase="'time'">
+								{{ record.count * 60000 | date : 'H:mm:ss' : 'UTC' }}
+							</span>
+						</span>
 					</td>
 
 					<td class="px-3 py-2 border border-gray-300">

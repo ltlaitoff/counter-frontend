@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {
 	ChartDataBy,
-	ChartDataCategoryMode,
+	ChartDataCategoryModeWithAll,
 	ChartDataInterval
 } from '../statistic-chart/statistic-chart.types'
 
@@ -12,11 +12,12 @@ import {
 export class StatisticChartOptionsComponent {
 	@Input({ required: true }) interval!: ChartDataInterval
 	@Input({ required: true }) by!: ChartDataBy
-	@Input({ required: true }) categoryMode!: ChartDataCategoryMode
+	@Input({ required: true }) categoryMode!: ChartDataCategoryModeWithAll
 
 	@Output() intervalChange = new EventEmitter<ChartDataInterval>()
 	@Output() byChange = new EventEmitter<ChartDataBy>()
-	@Output() categoryModeChange = new EventEmitter<ChartDataCategoryMode>()
+	@Output() categoryModeChange =
+		new EventEmitter<ChartDataCategoryModeWithAll>()
 	@Output() update = new EventEmitter()
 
 	toggleInterval() {

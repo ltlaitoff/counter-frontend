@@ -10,6 +10,7 @@ import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statisti
 import {
 	ChartDataBy,
 	ChartDataCategoryMode,
+	ChartDataCategoryModeWithAll,
 	ChartDataInterval,
 	ChartDataset
 } from './statistic-chart.types'
@@ -25,11 +26,9 @@ export class StatisticChartComponent implements OnChanges {
 
 	chartDataInterval: ChartDataInterval = 'day'
 	chartDataBy: ChartDataBy = 'category'
-	chartDataCategoryMode: ChartDataCategoryMode = 'all'
+	chartDataCategoryMode: ChartDataCategoryModeWithAll = 'all'
 
 	private chart!: Chart
-
-	constructor(private store: Store<RootState>) {}
 
 	ngOnInit() {
 		this.store.select(selectCategoryGroups).subscribe(value => {
@@ -38,13 +37,7 @@ export class StatisticChartComponent implements OnChanges {
 			}, {})
 		})
 
-		this.chart = new Chart('statistic-chart-canvas', {
-			type: 'line',
-			data: {
-				datasets: this.getChartDataset(this.statistics, this.chartDataInterval)
-			},
-			options: CHART_OPTIONS
-		})
+		this.initializeChart()
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -54,29 +47,13 @@ export class StatisticChartComponent implements OnChanges {
 	}
 
 	updateChartData() {
-		this.chart.data.datasets = this.getChartDataset(
-			this.statistics,
-			this.chartDataInterval
-		)
-
-		if (this.chart.options.scales?.['yTime']) {
-			this.chart.options.scales['yTime'].display =
-				this.chartDataCategoryMode === 'all' ||
-				this.chartDataCategoryMode === 'time'
-		}
-
-		if (this.chart.options.scales?.['yNumber']) {
-			this.chart.options.scales['yNumber'].display =
-				this.chartDataCategoryMode === 'all' ||
-				this.chartDataCategoryMode === 'number'
-		}
-
-		console.log(this.chart.data.datasets)
+		this.updateChartDatasets()
+		this.updateChartOptions()
 
 		this.chart.update()
 	}
 
-	getChartDataset(
+	getChartDatasets(
 		statistics: StatisticStateItemWithCategory[],
 		type: ChartDataInterval
 	) {
@@ -92,100 +69,12 @@ export class StatisticChartComponent implements OnChanges {
 		}))
 	}
 
-	private getRawDatasets(
-		statistics: StatisticStateItemWithCategory[],
-		type: ChartDataInterval
-	) {
-		const rawDatasets: {
-			id: string
-			name: string
-			data: Array<any>
-			colorHEX: string
-			mode: Exclude<ChartDataCategoryMode, 'all'>
-		}[] = []
-
-		statistics.forEach(record => {
-			if (!record.category) return
-
-			if (this.chartDataBy === 'group') {
-				record.category.group.forEach(groupId => {
-					const group = this.categoryGroups[groupId]
-
-					const rawDataset = this.findOrCreateRawDataset(
-						{
-							id: this.categoryGroups[groupId]._id,
-							name: group.name,
-							colorHEX: group.color.colorHEX,
-							mode: record.category.mode
-						},
-						rawDatasets
-					)
-
-					this.updateDatasetData(
-						type,
-						{
-							date: record.date,
-							count: record.count,
-							type: record.category.mode
-						},
-						rawDataset
-					)
-				})
-
-				return
-			}
-
-			const rawDataset = this.findOrCreateRawDataset(
-				{
-					id: record.category._id,
-					name: record.category.name,
-					colorHEX: record.category.color.colorHEX,
-					mode: record.category.mode
-				},
-				rawDatasets
-			)
-
-			this.updateDatasetData(
-				type,
-				{ date: record.date, count: record.count, type: record.category.mode },
-				rawDataset
-			)
-		})
-
-		return rawDatasets
-	}
-
-	private findOrCreateRawDataset(
-		data: {
-			id: string
-			name: string
-			colorHEX: string
-			mode: Exclude<ChartDataCategoryMode, 'all'>
-		},
-		rawDatasets: ChartDataset[]
-	) {
-		const rawDataset = rawDatasets.find(item => item.id === data.id)
-
-		if (rawDataset !== undefined) return rawDataset
-
-		const index = rawDatasets.push({
-			id: data.id,
-			name: data.name,
-			colorHEX: data.colorHEX,
-			data: [],
-			// @ts-expect-error
-			mode: data.mode
-		})
-
-		return rawDatasets[index - 1]
-	}
-
 	updateDatasetData(
 		type: ChartDataInterval,
 		record: {
 			date: string
 			count: number
-			type: Exclude<ChartDataCategoryMode, 'all'>
+			type: ChartDataCategoryMode
 		},
 		rawDataset: ChartDataset
 	) {
@@ -227,4 +116,135 @@ export class StatisticChartComponent implements OnChanges {
 			return
 		}
 	}
+
+	private initializeChart() {
+		this.chart = new Chart('statistic-chart-canvas', {
+			type: 'line',
+			data: {
+				datasets: this.getChartDatasets(this.statistics, this.chartDataInterval)
+			},
+			options: CHART_OPTIONS
+		})
+	}
+
+	private updateChartDatasets() {
+		this.chart.data.datasets = this.getChartDatasets(
+			this.statistics,
+			this.chartDataInterval
+		)
+	}
+
+	private updateChartOptions() {
+		if (this.chart.options.scales?.['yTime']) {
+			this.chart.options.scales['yTime'].display =
+				this.chartDataCategoryMode === 'all' ||
+				this.chartDataCategoryMode === 'time'
+		}
+
+		if (this.chart.options.scales?.['yNumber']) {
+			this.chart.options.scales['yNumber'].display =
+				this.chartDataCategoryMode === 'all' ||
+				this.chartDataCategoryMode === 'number'
+		}
+	}
+
+	private getRawDatasets(
+		statistics: StatisticStateItemWithCategory[],
+		type: ChartDataInterval
+	) {
+		const rawDatasets: ChartDataset[] = []
+
+		statistics.forEach(statisticRecord => {
+			if (!statisticRecord.category) return
+
+			if (this.chartDataBy === 'group') {
+				statisticRecord.category.group.forEach(groupId => {
+					const group = this.categoryGroups[groupId]
+
+					this.createRawDatasetAndUpdateRawDatasets(
+						statisticRecord,
+						type,
+						rawDatasets,
+						{
+							id: this.categoryGroups[groupId]._id,
+							name: group.name,
+							colorHEX: group.color.colorHEX
+						}
+					)
+				})
+
+				return
+			}
+
+			this.createRawDatasetAndUpdateRawDatasets(
+				statisticRecord,
+				type,
+				rawDatasets,
+				{
+					id: statisticRecord.category._id,
+					name: statisticRecord.category.name,
+					colorHEX: statisticRecord.category.color.colorHEX
+				}
+			)
+		})
+
+		return rawDatasets
+	}
+
+	private createRawDatasetAndUpdateRawDatasets(
+		statisticRecord: StatisticStateItemWithCategory,
+		type: ChartDataInterval,
+		rawDatasets: ChartDataset[],
+		options: {
+			id: string
+			name: string
+			colorHEX: string
+		}
+	) {
+		const rawDataset = this.findOrCreateRawDataset(
+			{
+				id: options.id,
+				name: options.name,
+				colorHEX: options.colorHEX,
+				mode: statisticRecord.category.mode
+			},
+			rawDatasets
+		)
+
+		this.updateDatasetData(
+			type,
+			{
+				date: statisticRecord.date,
+				count: statisticRecord.count,
+				type: statisticRecord.category.mode
+			},
+			rawDataset
+		)
+	}
+
+	private findOrCreateRawDataset(
+		data: {
+			id: string
+			name: string
+			colorHEX: string
+			mode: ChartDataCategoryMode
+		},
+		rawDatasets: ChartDataset[]
+	) {
+		const rawDataset = rawDatasets.find(item => item.id === data.id)
+
+		if (rawDataset !== undefined) return rawDataset
+
+		const index = rawDatasets.push({
+			id: data.id,
+			name: data.name,
+			colorHEX: data.colorHEX,
+			data: [],
+			mode: data.mode
+		})
+
+		return rawDatasets[index - 1]
+	}
+
+	constructor(private store: Store<RootState>) {}
 }

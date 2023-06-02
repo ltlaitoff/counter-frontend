@@ -86,7 +86,7 @@ export class StatisticChartComponent implements OnChanges {
 		}
 
 		const recordCount =
-			record.type === 'number' ? record.count : record.count * 60000
+			record.type === 'number' ? record.count : record.count * 1000
 
 		if (type === 'day') {
 			const date = new Date(new Date(record.date).toDateString()).getTime()

@@ -27,22 +27,22 @@ export const CHART_OPTIONS: ChartOptions<'line'> = {
 			min: 0,
 			adapters: {
 				date: {
+					locale: 'en-GB',
 					zone: 'utc'
 				}
 			},
+			ticks: {
+				stepSize: 60
+			},
 			time: {
 				tooltipFormat: 'HH:mm:ss',
+				unit: 'minute',
 				displayFormats: {
 					day: 'dd HH:mm:ss.SSS',
 					millisecond: 'HH:mm:ss.SSS',
 					second: 'HH:mm:ss',
 					minute: 'HH:mm',
 					hour: 'HH'
-				},
-				parser(number) {
-					if (typeof number !== 'number') return 0
-
-					return number + new Date().getTimezoneOffset()
 				}
 			},
 

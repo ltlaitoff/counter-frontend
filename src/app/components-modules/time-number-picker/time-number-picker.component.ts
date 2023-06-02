@@ -37,21 +37,16 @@ export class TimeNumberPickerComponent implements ControlValueAccessor {
 	}
 
 	get timeValue() {
-		if (this.numberValue === null) return '00:00 AM'
+		// TODO: Func transform seconds to time-string
+		if (this.numberValue === null) return '00:00:00 AM'
 
-		const absNumberValue = Math.abs(this.numberValue)
+		const absNumberValueInSeconds = Math.abs(this.numberValue)
 
-		let hours = Math.floor(absNumberValue / 60)
-		const minutes = absNumberValue - hours * 60
+		const output = new Date(absNumberValueInSeconds * 1000)
 
-		if (hours > 23) {
-			hours = 23
-		}
+		console.log(output.toLocaleTimeString('en-GB', { timeZone: 'UTC' }))
 
-		const hoursAsString = this.tranformNumberToTwoDigit(hours)
-		const minutesAsString = this.tranformNumberToTwoDigit(minutes)
-
-		return `${hoursAsString}:${minutesAsString}`
+		return output.toLocaleTimeString('en-GB', { timeZone: 'UTC' })
 	}
 
 	set timeValue(newTime: string | null) {
@@ -71,9 +66,9 @@ export class TimeNumberPickerComponent implements ControlValueAccessor {
 	}
 
 	private tranformTimeToSeconds(newTime: string) {
-		const [minutes, seconds] = newTime.split(':').map(Number)
+		const [hours, minutes, seconds] = newTime.split(':').map(Number)
 
-		return minutes * 60 + seconds
+		return hours * 60 * 60 + minutes * 60 + seconds
 	}
 
 	onChange: any = (value: number) => {}

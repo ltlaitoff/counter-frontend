@@ -22,10 +22,10 @@
 					'rounded-tl-md border border-gray-400 text-gray-600 h-full w-full px-5 text-lg'
 				"
 				[inputId]="'add-form-count'"
-				[inputTimeShow]="
+				[inputNumberShow]="
 					this.choicedCategory == null || this.choicedCategory.mode === 'number'
 				"
-				[inputNumberShow]="
+				[inputTimeShow]="
 					this.choicedCategory !== null && this.choicedCategory.mode === 'time'
 				"
 				formControlName="count"

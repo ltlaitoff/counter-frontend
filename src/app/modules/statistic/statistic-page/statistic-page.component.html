@@ -55,6 +55,7 @@
 									comment: record.comment,
 									category: record.category._id
 								}"
+								[categoryMode]="record.category.mode"
 								(onSubmit)="editStastistic(record, $event)"
 							></counter-statistic-form>
 						</counter-table-controls>
@@ -64,7 +65,7 @@
 								{{ record.count }}
 							</span>
 							<span *ngSwitchCase="'time'">
-								{{ record.count * 60000 | date : 'H:mm:ss' : 'UTC' }}
+								{{ record.count * 1000 | date : 'H:mm:ss' : 'UTC' }}
 							</span>
 						</span>
 					</td>

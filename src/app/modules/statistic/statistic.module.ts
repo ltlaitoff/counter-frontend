@@ -11,8 +11,9 @@ import { StatisticFormComponent } from './statistic-form/statistic-form.componen
 import { ReactiveFormsModule } from '@angular/forms'
 import { CategoriesModule } from '../categories/categories.module'
 import { ClickedOutsideDirectiveModule } from '../../directives/clicked-outside-directive.module'
-import { KeydownDirectiveModule } from '../../directives/keydown-directive.module';
+import { KeydownDirectiveModule } from '../../directives/keydown-directive.module'
 import { StatisticChartOptionsComponent } from './statistic-chart-options/statistic-chart-options.component'
+import { TimeNumberPickerModule } from 'src/app/components-modules/time-number-picker/time-number-picker.module'
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,7 @@ import { StatisticChartOptionsComponent } from './statistic-chart-options/statis
 		StatisticChartComponent,
 		StatisticLogComponent,
 		StatisticFormComponent,
-  StatisticChartOptionsComponent
+		StatisticChartOptionsComponent
 	],
 	imports: [
 		CommonModule,
@@ -31,7 +32,8 @@ import { StatisticChartOptionsComponent } from './statistic-chart-options/statis
 		TableControlsModule,
 		CategoriesModule,
 		ClickedOutsideDirectiveModule,
-		KeydownDirectiveModule
+		KeydownDirectiveModule,
+		TimeNumberPickerModule
 	],
 	exports: [StatisticComponent, StatisticLogComponent]
 })

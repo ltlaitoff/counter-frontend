@@ -13,12 +13,13 @@ import { formatDateToDateTimeLocalInput } from 'src/app/helpers'
 	styleUrls: ['./statistic-form.component.scss']
 })
 export class StatisticFormComponent {
-	@Input() initialFormData: {
+	@Input({ required: true }) initialFormData: {
 		date: string
 		count: number
 		comment: string
 		category: string
 	} | null = null
+	@Input({ required: true }) categoryMode: 'number' | 'time' = 'number'
 
 	@Input() fromType: 'add' | 'edit' = 'add'
 	@Output() onSubmit = new EventEmitter<AddStatisticInputs>()
@@ -51,6 +52,11 @@ export class StatisticFormComponent {
 
 	onSubmitAddForm() {
 		const valueForSend = this.prepareSubmitData(this.formData.value)
+
+		console.log(
+			'🚀 ~ file: statistic-form.component.ts:55 ~ StatisticFormComponent ~ onSubmitAddForm ~ valueForSend:',
+			valueForSend
+		)
 
 		if (valueForSend == null) {
 			return

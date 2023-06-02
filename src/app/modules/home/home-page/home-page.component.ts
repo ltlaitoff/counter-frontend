@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { formatDateToDateTimeLocalInput } from 'src/app/helpers'
@@ -12,8 +12,7 @@ import { StatisticActions } from 'src/app/store/statistic'
 
 @Component({
 	selector: 'counter-home-page',
-	templateUrl: './home-page.component.html',
-	styleUrls: ['./home-page.component.scss']
+	templateUrl: './home-page.component.html'
 })
 export class HomePageComponent implements OnInit {
 	addForm = new FormGroup({
@@ -96,6 +95,25 @@ export class HomePageComponent implements OnInit {
 		}
 
 		return valueForSend
+	}
+
+	get choicedCategory() {
+		const categoryId = this.addForm.value.category
+		// console.log('%c⧭', 'color: #731d6d', categoryId)
+
+		// console.log('%c⧭', 'color: #e57373', this.categories)
+
+		if (categoryId === null || this.categories === null) return null
+
+		const findedCategoty = this.categories.find(
+			item => item._id === this.addForm.value.category
+		)
+
+		// console.log('%c⧭', 'color: #997326', findedCategoty)
+
+		if (findedCategoty == undefined) return null
+
+		return findedCategoty
 	}
 
 	private resetAddFormDate() {

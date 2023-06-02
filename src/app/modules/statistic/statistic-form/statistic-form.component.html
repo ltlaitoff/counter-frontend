@@ -5,12 +5,16 @@
 >
 	<label class="flex gap-x-5 justify-between items-center">
 		Count
-		<input
-			type="number"
+
+		<counter-time-number-picker
+			class="max-w-[250px] w-full"
+			[inputClass]="'px-2 py-1 border border-gray-300 rounded w-full'"
+			[inputTimeShow]="categoryMode === 'time'"
+			[inputNumberShow]="categoryMode === 'number'"
 			formControlName="count"
-			class="px-2 py-1 border border-gray-300 rounded"
-		/>
+		></counter-time-number-picker>
 	</label>
+
 	<label class="flex gap-x-5 justify-between items-center">
 		Comment
 		<input

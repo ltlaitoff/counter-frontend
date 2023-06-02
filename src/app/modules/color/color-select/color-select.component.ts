@@ -27,9 +27,17 @@ export class ColorSelectComponent implements ControlValueAccessor {
 			this.colors = newColors
 
 			if (this.choicedColorId === null) {
-				this.choicedColorId = newColors[0]?._id || null
+				this.setFirstColorAsChoiced(newColors)
 			}
 		})
+	}
+
+	private setFirstColorAsChoiced(colors: Color[]) {
+		this.markAsTouched()
+
+		this.choicedColorId = colors[0]?._id || null
+
+		this.onChange(this.choicedColorId)
 	}
 
 	get sortedByOrderColors() {
@@ -52,7 +60,11 @@ export class ColorSelectComponent implements ControlValueAccessor {
 	touched: boolean = false
 
 	writeValue(colorId: string | null): void {
-		if (colorId === null) return
+		if (colorId === null) {
+			if (this.colors) this.setFirstColorAsChoiced(this.colors)
+
+			return
+		}
 
 		this.choicedColorId = colorId
 	}

@@ -1,0 +1,19 @@
+<input
+	*ngIf="inputNumberShow"
+	type="number"
+	[id]="inputId"
+	[class]="inputClass"
+	[disabled]="disabled"
+	[(ngModel)]="numberValue"
+	(ngModelChange)="onNumberValueChange()"
+/>
+
+<input
+	*ngIf="inputTimeShow"
+	type="time"
+	step="1"
+	[id]="inputId"
+	[class]="inputClass"
+	[disabled]="disabled"
+	[(ngModel)]="timeValue"
+/>

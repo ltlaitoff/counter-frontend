@@ -29,6 +29,17 @@
 		/>
 	</label>
 
+	<label class="flex gap-x-5 justify-between items-center">
+		Mode
+		<select
+			formControlName="mode"
+			class="px-2 py-1 border border-gray-300 rounded w-[250px] bg-white text-slate-700"
+		>
+			<option value="number">Number</option>
+			<option value="time">Time</option>
+		</select>
+	</label>
+
 	<counter-color-select formControlName="color"></counter-color-select>
 
 	<button

@@ -28,8 +28,16 @@
 				</span>
 			</div>
 
-			<div class="text-gray-400">count</div>
-			<div class="text-slate-600 font-medium">{{ item.count }}</div>
+			<div class="text-gray-400">
+				{{ item.category.mode === 'number' ? 'count' : 'time' }}
+			</div>
+			<div class="text-slate-600 font-medium">
+				{{
+					item.category.mode === 'number'
+						? item.count
+						: getTimeForOutput(item.count)
+				}}
+			</div>
 
 			<div
 				*ngIf="item.comment"

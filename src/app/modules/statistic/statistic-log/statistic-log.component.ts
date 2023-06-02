@@ -42,25 +42,14 @@ export class StatisticLogComponent {
 	}
 
 	getTimeForOutput(value: number) {
-		const absNumberValue = Math.abs(value)
+		// TODO: Func transform seconds to time-string
+		const absNumberValueInSeconds = Math.abs(value)
 
-		let hours = Math.floor(absNumberValue / 60)
-		const minutes = absNumberValue - hours * 60
+		const output = new Date(absNumberValueInSeconds * 1000)
 
-		if (hours > 23) {
-			hours = 23
-		}
+		console.log(output.toLocaleTimeString('en-GB', { timeZone: 'UTC' }))
 
-		const hoursAsString = this.tranformNumberToTwoDigit(hours)
-		const minutesAsString = this.tranformNumberToTwoDigit(minutes)
-
-		return `${hoursAsString}:${minutesAsString}`
-	}
-
-	private tranformNumberToTwoDigit(value: number) {
-		const valueAsString = String(value)
-
-		return `${valueAsString.length === 1 ? '0' : ''}${valueAsString}`
+		return output.toLocaleTimeString('en-GB', { timeZone: 'UTC' })
 	}
 
 	private updateNoSyncLocalState(newState: LocalStateItem[]) {

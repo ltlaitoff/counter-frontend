@@ -114,14 +114,14 @@
 	<div class="h-full w-full pb-20 flex items-center justify-center">
 		<div
 			class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600"
-			*ngIf="currentStatus === null"
+			*ngIf="currentStatus === null || currentStatus === 'synchronization'"
 		>
 			Loading...
 		</div>
 
 		<div
 			class="flex flex-col items-center gap-y-2 justify-center"
-			*ngIf="currentStatus !== null"
+			*ngIf="currentStatus !== null && currentStatus !== 'synchronization'"
 		>
 			<div class="text-xl flex gap-x-1 text-slate-800">
 				<span class="text-pink-500">Statistic</span>

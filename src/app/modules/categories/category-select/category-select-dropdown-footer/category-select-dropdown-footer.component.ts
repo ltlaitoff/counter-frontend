@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { RootState } from 'src/app/store'
 import { CategoriesActions } from 'src/app/store/categories'
@@ -11,14 +11,21 @@ import { CategoriesBasicSet } from 'src/types/ApiInputs'
 export class CategorySelectDropdownFooterComponent {
 	constructor(private store: Store<RootState>) {}
 
-	isAddFormOpened: boolean = false
+	@Input() isAddFormOpened: boolean = false
+	@Output() isAddFormOpenedChange = new EventEmitter<boolean>()
 
-	toggleAddForm() {
+	toggleAddForm(event: Event) {
+		event.stopPropagation()
+
 		this.isAddFormOpened = !this.isAddFormOpened
+
+		this.isAddFormOpenedChange.emit(this.isAddFormOpened)
 	}
 
 	closeAddForm() {
 		this.isAddFormOpened = false
+
+		this.isAddFormOpenedChange.emit(this.isAddFormOpened)
 	}
 
 	addNewCategory(data: CategoriesBasicSet) {

@@ -9,12 +9,14 @@ import { Store } from '@ngrx/store'
 import { sortedByOrder } from 'src/app/helpers'
 import { RootState } from 'src/app/store'
 import { selectCategories, CategoriesActions } from 'src/app/store/categories'
+import { selectCategoriesState } from 'src/app/store/categories/categories.select'
 import {
 	CategoryStateItemWithColor,
 	CategorySyncStateItemWithColor
 } from 'src/app/store/categories/categories.types'
 import { selectCategoryGroups } from 'src/app/store/category-groups/category-groups.select'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
+import { LoadStatus } from 'src/app/store/store.types'
 import { AddCategoryGroupInputs, CategoriesBasicSet } from 'src/types/ApiInputs'
 
 @Component({
@@ -27,6 +29,7 @@ export class CategoriesTableComponent implements OnInit {
 	showMenu: string | null = null
 	editCategoryId: string | null = null
 	allCategoryGroups: CategoryGroupsStateItemWithColor[] = []
+	currentStatus: LoadStatus = LoadStatus.NOT_SYNCHRONIZED
 
 	ngOnInit() {
 		this.store.select(selectCategories).subscribe(value => {
@@ -39,6 +42,10 @@ export class CategoriesTableComponent implements OnInit {
 			if (JSON.stringify(value) !== JSON.stringify(this.allCategoryGroups)) {
 				this.allCategoryGroups = value
 			}
+		})
+
+		this.store.select(selectCategoriesState).subscribe(value => {
+			this.currentStatus = value
 		})
 	}
 

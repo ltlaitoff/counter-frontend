@@ -26,21 +26,20 @@
 
 	<div
 		class="py-2 overflow-y-auto flex flex-col gap-y-[2px]"
-		*ngIf="categories; else notFound"
+		*ngIf="categories && categories.length > 0 && categoryGroups; else notFound"
+		[ngSwitch]="activeTab"
 	>
-		<div *ngIf="activeTab === 'group'">
-			<counter-category-select-dropdown-group-tab
-				*ngIf="categoryGroups; else notFound"
-				[categories]="categories"
-				[categoryGroups]="categoryGroups"
-				[currentCategory]="currentCategory"
-				[searchValue]="searchValue"
-				(onSubmit)="onItemClick($event)"
-			></counter-category-select-dropdown-group-tab>
-		</div>
+		<counter-category-select-dropdown-group-tab
+			*ngSwitchCase="'group'"
+			[categories]="categories"
+			[categoryGroups]="categoryGroups"
+			[currentCategory]="currentCategory"
+			[searchValue]="searchValue"
+			(onSubmit)="onItemClick($event)"
+		></counter-category-select-dropdown-group-tab>
 
 		<counter-category-select-dropdown-category-tab
-			*ngIf="activeTab === 'category'"
+			*ngSwitchCase="'category'"
 			[categories]="categories"
 			[currentCategory]="currentCategory"
 			[searchValue]="searchValue"
@@ -49,7 +48,9 @@
 	</div>
 
 	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
-	<counter-category-select-dropdown-footer></counter-category-select-dropdown-footer>
+	<counter-category-select-dropdown-footer
+		[(isAddFormOpened)]="isAddFormOpened"
+	></counter-category-select-dropdown-footer>
 </div>
 
 <ng-template #notFound>

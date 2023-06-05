@@ -29,6 +29,7 @@ export class CategorySelectDropdownComponent {
 	searchValue: string = ''
 	tabs: CategorySelectTab[] = TABS_DEFAULT
 	activeTab: CategorySelectTab = ACTIVE_TAB_DEFAULT
+	isAddFormOpened: boolean = false
 
 	onItemClick(id: string | null) {
 		this.itemClick.emit(id)
@@ -39,6 +40,8 @@ export class CategorySelectDropdownComponent {
 	}
 
 	stopPropagination(event: Event) {
+		this.isAddFormOpened = false
+
 		event.stopPropagation()
 	}
 }

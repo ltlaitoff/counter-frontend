@@ -6,13 +6,15 @@
 	<div
 		class="min-h-[41px] py-2 px-2 bg-gray-100 flex gap-x-2 gap-y-1 flex-wrap rounded-t-lg border-b border-inherit"
 	>
-		<counter-category-groups-item
-			*ngFor="let categoryGroup of categoryGroupsChoiced"
-			[name]="categoryGroup.name"
-			[color]="categoryGroup.color.colorHEX"
-			[showDeleteButton]="true"
-			(onDelete)="onDeleteClick(categoryGroup)"
-		></counter-category-groups-item>
+		<div *ngIf="categoryGroupsChoiced && categoryGroupsChoiced.length > 0">
+			<counter-category-groups-item
+				*ngFor="let categoryGroup of categoryGroupsChoiced"
+				[name]="categoryGroup.name"
+				[color]="categoryGroup.color.colorHEX"
+				[showDeleteButton]="true"
+				(onDelete)="onDeleteClick(categoryGroup)"
+			></counter-category-groups-item>
+		</div>
 	</div>
 
 	<div class="py-2">
@@ -20,6 +22,7 @@
 			class="flex flex-col"
 			cdkDropList
 			(cdkDropListDropped)="drop($event)"
+			*ngIf="categoryGroupsList && categoryGroupsList.length > 0; else notFound"
 		>
 			<li
 				*ngFor="let categoryGroup of categoryGroupsList"
@@ -78,6 +81,10 @@
 				</div>
 			</li>
 		</ul>
+
+		<ng-template #notFound>
+			<div class="text-base px-2">Not found</div>
+		</ng-template>
 	</div>
 
 	<footer class="w-full relative">

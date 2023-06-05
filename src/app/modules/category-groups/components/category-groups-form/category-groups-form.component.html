@@ -84,7 +84,7 @@
 		<button
 			class="py-1 px-2 w-full border-t border-inherit rounded-b-lg text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
 			type="button"
-			(click)="toggleAddForm()"
+			(click)="toggleAddForm($event)"
 			[class.bg-slate-200]="isAddFormOpened"
 			[class.fill-sky-500]="isAddFormOpened"
 		>

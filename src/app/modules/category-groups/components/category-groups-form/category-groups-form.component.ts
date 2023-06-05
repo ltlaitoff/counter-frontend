@@ -78,6 +78,8 @@ export class CategoryGroupsFormComponent {
 	closeFormsWithStopPropagation(event: Event) {
 		event.stopPropagation()
 
+		console.log('closeFormsWithStopPropagation')
+
 		this.closeForms()
 	}
 
@@ -100,7 +102,9 @@ export class CategoryGroupsFormComponent {
 		this.isAddFormOpened = false
 	}
 
-	toggleAddForm() {
+	toggleAddForm(e: Event) {
+		e.stopPropagation()
+
 		this.isAddFormOpened = !this.isAddFormOpened
 	}
 

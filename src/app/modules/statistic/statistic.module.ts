@@ -14,6 +14,7 @@ import { ClickedOutsideDirectiveModule } from '../../directives/clicked-outside-
 import { KeydownDirectiveModule } from '../../directives/keydown-directive.module'
 import { StatisticChartOptionsComponent } from './statistic-chart-options/statistic-chart-options.component'
 import { TimeNumberPickerModule } from 'src/app/components-modules/time-number-picker/time-number-picker.module'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
 	declarations: [
@@ -33,7 +34,8 @@ import { TimeNumberPickerModule } from 'src/app/components-modules/time-number-p
 		CategoriesModule,
 		ClickedOutsideDirectiveModule,
 		KeydownDirectiveModule,
-		TimeNumberPickerModule
+		TimeNumberPickerModule,
+		RouterModule
 	],
 	exports: [StatisticComponent, StatisticLogComponent]
 })

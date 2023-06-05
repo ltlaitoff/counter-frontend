@@ -48,7 +48,9 @@
 	</div>
 
 	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
-	<counter-category-select-dropdown-footer></counter-category-select-dropdown-footer>
+	<counter-category-select-dropdown-footer
+		[(isAddFormOpened)]="isAddFormOpened"
+	></counter-category-select-dropdown-footer>
 </div>
 
 <ng-template #notFound>

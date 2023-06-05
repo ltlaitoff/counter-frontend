@@ -45,6 +45,17 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 		return result
 	}
 
+	get categoriesList() {
+		const searchedCategories = filterCategoriesBySearch(
+			this.categories,
+			this.searchValue
+		)
+
+		if (!searchedCategories) return null
+
+		return sortedByOrder(searchedCategories)
+	}
+
 	transformCategoriesAndGroupsForOutput() {
 		this.categoriesAndGroupsForOutput = {}
 		this.categoriesWithoutGroups = []

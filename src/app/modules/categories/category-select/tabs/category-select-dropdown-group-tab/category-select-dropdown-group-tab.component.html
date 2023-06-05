@@ -1,4 +1,4 @@
-<div class="">
+<div class="flex flex-col gap-y-2">
 	<div
 		class=""
 		*ngFor="let group of categoryGroupsForOutput"
@@ -42,9 +42,9 @@
 		</div>
 	</div>
 
-	<div class="mt-2">
+	<div class="">
 		<counter-category-select-dropdown-category-item
-			*ngFor="let category of categoriesWithoutGroups"
+			*ngFor="let category of categoriesList"
 			[category]="category"
 			[choiced]="currentCategory?._id === category._id"
 			[searchValue]="searchValue"

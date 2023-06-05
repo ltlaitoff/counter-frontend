@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { AnimationItem } from 'lottie-web'
 import { AnimationOptions } from 'ngx-lottie'
 import { MENU_ITEMS } from './menu.config'
@@ -14,6 +14,9 @@ import { getAnimationOptions } from './menu.helper'
 	templateUrl: './menu.component.html'
 })
 export class MenuComponent {
+	@Input() mini: boolean = false
+	@Output() onRouteClick = new EventEmitter()
+
 	menuItems: MenuItem[]
 
 	private animateOptions: AnimationOptionsWithId[]
@@ -73,5 +76,9 @@ export class MenuComponent {
 
 	mouseLinkLeave(id: number) {
 		this.animationSetStatus(id, AnimationSetStatusTypes.STOP)
+	}
+
+	onRouteClickInner() {
+		this.onRouteClick.emit()
 	}
 }

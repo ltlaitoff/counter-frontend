@@ -1,5 +1,8 @@
 <a
 	class="flex"
+	[ngClass]="{
+		'cursor-default': !userInfo || !userInfo.authorized
+	}"
 	routerLink="/"
 >
 	<app-logo-item

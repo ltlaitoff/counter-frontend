@@ -9,10 +9,12 @@
 			<a
 				(mouseenter)="mouseLinkEnter(item.id)"
 				(mouseleave)="mouseLinkLeave(item.id)"
+				[attr.disabled]="!userInfo || !userInfo.authorized"
 				(click)="onRouteClickInner()"
 				class="flex items-center gap-x-2 px-2 h-full text-gray-800 hover:text-sky-600 transition-colors"
 				[ngClass]="{
-					'px-6 py-3 text-lg': mini
+					'px-6 py-3 text-lg': mini,
+					'!text-slate-400 cursor-default': !userInfo || !userInfo.authorized
 				}"
 				[routerLink]="item.path"
 				[routerLinkActiveOptions]="{ exact: true }"

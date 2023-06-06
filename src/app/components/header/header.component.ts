@@ -8,7 +8,7 @@ import { User } from 'src/types/User'
 export class HeaderComponent {
 	@Input() userInfo: User | null = null
 
-	menuOpened = true
+	menuOpened = false
 
 	toggleMenuOpened() {
 		this.menuOpened = !this.menuOpened

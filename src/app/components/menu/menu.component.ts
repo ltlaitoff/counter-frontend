@@ -8,6 +8,7 @@ import {
 	MenuItem
 } from './menu.types'
 import { getAnimationOptions } from './menu.helper'
+import { User } from 'src/types/User'
 
 @Component({
 	selector: 'app-menu',
@@ -15,6 +16,8 @@ import { getAnimationOptions } from './menu.helper'
 })
 export class MenuComponent {
 	@Input() mini: boolean = false
+	@Input() userInfo: User | null = null
+
 	@Output() onRouteClick = new EventEmitter()
 
 	menuItems: MenuItem[]
@@ -71,10 +74,14 @@ export class MenuComponent {
 	}
 
 	mouseLinkEnter(id: number) {
+		if (!this.userInfo || !this.userInfo.authorized) return
+
 		this.animationSetStatus(id, AnimationSetStatusTypes.PLAY)
 	}
 
 	mouseLinkLeave(id: number) {
+		if (!this.userInfo || !this.userInfo.authorized) return
+
 		this.animationSetStatus(id, AnimationSetStatusTypes.STOP)
 	}
 

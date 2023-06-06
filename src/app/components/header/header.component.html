@@ -3,15 +3,18 @@
 >
 	<div class="max-[750px]:hidden flex justify-between">
 		<div class="flex gap-x-8 max-[900px]:gap-x-6 items-center">
-			<app-logo></app-logo>
-			<app-menu class="h-full"></app-menu>
+			<app-logo [userInfo]="userInfo"></app-logo>
+			<app-menu
+				class="h-full"
+				[userInfo]="userInfo"
+			></app-menu>
 		</div>
 
 		<user-panel [userInfo]="userInfo"></user-panel>
 	</div>
 
 	<div class="max-[750px]:flex hidden justify-between">
-		<app-logo></app-logo>
+		<app-logo [userInfo]="userInfo"></app-logo>
 
 		<button
 			class="px-2 py-1 hover:bg-pink-200 bg-opacity-60 rounded-md"
@@ -41,9 +44,13 @@
 		</button>
 
 		<div class="flex flex-col gap-y-2">
-			<app-logo (click)="closeMenu()"></app-logo>
+			<app-logo
+				(click)="closeMenu()"
+				[userInfo]="userInfo"
+			></app-logo>
 
 			<app-menu
+				[userInfo]="userInfo"
 				[mini]="true"
 				(onRouteClick)="closeMenu()"
 				class="h-full"

@@ -1,4 +1,7 @@
-<footer class="w-full relative">
+<footer
+	class="w-full relative"
+	(click)="stopPropagination($event)"
+>
 	<button
 		class="py-1 px-2 w-full rounded-md text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
 		type="button"

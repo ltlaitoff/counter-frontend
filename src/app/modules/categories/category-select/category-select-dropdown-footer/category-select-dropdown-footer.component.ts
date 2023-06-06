@@ -32,4 +32,8 @@ export class CategorySelectDropdownFooterComponent {
 		this.store.dispatch(CategoriesActions.add(data))
 		this.closeAddForm()
 	}
+
+	stopPropagination(e: Event) {
+		e.stopPropagation()
+	}
 }

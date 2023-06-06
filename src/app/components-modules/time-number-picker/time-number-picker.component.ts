@@ -2,7 +2,8 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	forwardRef,
-	Input
+	Input,
+	SimpleChanges
 } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
@@ -23,10 +24,16 @@ export class TimeNumberPickerComponent implements ControlValueAccessor {
 	@Input() inputId = ''
 	@Input() inputTimeShow = false
 	@Input() inputNumberShow = true
+	// `value` is stub for sync formControlName work in adaptive
+	@Input() value: number | null | undefined = null
 
 	numberValue: number | null = null
 
-	ngOnInit() {}
+	ngOnChanges(changes: SimpleChanges) {
+		if (changes['value'] && !changes['value'].firstChange) {
+			this.numberValue = changes['value'].currentValue
+		}
+	}
 
 	onNumberValueChange() {
 		this.markAsTouched()

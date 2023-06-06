@@ -31,6 +31,7 @@
 					this.choicedCategory !== null && this.choicedCategory.mode === 'time'
 				"
 				formControlName="count"
+				[value]="addForm.value.count"
 			></counter-time-number-picker>
 
 			<counter-category-select
@@ -39,6 +40,7 @@
 				[categoryGroups]="categoryGroups"
 				formControlName="category"
 				buttonClass="p-4"
+				[value]="addForm.value.category"
 			></counter-category-select>
 
 			<input
@@ -47,6 +49,7 @@
 				type="text"
 				placeholder="Comment"
 				formControlName="comment"
+				[value]="addForm.value.comment"
 			/>
 
 			<input
@@ -82,6 +85,7 @@
 						this.choicedCategory.mode === 'time'
 					"
 					formControlName="count"
+					[value]="addForm.value.count"
 				></counter-time-number-picker>
 			</div>
 
@@ -94,6 +98,7 @@
 					[categoryGroups]="categoryGroups"
 					formControlName="category"
 					buttonClass="px-4 py-2"
+					[value]="addForm.value.category"
 				></counter-category-select>
 			</div>
 
@@ -111,6 +116,7 @@
 					type="text"
 					placeholder="Comment"
 					formControlName="comment"
+					[value]="addForm.value.comment"
 				/>
 			</div>
 

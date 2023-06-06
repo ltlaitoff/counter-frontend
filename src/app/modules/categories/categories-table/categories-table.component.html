@@ -1,145 +1,147 @@
-<table
-	class="h-auto drop-table table-auto w-full mt-4 border-white border-2"
-	*ngIf="categories && categories.length > 0; else categoriesTableStub"
->
-	<tr class="text-slate-700">
-		<th></th>
-		<th
-			class="font-medium p-2 border border-gray-300 border-l-transparent"
-			title="Color"
-		>
-			<counter-categories-table-color-head-item></counter-categories-table-color-head-item>
-		</th>
-		<th
-			class="font-medium p-2 border border-gray-300"
-			title="Mode"
-		>
-			M
-		</th>
-		<th class="font-medium p-2 border border-gray-300">Name</th>
-		<th class="font-medium p-2 border border-gray-300">Comment</th>
-		<th class="font-medium p-2 border border-gray-300">Dimension</th>
-		<th class="font-medium p-2 border border-gray-300">Group</th>
-	</tr>
-	<tbody
-		class="w-full h-full relative"
-		cdkDropList
-		(cdkDropListDropped)="drop($event)"
+<div class="max-[750px]:overflow-x-scroll">
+	<table
+		class="max-[750px]:w-[800px] h-auto drop-table table-auto w-full mt-4 border-white border-2"
+		*ngIf="categories && categories.length > 0; else categoriesTableStub"
 	>
-		<tr
-			class="group drop-item table-row text-slate-600 relative transition-opacity"
-			*ngFor="let category of sortedByOrderCategories"
-			cdkDrag
-			[cdkDragData]="category"
-			[cdkDragDisabled]="category.status !== undefined"
-		>
-			<td class="">
-				<counter-categories-table-control
-					class="counter-categories-table-control group-hover:opacity-100 opacity-0 transition-all duration-100 ease-out"
-					[category]="category"
-					cdkDragHandle
-					(onClick)="onControlButtonClick(category._id)"
-					[class.opacity-100]="showMenu === category._id"
-					appClickedOutside
-					(clickedOutside)="onFormClickedOutside(category._id)"
-					[allowShowHint]="showMenu !== category._id"
-				>
-					<div
-						*ngIf="showMenu === category._id"
-						class="absolute z-50 flex flex-col mt-2 py-1 left-1/2 -translate-x-1/4 w-36 text-slate-600 rounded-lg border border-slate-200 bg-white"
-					>
-						<counter-panel-form-item
-							text="Edit"
-							imageSrc="assets/icons/pencil.svg"
-							imageType="svg"
-							imageClass="w-5"
-							(onClick)="setEditCategoryId(category._id)"
-						></counter-panel-form-item>
-
-						<counter-panel-form-item
-							imageSrc="assets/icons/trash-can.svg"
-							text="Delete"
-							imageType="svg"
-							imageClass="w-5"
-							(onClick)="deleteCategory(category)"
-						></counter-panel-form-item>
-
-						<counter-categories-form
-							*ngIf="editCategoryId === category._id"
-							class="absolute top-6"
-							[fromType]="'edit'"
-							[initialFormData]="{
-								name: category.name,
-								comment: category.comment,
-								color: category.color._id,
-								dimension: category.dimension || '',
-								mode: category.mode
-							}"
-							(onSubmit)="editCategory(category, $event)"
-						></counter-categories-form>
-					</div>
-				</counter-categories-table-control>
-			</td>
-
-			<td class="px-4 py-2 border border-gray-300 border-l-0 z-0">
-				<div class="flex gap-x-3 items-center justify-center capitalize">
-					<div
-						class="w-4 h-4 rounded-full"
-						[style]="{ background: category.color.colorHEX }"
-					></div>
-				</div>
-			</td>
-
-			<td class="border border-gray-300">
-				<div class="px-2 py-1 h-full w-full flex items-center justify-center">
-					<svg-icon
-						*ngIf="category.mode === 'time'"
-						title="time"
-						class="inline-block w-6 fill-slate-500 group-disabled/form-item:opacity-50"
-						src="assets/icons/time-outline.svg"
-					></svg-icon>
-
-					<svg-icon
-						*ngIf="category.mode === 'number'"
-						title="number"
-						class="inline-block w-7 fill-slate-500 group-disabled/form-item:opacity-50"
-						src="assets/icons/number-outline.svg"
-					></svg-icon>
-				</div>
-			</td>
-
-			<td class="px-4 py-2 border border-gray-300">
-				<counter-not-sync-status-icon
-					[status]="category.status"
-				></counter-not-sync-status-icon>
-
-				<div class="break-all">
-					{{ category.name }}
-				</div>
-			</td>
-
-			<td class="px-4 py-2 border border-gray-300">
-				<div class="break-all">
-					{{ category.comment }}
-				</div>
-			</td>
-
-			<td class="px-4 py-2 border border-gray-300">
-				<div class="break-all">
-					{{ category.dimension }}
-				</div>
-			</td>
-
-			<td class="border border-gray-300 max-w-[50%] relative p-0">
-				<counter-category-groups-cell
-					[allCategoryGroups]="allCategoryGroups"
-					[categoryGroups]="category.group"
-					(changeCategoryGroups)="changeCategoryGroups(category, $event)"
-				></counter-category-groups-cell>
-			</td>
+		<tr class="text-slate-700">
+			<th></th>
+			<th
+				class="font-medium p-2 border border-gray-300 border-l-transparent"
+				title="Color"
+			>
+				<counter-categories-table-color-head-item></counter-categories-table-color-head-item>
+			</th>
+			<th
+				class="font-medium p-2 border border-gray-300"
+				title="Mode"
+			>
+				M
+			</th>
+			<th class="font-medium p-2 border border-gray-300">Name</th>
+			<th class="font-medium p-2 border border-gray-300">Comment</th>
+			<th class="font-medium p-2 border border-gray-300">Dimension</th>
+			<th class="font-medium p-2 border border-gray-300">Group</th>
 		</tr>
-	</tbody>
-</table>
+		<tbody
+			class="w-full h-full relative leading-[1.1em]"
+			cdkDropList
+			(cdkDropListDropped)="drop($event)"
+		>
+			<tr
+				class="group drop-item table-row text-slate-600 relative transition-opacity"
+				*ngFor="let category of sortedByOrderCategories"
+				cdkDrag
+				[cdkDragData]="category"
+				[cdkDragDisabled]="category.status !== undefined"
+			>
+				<td class="">
+					<counter-categories-table-control
+						class="counter-categories-table-control group-hover:opacity-100 opacity-0 transition-all duration-100 ease-out"
+						[category]="category"
+						cdkDragHandle
+						(onClick)="onControlButtonClick(category._id)"
+						[class.opacity-100]="showMenu === category._id"
+						appClickedOutside
+						(clickedOutside)="onFormClickedOutside(category._id)"
+						[allowShowHint]="showMenu !== category._id"
+					>
+						<div
+							*ngIf="showMenu === category._id"
+							class="absolute z-50 flex flex-col mt-2 py-1 max-[1110px]:left-0 left-1/2 max-[1110px]:translate-x-0 -translate-x-1/4 w-36 text-slate-600 rounded-lg border border-slate-200 bg-white"
+						>
+							<counter-panel-form-item
+								text="Edit"
+								imageSrc="assets/icons/pencil.svg"
+								imageType="svg"
+								imageClass="w-5"
+								(onClick)="setEditCategoryId(category._id)"
+							></counter-panel-form-item>
+
+							<counter-panel-form-item
+								imageSrc="assets/icons/trash-can.svg"
+								text="Delete"
+								imageType="svg"
+								imageClass="w-5"
+								(onClick)="deleteCategory(category)"
+							></counter-panel-form-item>
+
+							<counter-categories-form
+								*ngIf="editCategoryId === category._id"
+								class="absolute top-6"
+								[fromType]="'edit'"
+								[initialFormData]="{
+									name: category.name,
+									comment: category.comment,
+									color: category.color._id,
+									dimension: category.dimension || '',
+									mode: category.mode
+								}"
+								(onSubmit)="editCategory(category, $event)"
+							></counter-categories-form>
+						</div>
+					</counter-categories-table-control>
+				</td>
+
+				<td class="border border-gray-300 border-l-0 z-0">
+					<div class="flex gap-x-3 items-center justify-center capitalize">
+						<div
+							class="w-4 h-4 rounded-full"
+							[style]="{ background: category.color.colorHEX }"
+						></div>
+					</div>
+				</td>
+
+				<td class="border border-gray-300">
+					<div class="px-2 py-1 h-full w-full flex items-center justify-center">
+						<svg-icon
+							*ngIf="category.mode === 'time'"
+							title="time"
+							class="inline-block w-6 fill-slate-500 group-disabled/form-item:opacity-50"
+							src="assets/icons/time-outline.svg"
+						></svg-icon>
+
+						<svg-icon
+							*ngIf="category.mode === 'number'"
+							title="number"
+							class="inline-block w-7 fill-slate-500 group-disabled/form-item:opacity-50"
+							src="assets/icons/number-outline.svg"
+						></svg-icon>
+					</div>
+				</td>
+
+				<td class="px-4 max-[750px]:px-2 py-2 border border-gray-300">
+					<counter-not-sync-status-icon
+						[status]="category.status"
+					></counter-not-sync-status-icon>
+
+					<div class="break-all">
+						{{ category.name }}
+					</div>
+				</td>
+
+				<td class="px-4 max-[750px]:px-2 py-2 border border-gray-300">
+					<div class="break-all">
+						{{ category.comment }}
+					</div>
+				</td>
+
+				<td class="px-4 max-[750px]:px-2 py-2 border border-gray-300">
+					<div class="break-all">
+						{{ category.dimension }}
+					</div>
+				</td>
+
+				<td class="border border-gray-300 max-w-[50%] relative p-0">
+					<counter-category-groups-cell
+						[allCategoryGroups]="allCategoryGroups"
+						[categoryGroups]="category.group"
+						(changeCategoryGroups)="changeCategoryGroups(category, $event)"
+					></counter-category-groups-cell>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
 <ng-template
 	class=""

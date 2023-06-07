@@ -1,8 +1,62 @@
-<header class="pt-8 flex justify-between">
-	<div class="flex gap-x-8 items-center">
-		<app-logo></app-logo>
-		<app-menu class="h-full"></app-menu>
+<header
+	class="pt-8 max-[1440px]:pt-4 max-[1440px]:px-4 max-[900px]:px-2 max-[750px]:px-4"
+>
+	<div class="max-[750px]:hidden flex justify-between">
+		<div class="flex gap-x-8 max-[900px]:gap-x-6 items-center">
+			<app-logo [userInfo]="userInfo"></app-logo>
+			<app-menu
+				class="h-full"
+				[userInfo]="userInfo"
+			></app-menu>
+		</div>
+
+		<user-panel [userInfo]="userInfo"></user-panel>
 	</div>
 
-	<user-panel [userInfo]="userInfo"></user-panel>
+	<div class="max-[750px]:flex hidden justify-between">
+		<app-logo [userInfo]="userInfo"></app-logo>
+
+		<button
+			class="px-2 py-1 hover:bg-pink-200 bg-opacity-60 rounded-md"
+			(click)="toggleMenuOpened()"
+		>
+			<svg-icon
+				class="w-6 h-6"
+				[applyClass]="true"
+				src="assets/icons/burger-menu.svg"
+			></svg-icon>
+		</button>
+	</div>
+
+	<div
+		class="absolute top-0 left-0 h-full w-full flex items-center justify-center bg-white z-50 pb-10"
+		*ngIf="menuOpened"
+	>
+		<button
+			class="absolute top-10 right-20 p-1 hover:bg-sky-200 bg-opacity-60 rounded-full"
+			(click)="closeMenu()"
+		>
+			<svg-icon
+				class="w-10 h-10"
+				[applyClass]="true"
+				src="assets/icons/cancel.svg"
+			></svg-icon>
+		</button>
+
+		<div class="flex flex-col gap-y-2">
+			<app-logo
+				(click)="closeMenu()"
+				[userInfo]="userInfo"
+			></app-logo>
+
+			<app-menu
+				[userInfo]="userInfo"
+				[mini]="true"
+				(onRouteClick)="closeMenu()"
+				class="h-full"
+			></app-menu>
+
+			<user-panel [userInfo]="userInfo"></user-panel>
+		</div>
+	</div>
 </header>

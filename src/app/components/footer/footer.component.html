@@ -1,5 +1,5 @@
 <footer class="w-full px-6 py-4 flex justify-between items-center">
-	<div class="text-slate-400 flex gap-x-2">
+	<div class="text-slate-400 flex gap-x-2 max-[425px]:text-sm">
 		v{{ version }}
 
 		<div class="">
@@ -18,7 +18,7 @@
 		</div>
 	</div>
 
-	<div class="text-slate-400 font-light">
+	<div class="text-slate-400 font-light max-[425px]:text-sm">
 		Created by
 		<a
 			class="text-slate-400 hover:text-fuchsia-400 font-medium"
@@ -32,7 +32,7 @@
 		<a
 			*ngFor="let item of config.sourceLinks"
 			[href]="item.link"
-			class="px-1 inline-block w-8 hover:bg-fuchsia-200 rounded"
+			class="px-1 max-[425px]:px-0 inline-block w-8 max-[425px]:w-6 hover:bg-fuchsia-200 rounded"
 			target="_blank"
 		>
 			<svg-icon

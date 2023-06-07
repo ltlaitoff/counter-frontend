@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { AnimationItem } from 'lottie-web'
 import { AnimationOptions } from 'ngx-lottie'
 import { MENU_ITEMS } from './menu.config'
@@ -8,12 +8,18 @@ import {
 	MenuItem
 } from './menu.types'
 import { getAnimationOptions } from './menu.helper'
+import { User } from 'src/types/User'
 
 @Component({
 	selector: 'app-menu',
 	templateUrl: './menu.component.html'
 })
 export class MenuComponent {
+	@Input() mini: boolean = false
+	@Input() userInfo: User | null = null
+
+	@Output() onRouteClick = new EventEmitter()
+
 	menuItems: MenuItem[]
 
 	private animateOptions: AnimationOptionsWithId[]
@@ -68,10 +74,18 @@ export class MenuComponent {
 	}
 
 	mouseLinkEnter(id: number) {
+		if (!this.userInfo || !this.userInfo.authorized) return
+
 		this.animationSetStatus(id, AnimationSetStatusTypes.PLAY)
 	}
 
 	mouseLinkLeave(id: number) {
+		if (!this.userInfo || !this.userInfo.authorized) return
+
 		this.animationSetStatus(id, AnimationSetStatusTypes.STOP)
+	}
+
+	onRouteClickInner() {
+		this.onRouteClick.emit()
 	}
 }

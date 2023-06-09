@@ -1,13 +1,24 @@
 <div
 	class=""
-	*ngIf="statistics && statistics.length > 0; else statisticPageStub"
+	*ngIf="
+		statistics && statistics.length > 0 && filteredStatistic;
+		else statisticPageStub
+	"
 >
 	<counter-statistic-chart
-		*ngIf="statistics"
-		[statistics]="statistics"
+		[interval]="formData['chart-interval']"
+		[by]="formData['chart-by']"
+		[mode]="formData.mode"
+		*ngIf="filteredStatistic"
+		[statistics]="filteredStatistic"
 	></counter-statistic-chart>
 
-	<div class="mt-10 flex justify-center">
+	<counter-statistic-controls
+		[(formData)]="formData"
+		(formDataChange)="formDataChange($event)"
+	></counter-statistic-controls>
+
+	<div class="mt-6 flex justify-center">
 		<div class="max-w-[960px] w-full">
 			<counter-load-status-button
 				class="max-[960px]:ml-4"
@@ -27,7 +38,7 @@
 						<th class="font-medium p-2 border border-gray-300">Category</th>
 						<th class="font-medium p-2 border border-gray-300">Date</th>
 					</tr>
-					<ng-container *ngFor="let record of statistics">
+					<ng-container *ngFor="let record of filteredStatistic">
 						<tr
 							*ngIf="record.category !== null"
 							class="table-row text-slate-600 transition-opacity relative"

@@ -1,0 +1,32 @@
+<div
+	*ngIf="categories"
+	class="w-full h-full inline-block text-gray-600 z-10"
+	appClickedOutside
+	(clickedOutside)="closeDropDown()"
+	appKeydown
+	(escapePress)="closeDropDown()"
+>
+	<button
+		type="button"
+		class="text-left text-slate-600"
+		[ngClass]="[buttonClass, getButtonClasses()]"
+		(click)="toggleDropDown()"
+	>
+		Categories
+
+		<span
+			*ngIf="currentId.length > 0"
+			class="text-purple-500"
+		>
+			{{ currentId.length }}
+		</span>
+	</button>
+
+	<counter-category-select-dropdown
+		*ngIf="isDropDownOpened"
+		[categories]="categories"
+		[categoryGroups]="categoryGroups"
+		[currentCategory]="currentId"
+		(itemClick)="onItemClick($event)"
+	></counter-category-select-dropdown>
+</div>

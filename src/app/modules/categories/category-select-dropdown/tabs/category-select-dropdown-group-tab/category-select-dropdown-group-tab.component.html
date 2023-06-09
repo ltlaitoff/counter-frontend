@@ -28,25 +28,27 @@
 		</button>
 
 		<div
-			class="ml-3"
+			class="ml-3 flex flex-col gap-y-[2px]"
 			*ngIf="openedGroupIds.includes(group._id)"
 		>
 			<counter-category-select-dropdown-category-item
 				class="text-sm"
 				*ngFor="let category of categoriesByGroupIdForOutput(group._id)"
 				[category]="category"
-				[choiced]="currentCategory?._id === category._id"
+				[multi]="isMulti"
+				[choiced]="checkIsItemChoised(category._id)"
 				[searchValue]="searchValue"
 				(itemClick)="onItemClick($event)"
 			></counter-category-select-dropdown-category-item>
 		</div>
 	</div>
 
-	<div class="">
+	<div class="flex flex-col gap-y-[2px]">
 		<counter-category-select-dropdown-category-item
 			*ngFor="let category of categoriesList"
 			[category]="category"
-			[choiced]="currentCategory?._id === category._id"
+			[multi]="isMulti"
+			[choiced]="checkIsItemChoised(category._id)"
 			[searchValue]="searchValue"
 			(itemClick)="onItemClick($event)"
 		></counter-category-select-dropdown-category-item>

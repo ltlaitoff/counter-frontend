@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CategorySelectTab } from '../category-select.types'
+import { CategorySelectTab } from '../category-select-dropdown.types'
 
 @Component({
 	selector: 'counter-category-select-dropdown-tab',

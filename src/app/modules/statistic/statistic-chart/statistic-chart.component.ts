@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnChanges,
+	SimpleChanges
+} from '@angular/core'
 import { Store } from '@ngrx/store'
 import Chart from 'chart.js/auto'
 import 'chartjs-adapter-moment'
@@ -7,26 +13,23 @@ import { RootState } from 'src/app/store'
 import { selectCategoryGroups } from 'src/app/store/category-groups/category-groups.select'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
 import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statistic.types'
-import {
-	ChartDataBy,
-	ChartDataCategoryMode,
-	ChartDataCategoryModeWithAll,
-	ChartDataInterval,
-	ChartDataset
-} from './statistic-chart.types'
+import { ChartDataset } from './statistic-chart.types'
 import { CHART_OPTIONS } from './statistic-chat.config'
+import { ChartInterval, ChartBy, Mode } from '../statistic.types'
+import * as moment from 'moment'
 
 @Component({
 	selector: 'counter-statistic-chart',
-	templateUrl: './statistic-chart.component.html'
+	templateUrl: './statistic-chart.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StatisticChartComponent implements OnChanges {
 	@Input() statistics: StatisticStateItemWithCategory[] = []
 	categoryGroups: Record<string, CategoryGroupsStateItemWithColor> = {}
 
-	chartDataInterval: ChartDataInterval = 'day'
-	chartDataBy: ChartDataBy = 'category'
-	chartDataCategoryMode: ChartDataCategoryModeWithAll = 'all'
+	@Input({ required: true }) interval: ChartInterval = 'day'
+	@Input({ required: true }) by: ChartBy = 'category'
+	@Input({ required: true }) mode: Mode = 'all'
 
 	private chart!: Chart
 
@@ -41,7 +44,7 @@ export class StatisticChartComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (changes['statistics'].firstChange) return
+		if (changes['statistics'] && changes['statistics'].firstChange) return
 
 		this.updateChartData()
 	}
@@ -55,7 +58,7 @@ export class StatisticChartComponent implements OnChanges {
 
 	getChartDatasets(
 		statistics: StatisticStateItemWithCategory[],
-		type: ChartDataInterval
+		type: ChartInterval
 	) {
 		const rawDatasets = this.getRawDatasets(statistics, type)
 
@@ -70,50 +73,98 @@ export class StatisticChartComponent implements OnChanges {
 	}
 
 	updateDatasetData(
-		type: ChartDataInterval,
+		type: ChartInterval,
 		record: {
 			date: string
 			count: number
-			type: ChartDataCategoryMode
+			type: Mode
 		},
 		rawDataset: ChartDataset
 	) {
-		if (this.chartDataCategoryMode !== 'all') {
-			if (this.chartDataCategoryMode === 'time' && record.type !== 'time')
-				return
-			if (this.chartDataCategoryMode === 'number' && record.type !== 'number')
-				return
+		if (this.mode !== 'all') {
+			if (this.mode === 'time' && record.type !== 'time') return
+			if (this.mode === 'number' && record.type !== 'number') return
 		}
 
 		const recordCount =
 			record.type === 'number' ? record.count : record.count * 1000
 
-		if (type === 'day') {
-			const date = new Date(new Date(record.date).toDateString()).getTime()
+		switch (type) {
+			case 'record': {
+				const date = new Date(record.date).getTime()
 
-			const findedRecordData = rawDataset.data.find(item => item.x === date)
-
-			if (findedRecordData === undefined) {
 				rawDataset.data.push({
 					x: date,
 					y: recordCount
 				})
+
 				return
 			}
 
-			findedRecordData.y += recordCount
-			return
-		}
+			case 'day': {
+				const date = new Date(new Date(record.date).toDateString()).getTime()
 
-		if (type === 'record') {
-			const date = new Date(record.date).getTime()
+				const findedRecordData = rawDataset.data.find(item => item.x === date)
 
-			rawDataset.data.push({
-				x: date,
-				y: recordCount
-			})
+				if (findedRecordData === undefined) {
+					rawDataset.data.push({
+						x: date,
+						y: recordCount
+					})
+					return
+				}
 
-			return
+				findedRecordData.y += recordCount
+				return
+			}
+
+			case 'week': {
+				const weekNumberDate =
+					moment()
+						.day('Monday')
+						.week(Number(moment(new Date(record.date)).format('W')))
+						.unix() * 1000
+
+				const findedRecordData = rawDataset.data.find(
+					item => item.x === weekNumberDate
+				)
+
+				if (findedRecordData === undefined) {
+					rawDataset.data.push({
+						x: weekNumberDate,
+						y: recordCount
+					})
+					return
+				}
+
+				findedRecordData.y += recordCount
+
+				return
+			}
+
+			case 'month': {
+				const weekNumberDate =
+					moment()
+						.startOf('month')
+						.month(Number(moment(new Date(record.date)).format('M')) - 1)
+						.unix() * 1000
+
+				const findedRecordData = rawDataset.data.find(
+					item => item.x === weekNumberDate
+				)
+
+				if (findedRecordData === undefined) {
+					rawDataset.data.push({
+						x: weekNumberDate,
+						y: recordCount
+					})
+					return
+				}
+
+				findedRecordData.y += recordCount
+
+				return
+			}
 		}
 	}
 
@@ -121,7 +172,7 @@ export class StatisticChartComponent implements OnChanges {
 		this.chart = new Chart('statistic-chart-canvas', {
 			type: 'line',
 			data: {
-				datasets: this.getChartDatasets(this.statistics, this.chartDataInterval)
+				datasets: this.getChartDatasets(this.statistics, this.interval)
 			},
 			options: CHART_OPTIONS
 		})
@@ -130,34 +181,32 @@ export class StatisticChartComponent implements OnChanges {
 	private updateChartDatasets() {
 		this.chart.data.datasets = this.getChartDatasets(
 			this.statistics,
-			this.chartDataInterval
+			this.interval
 		)
 	}
 
 	private updateChartOptions() {
 		if (this.chart.options.scales?.['yTime']) {
 			this.chart.options.scales['yTime'].display =
-				this.chartDataCategoryMode === 'all' ||
-				this.chartDataCategoryMode === 'time'
+				this.mode === 'all' || this.mode === 'time'
 		}
 
 		if (this.chart.options.scales?.['yNumber']) {
 			this.chart.options.scales['yNumber'].display =
-				this.chartDataCategoryMode === 'all' ||
-				this.chartDataCategoryMode === 'number'
+				this.mode === 'all' || this.mode === 'number'
 		}
 	}
 
 	private getRawDatasets(
 		statistics: StatisticStateItemWithCategory[],
-		type: ChartDataInterval
+		type: ChartInterval
 	) {
 		const rawDatasets: ChartDataset[] = []
 
 		statistics.forEach(statisticRecord => {
 			if (!statisticRecord.category) return
 
-			if (this.chartDataBy === 'group') {
+			if (this.by === 'group') {
 				statisticRecord.category.group.forEach(groupId => {
 					const group = this.categoryGroups[groupId]
 
@@ -193,7 +242,7 @@ export class StatisticChartComponent implements OnChanges {
 
 	private createRawDatasetAndUpdateRawDatasets(
 		statisticRecord: StatisticStateItemWithCategory,
-		type: ChartDataInterval,
+		type: ChartInterval,
 		rawDatasets: ChartDataset[],
 		options: {
 			id: string
@@ -227,7 +276,7 @@ export class StatisticChartComponent implements OnChanges {
 			id: string
 			name: string
 			colorHEX: string
-			mode: ChartDataCategoryMode
+			mode: Mode
 		},
 		rawDatasets: ChartDataset[]
 	) {

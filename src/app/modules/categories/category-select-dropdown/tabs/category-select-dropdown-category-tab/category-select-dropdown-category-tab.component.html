@@ -1,8 +1,12 @@
-<div *ngIf="categoriesList && categoriesList.length > 0; else notFound">
+<div
+	class="flex flex-col gap-y-[2px]"
+	*ngIf="categoriesList && categoriesList.length > 0; else notFound"
+>
 	<counter-category-select-dropdown-category-item
 		*ngFor="let category of categoriesList"
 		[category]="category"
-		[choiced]="currentCategory?._id === category._id"
+		[multi]="isMulti"
+		[choiced]="checkIsItemChoised(category._id)"
 		[searchValue]="searchValue"
 		(itemClick)="onItemClick($event)"
 	></counter-category-select-dropdown-category-item>

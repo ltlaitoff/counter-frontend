@@ -7,7 +7,7 @@ import {
 } from '@angular/core'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
-import { CategorySelectTab } from '../category-select.types'
+import { CategorySelectTab } from './category-select-dropdown.types'
 import {
 	TABS_DEFAULT,
 	ACTIVE_TAB_DEFAULT
@@ -22,7 +22,7 @@ import {
 export class CategorySelectDropdownComponent {
 	@Input() categories: CategoryStateItemWithColor[] | null = null
 	@Input() categoryGroups: CategoryGroupsStateItemWithColor[] | null = null
-	@Input() currentCategory: CategoryStateItemWithColor | null = null
+	@Input() currentCategory: string | string[] | null = null
 
 	@Output() itemClick = new EventEmitter<string | null>()
 

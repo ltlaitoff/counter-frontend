@@ -9,7 +9,7 @@ import { filterCategoriesBySearch } from '../../helpers/filter-by-search.helper'
 })
 export class CategorySelectDropdownCategoryTabComponent {
 	@Input() categories: CategoryStateItemWithColor[] = []
-	@Input() currentCategory: CategoryStateItemWithColor | null = null
+	@Input() currentCategory: string | string[] | null = null
 	@Input() searchValue: string = ''
 
 	@Output() onSubmit = new EventEmitter<string | null>()
@@ -27,5 +27,21 @@ export class CategorySelectDropdownCategoryTabComponent {
 
 	onItemClick(value: string | null) {
 		this.onSubmit.emit(value)
+	}
+
+	checkIsItemChoised(id: string) {
+		if (this.currentCategory === null) return false
+
+		if (this.currentCategory instanceof Array) {
+			return this.currentCategory.reduce((acc, item) => {
+				return acc || item === id
+			}, false)
+		}
+
+		return this.currentCategory === id
+	}
+
+	get isMulti() {
+		return this.currentCategory instanceof Array
 	}
 }

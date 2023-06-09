@@ -22,7 +22,7 @@ import {
 export class CategorySelectDropdownComponent {
 	@Input() categories: CategoryStateItemWithColor[] | null = null
 	@Input() categoryGroups: CategoryGroupsStateItemWithColor[] | null = null
-	@Input() currentCategory: CategoryStateItemWithColor | null = null
+	@Input() currentCategory: string | string[] | null = null
 
 	@Output() itemClick = new EventEmitter<string | null>()
 

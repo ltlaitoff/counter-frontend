@@ -19,7 +19,7 @@ import { filterCategoriesBySearch } from '../../helpers/filter-by-search.helper'
 export class CategorySelectDropdownGroupTabComponent implements OnInit {
 	@Input() categories: CategoryStateItemWithColor[] = []
 	@Input() categoryGroups: CategoryGroupsStateItemWithColor[] = []
-	@Input() currentCategory: CategoryStateItemWithColor | null = null
+	@Input() currentCategory: string | string[] | null = null
 	@Input() searchValue: string = ''
 
 	@Output() onSubmit = new EventEmitter<string | null>()
@@ -96,5 +96,17 @@ export class CategorySelectDropdownGroupTabComponent implements OnInit {
 
 	onItemClick(value: string | null) {
 		this.onSubmit.emit(value)
+	}
+
+	checkIsItemChoised(id: string) {
+		if (this.currentCategory === null) return false
+
+		if (this.currentCategory instanceof Array) {
+			return this.currentCategory.reduce((acc, item) => {
+				return acc || item === id
+			}, false)
+		}
+
+		return this.currentCategory === id
 	}
 }

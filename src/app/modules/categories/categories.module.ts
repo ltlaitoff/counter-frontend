@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ClickedOutsideDirectiveModule } from 'src/app/directives/clicked-outside-directive.module'
 import { KeydownDirectiveModule } from 'src/app/directives/keydown-directive.module'
 import { CategorySelectComponent } from './category-select/category-select.component'
+import { CategorySelectMultiComponent } from './category-select-multi/category-select-multi.component'
 import { ButtonsModule } from '../buttons/buttons.module'
 import { LoadStatusButtonModule } from 'src/app/components-modules/load-status-button/load-status-button.module'
 import { CategoriesTableComponent } from './categories-table/categories-table.component'
@@ -39,6 +40,7 @@ export function playerFactory() {
 	declarations: [
 		CategoriesPageComponent,
 		CategorySelectComponent,
+		CategorySelectMultiComponent,
 		CategoriesTableComponent,
 		CategoriesFormComponent,
 		CategoriesTableColorHeadItemComponent,
@@ -69,6 +71,10 @@ export function playerFactory() {
 		CategoryGroupsModule,
 		ColorModule
 	],
-	exports: [CategoriesPageComponent, CategorySelectComponent]
+	exports: [
+		CategoriesPageComponent,
+		CategorySelectComponent,
+		CategorySelectMultiComponent
+	]
 })
 export class CategoriesModule {}

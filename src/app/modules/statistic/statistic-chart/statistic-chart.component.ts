@@ -16,6 +16,7 @@ import { StatisticStateItemWithCategory } from 'src/app/store/statistic/statisti
 import { ChartDataset } from './statistic-chart.types'
 import { CHART_OPTIONS } from './statistic-chat.config'
 import { ChartInterval, ChartBy, Mode } from '../statistic.types'
+import * as moment from 'moment'
 
 @Component({
 	selector: 'counter-statistic-chart',
@@ -88,32 +89,82 @@ export class StatisticChartComponent implements OnChanges {
 		const recordCount =
 			record.type === 'number' ? record.count : record.count * 1000
 
-		if (type === 'day') {
-			const date = new Date(new Date(record.date).toDateString()).getTime()
+		switch (type) {
+			case 'record': {
+				const date = new Date(record.date).getTime()
 
-			const findedRecordData = rawDataset.data.find(item => item.x === date)
-
-			if (findedRecordData === undefined) {
 				rawDataset.data.push({
 					x: date,
 					y: recordCount
 				})
+
 				return
 			}
 
-			findedRecordData.y += recordCount
-			return
-		}
+			case 'day': {
+				const date = new Date(new Date(record.date).toDateString()).getTime()
 
-		if (type === 'record') {
-			const date = new Date(record.date).getTime()
+				const findedRecordData = rawDataset.data.find(item => item.x === date)
 
-			rawDataset.data.push({
-				x: date,
-				y: recordCount
-			})
+				if (findedRecordData === undefined) {
+					rawDataset.data.push({
+						x: date,
+						y: recordCount
+					})
+					return
+				}
 
-			return
+				findedRecordData.y += recordCount
+				return
+			}
+
+			case 'week': {
+				const weekNumberDate =
+					moment()
+						.day('Monday')
+						.week(Number(moment(new Date(record.date)).format('W')))
+						.unix() * 1000
+
+				const findedRecordData = rawDataset.data.find(
+					item => item.x === weekNumberDate
+				)
+
+				if (findedRecordData === undefined) {
+					rawDataset.data.push({
+						x: weekNumberDate,
+						y: recordCount
+					})
+					return
+				}
+
+				findedRecordData.y += recordCount
+
+				return
+			}
+
+			case 'month': {
+				const weekNumberDate =
+					moment()
+						.startOf('month')
+						.month(Number(moment(new Date(record.date)).format('M')) - 1)
+						.unix() * 1000
+
+				const findedRecordData = rawDataset.data.find(
+					item => item.x === weekNumberDate
+				)
+
+				if (findedRecordData === undefined) {
+					rawDataset.data.push({
+						x: weekNumberDate,
+						y: recordCount
+					})
+					return
+				}
+
+				findedRecordData.y += recordCount
+
+				return
+			}
 		}
 	}
 

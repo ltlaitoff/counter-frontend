@@ -10,6 +10,7 @@ import { HighlightPipe } from '../highlight.pipe'
 export class CategorySelectDropdownCategoryItemComponent {
 	@Input() category: CategoryStateItemWithColor | null = null
 	@Input() choiced: boolean = false
+	@Input() multi: boolean = false
 	@Input() searchValue: string = ''
 
 	@Output() itemClick = new EventEmitter<string | null>()

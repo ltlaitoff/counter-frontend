@@ -40,4 +40,8 @@ export class CategorySelectDropdownCategoryTabComponent {
 
 		return this.currentCategory === id
 	}
+
+	get isMulti() {
+		return this.currentCategory instanceof Array
+	}
 }

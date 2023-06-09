@@ -35,6 +35,7 @@
 				class="text-sm"
 				*ngFor="let category of categoriesByGroupIdForOutput(group._id)"
 				[category]="category"
+				[multi]="isMulti"
 				[choiced]="checkIsItemChoised(category._id)"
 				[searchValue]="searchValue"
 				(itemClick)="onItemClick($event)"
@@ -46,6 +47,7 @@
 		<counter-category-select-dropdown-category-item
 			*ngFor="let category of categoriesList"
 			[category]="category"
+			[multi]="isMulti"
 			[choiced]="checkIsItemChoised(category._id)"
 			[searchValue]="searchValue"
 			(itemClick)="onItemClick($event)"

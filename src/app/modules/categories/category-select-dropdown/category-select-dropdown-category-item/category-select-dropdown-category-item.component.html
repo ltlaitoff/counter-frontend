@@ -1,13 +1,14 @@
 <button
 	*ngIf="category"
 	type="button"
-	class="flex gap-x-2 justify-start items-center py-1 px-2 text-base font-medium hover:bg-slate-200 rounded-md w-full transition-colors duration-150"
+	class="flex gap-x-2 justify-start items-center py-1 px-2 text-base font-medium hover:bg-orange-100 rounded-md w-full transition-colors duration-150"
 	(click)="onItemClick(category._id)"
 	[style]="{
 		color: category.color.colorHEX
 	}"
 	[ngClass]="{
-		'bg-slate-200 cursor-default': choiced
+		'bg-slate-200': choiced,
+		'cursor-default hover:!bg-slate-200': !multi && choiced
 	}"
 >
 	<div

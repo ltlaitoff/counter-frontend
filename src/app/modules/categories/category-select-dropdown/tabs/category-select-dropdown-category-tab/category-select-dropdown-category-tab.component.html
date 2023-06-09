@@ -5,6 +5,7 @@
 	<counter-category-select-dropdown-category-item
 		*ngFor="let category of categoriesList"
 		[category]="category"
+		[multi]="isMulti"
 		[choiced]="checkIsItemChoised(category._id)"
 		[searchValue]="searchValue"
 		(itemClick)="onItemClick($event)"

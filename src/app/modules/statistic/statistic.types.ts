@@ -1,0 +1,5 @@
+export type ChartInterval = 'record' | 'day' | 'week' | 'month'
+export type ChartBy = 'category' | 'group'
+export type Mode = 'number' | 'time' | 'all'
+export type Comment = 'with' | 'without' | 'all'
+export type DateControl = 'week' | 'month' | 'prev-month' | 'year' | 'all'

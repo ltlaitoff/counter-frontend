@@ -1,0 +1,64 @@
+<div
+	class=""
+	[formGroup]="form"
+>
+	<label>
+		Chart interval:
+		<select formControlName="chart-interval">
+			<option value="record">Record</option>
+			<option value="day">Day</option>
+			<option value="week">Week</option>
+			<option value="month">Month</option>
+		</select>
+	</label>
+
+	<label>
+		Chart by:
+		<select formControlName="chart-by">
+			<option value="category">Category</option>
+			<option value="group">Group</option>
+		</select>
+	</label>
+
+	<label>
+		Mode:
+		<select formControlName="mode">
+			<option value="number">Number</option>
+			<option value="time">Time</option>
+			<option value="all">All</option>
+		</select>
+	</label>
+
+	<label>
+		Category:
+
+		<counter-category-select-multi
+			class=""
+			[categories]="categories"
+			[categoryGroups]="categoryGroups"
+			buttonClass="p-4"
+			formControlName="categories"
+			[value]="form.value.categories"
+		></counter-category-select-multi>
+	</label>
+
+	<label>
+		Comment:
+		<select formControlName="comment">
+			<option value="with">With comment</option>
+			<option value="without">Without comment</option>
+			<option value="all">All</option>
+		</select>
+	</label>
+
+	<label>
+		Date:
+		<select formControlName="date">
+			<option value="week">Week</option>
+			<option value="month">Month</option>
+			<option value="prev-month">Previous month</option>
+			<option value="year">Year</option>
+			<option value="all">All</option>
+		</select>
+	</label>
+</div>

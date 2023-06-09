@@ -1,31 +1,26 @@
 <div
 	*ngIf="categories"
-	class="w-full h-full relative text-gray-600 z-10"
+	class="w-full h-full inline-block text-gray-600 z-10"
 	appClickedOutside
 	(clickedOutside)="closeDropDown()"
 	appKeydown
 	(escapePress)="closeDropDown()"
 >
-	<div class="w-full h-full">
-		<button
-			type="button"
-			class="text-left w-full h-full text-gray-600"
-			[ngClass]="{
-				'border-purple-300': currentId.length > 0
-			}"
-			(click)="toggleDropDown()"
-			[ngClass]="buttonClass"
-		>
-			Categories
+	<button
+		type="button"
+		class="text-left text-slate-600"
+		[ngClass]="[buttonClass, getButtonClasses()]"
+		(click)="toggleDropDown()"
+	>
+		Categories
 
-			<span
-				*ngIf="currentId.length > 0"
-				class="text-purple-500 font-bold"
-			>
-				{{ currentId.length }}
-			</span>
-		</button>
-	</div>
+		<span
+			*ngIf="currentId.length > 0"
+			class="text-purple-500"
+		>
+			{{ currentId.length }}
+		</span>
+	</button>
 
 	<counter-category-select-dropdown
 		*ngIf="isDropDownOpened"

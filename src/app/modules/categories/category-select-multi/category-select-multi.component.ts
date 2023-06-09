@@ -81,4 +81,14 @@ export class CategorySelectMultiComponent implements ControlValueAccessor {
 	toggleDropDown() {
 		this.isDropDownOpened = !this.isDropDownOpened
 	}
+
+	getButtonClasses() {
+		const result = []
+
+		if (this.currentId.length > 0) {
+			result.push('border-purple-300')
+		}
+
+		return result.join(' ')
+	}
 }

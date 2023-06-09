@@ -1,10 +1,16 @@
 <div
-	class=""
+	class="max-[1440px]:px-4 flex flex-wrap max-[500px]:flex-col justify-center gap-x-4 gap-y-2 max-[500px]:gap-y-1 mt-4 z-10"
 	[formGroup]="form"
 >
-	<label>
-		Chart interval:
-		<select formControlName="chart-interval">
+	<label class="flex gap-x-2 text-slate-600 items-center">
+		<span class="whitespace-nowrap">
+			<span class="text-pink-600">Chart</span>
+			interval:
+		</span>
+		<select
+			class="px-2 py-1 text-slate-800 appearance-none border rounded-md bg-white border-slate-200"
+			formControlName="chart-interval"
+		>
 			<option value="record">Record</option>
 			<option value="day">Day</option>
 			<option value="week">Week</option>
@@ -12,48 +18,63 @@
 		</select>
 	</label>
 
-	<label>
-		Chart by:
-		<select formControlName="chart-by">
+	<label class="flex gap-x-2 text-slate-600 items-center">
+		<span class="whitespace-nowrap">
+			<span class="text-pink-600">Chart</span>
+			by:
+		</span>
+		<select
+			class="px-2 py-1 text-slate-800 appearance-none border rounded-md bg-white border-slate-200"
+			formControlName="chart-by"
+		>
 			<option value="category">Category</option>
 			<option value="group">Group</option>
 		</select>
 	</label>
 
-	<label>
+	<label class="flex gap-x-2 text-slate-600 items-center">
 		Mode:
-		<select formControlName="mode">
+		<select
+			class="px-2 py-1 text-slate-800 appearance-none border rounded-md bg-white border-slate-200"
+			formControlName="mode"
+		>
 			<option value="number">Number</option>
 			<option value="time">Time</option>
 			<option value="all">All</option>
 		</select>
 	</label>
 
-	<label>
+	<label class="flex gap-x-2 text-slate-600 items-center relative z-10">
 		Category:
 
 		<counter-category-select-multi
 			class=""
+			buttonClass="px-2 py-1 text-slate-800 appearance-none border rounded-md bg-white border-slate-200"
 			[categories]="categories"
 			[categoryGroups]="categoryGroups"
-			buttonClass="p-4"
 			formControlName="categories"
 			[value]="form.value.categories"
 		></counter-category-select-multi>
 	</label>
 
-	<label>
+	<label class="flex gap-x-2 text-slate-600 items-center">
 		Comment:
-		<select formControlName="comment">
+		<select
+			class="px-2 py-1 text-slate-800 appearance-none border rounded-md bg-white border-slate-200"
+			formControlName="comment"
+		>
 			<option value="with">With comment</option>
 			<option value="without">Without comment</option>
 			<option value="all">All</option>
 		</select>
 	</label>
 
-	<label>
+	<label class="flex gap-x-2 text-slate-600 items-center">
 		Date:
-		<select formControlName="date">
+		<select
+			class="px-2 py-1 text-slate-800 appearance-none border rounded-md bg-white border-slate-200"
+			formControlName="date"
+		>
 			<option value="week">Week</option>
 			<option value="month">Month</option>
 			<option value="prev-month">Previous month</option>

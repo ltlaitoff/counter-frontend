@@ -15,7 +15,7 @@ export type InitialControls = {
 	date: DateControl
 }
 
-export const INITIAL_CONTROLS: InitialControls = {
+export const INITIAL_CONTROLS: Readonly<InitialControls> = {
 	'chart-interval': 'day',
 	'chart-by': 'category',
 	mode: 'all',

@@ -22,7 +22,7 @@ export class StatisticComponent implements OnInit {
 	currentStatus: LoadStatus | null = null
 	editStatisticRecordId: string | null = null
 
-	formData: InitialControls = INITIAL_CONTROLS
+	formData: InitialControls = structuredClone(INITIAL_CONTROLS)
 
 	formDataChange(value: any) {
 		if (this.statistics === null) return

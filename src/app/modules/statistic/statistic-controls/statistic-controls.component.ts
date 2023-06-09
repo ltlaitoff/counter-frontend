@@ -20,7 +20,7 @@ import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/
 	templateUrl: './statistic-controls.component.html'
 })
 export class StatisticControlsComponent {
-	@Input() formData: InitialControls = INITIAL_CONTROLS
+	@Input() formData: InitialControls = structuredClone(INITIAL_CONTROLS)
 	@Output() formDataChange = new EventEmitter<InitialControls>()
 
 	form = new FormGroup({
@@ -28,7 +28,9 @@ export class StatisticControlsComponent {
 			INITIAL_CONTROLS['chart-interval']
 		),
 		'chart-by': new FormControl<ChartBy>(INITIAL_CONTROLS['chart-by']),
-		categories: new FormControl<string[]>(INITIAL_CONTROLS.categories),
+		categories: new FormControl<string[]>(
+			structuredClone(INITIAL_CONTROLS.categories)
+		),
 		mode: new FormControl<Mode>(INITIAL_CONTROLS.mode),
 		comment: new FormControl<Comment>(INITIAL_CONTROLS.comment),
 		date: new FormControl<DateControl>(INITIAL_CONTROLS.date)

@@ -6,6 +6,8 @@ import { ApiService } from './api.service'
 import { User } from 'src/types/User'
 import * as ApiInputs from 'src/types/ApiInputs'
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login'
+import * as Bowser from 'bowser'
+import { UserAuthHardware } from 'src/types/UserAuthHardware'
 
 @Injectable({
 	providedIn: 'root'
@@ -29,7 +31,7 @@ export class AuthGuardService {
 			if (user === null) return
 
 			this.apiService
-				.authorization(user.idToken)
+				.authorization(user.idToken, this.getUserHardware())
 				.subscribe(authorizationValue => {
 					this.authorize(authorizationValue)
 				})
@@ -54,5 +56,24 @@ export class AuthGuardService {
 			this.authGuardData.next({ authorized: false })
 			this.router.navigate(['/authorization'])
 		})
+	}
+
+	private getUserHardware(): UserAuthHardware {
+		const userAgent = window.navigator.userAgent
+
+		const hardware = Bowser.parse(window.navigator.userAgent)
+
+		console.log(hardware)
+
+		return {
+			browserName: hardware.browser.name || 'Unknown',
+			browserVersion: hardware.browser.version || '',
+			osName: hardware.os.name || 'Unknown',
+			osVersion: hardware.os.version || '',
+			osVersionName: hardware.os.versionName || '',
+			userAgent: userAgent,
+			platformType: hardware.platform.type || 'Unknown',
+			dateOfCreate: new Date(Date.now()).getTime()
+		}
 	}
 }

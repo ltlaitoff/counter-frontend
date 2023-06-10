@@ -9,4 +9,5 @@ export interface UserBase {
 
 export interface User extends UserBase {
 	authorized: boolean
+	sessionId: string
 }

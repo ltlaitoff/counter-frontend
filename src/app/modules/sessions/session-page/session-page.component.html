@@ -1,0 +1,86 @@
+<div class="max-w-[750px] max-[750px]:px-2 w-full mx-auto mt-10">
+	<div
+		class="flex flex-col gap-y-2"
+		*ngIf="sessions !== null; else sessionLoading"
+	>
+		<h1 class="text-center text-2xl text-slate-700 mb-4">Sessions</h1>
+		<div
+			class="bg-slate-50 px-4 max-[640px]:px-2 py-2 rounded-md flex justify-between"
+			[ngClass]="{
+				'bg-emerald-200 bg-opacity-70': nowSessionId === session._id
+			}"
+			*ngFor="let session of sessions"
+		>
+			<div class="flex flex-col gap-y-1 max-[640px]:text-sm">
+				<div class="flex gap-x-4">
+					<div class="text-pink-700 capitalize">
+						{{ session.platformType || 'Unknown' }}
+					</div>
+
+					<div class="flex gap-x-1 items-end">
+						<div
+							class="text-slate-800"
+							[title]="'os ' + session.osName"
+						>
+							{{ session.osName }}
+						</div>
+
+						<span
+							*ngIf="session.osVersion"
+							class="text-slate-500 max-[500px]:text-xs"
+						>
+							({{ session.osVersion }})
+						</span>
+					</div>
+
+					<div class="flex gap-x-1 items-end">
+						<div
+							class="text-slate-800"
+							[title]="'browser ' + session.browserName"
+						>
+							{{ session.browserName }}
+						</div>
+
+						<span
+							*ngIf="session.browserVersion"
+							class="text-slate-500 max-[500px]:text-xs"
+						>
+							{{ session.browserVersion }}
+						</span>
+					</div>
+				</div>
+
+				<div class="flex gap-x-2 max-[500px]:flex-col">
+					<div class="text-slate-500">
+						<span class="max-[640px]:hidden">Created:</span>
+						<span class="max-[640px]:inline-block hidden">Cre:</span>
+						<span class="text-slate-800">
+							{{ session.dateOfCreate | date : 'dd.MM.yyyy HH:ss' }}
+						</span>
+					</div>
+					<div class="text-pink-400 max-[500px]:hidden">➼</div>
+					<div class="text-slate-500">
+						<div class="text-pink-400 max-[500px]:inline-block hidden mr-2">
+							➼
+						</div>
+						<span class="max-[640px]:hidden">Expires:</span>
+						<span class="max-[640px]:inline-block hidden">Exp:</span>
+						<span class="text-slate-800">
+							{{ session.expires | date : 'dd.MM.yyyy HH:ss' }}
+						</span>
+					</div>
+				</div>
+			</div>
+			<button
+				class="px-4 max-[640px]:px-4 max-[640px]:text-sm py-1 rounded-md border-red-400 hover:border hover:bg-red-200 hover:text-red-800"
+				(click)="deleteSession(session._id)"
+			>
+				Delete
+			</button>
+		</div>
+	</div>
+</div>
+
+<ng-template #sessionLoading>
+	<div class="text-center text-xl">Loading</div>
+</ng-template>

@@ -7,8 +7,20 @@ import { Color } from 'src/types/Color'
 import { environment } from 'src/environments/environment'
 import * as ApiInputs from 'src/types/ApiInputs'
 import { CategoryGroup } from '../../types/CategoryGroup'
+import { UserSession } from '../modules/sessions/sessions.types'
 
 const API_BASE_URL = environment.API_HOST
+
+type UserAuthHardware = {
+	browserName: string
+	browserVersion: string
+	osName: string
+	osVersion: string
+	osVersionName: string
+	userAgent: string
+	platformType: string
+	dateOfCreate: number
+}
 
 @Injectable({
 	providedIn: 'root'
@@ -27,8 +39,11 @@ export class ApiService {
 
 	/* Authorization */
 
-	authorization(JWTGoogleAuthorizationToken: string) {
-		return this.http.post<User>(`${API_BASE_URL}/authorization`, null, {
+	authorization(
+		JWTGoogleAuthorizationToken: string,
+		userData: UserAuthHardware
+	) {
+		return this.http.post<User>(`${API_BASE_URL}/authorization`, userData, {
 			withCredentials: true,
 			responseType: 'json',
 			headers: new HttpHeaders({
@@ -155,6 +170,19 @@ export class ApiService {
 				withCredentials: true
 			}
 		)
+	}
+
+	/* Sessions */
+	getUserSessions() {
+		return this.http.get<UserSession[]>(`${API_BASE_URL}/session`, {
+			withCredentials: true
+		})
+	}
+
+	deleteUserSession(id: string) {
+		return this.http.delete<{ _id: string }>(`${API_BASE_URL}/session/${id}`, {
+			withCredentials: true
+		})
 	}
 
 	constructor(private http: HttpClient) {}

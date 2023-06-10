@@ -37,6 +37,7 @@ import { CategoriesModule } from './modules/categories/categories.module'
 import { StatisticModule } from './modules/statistic/statistic.module'
 import { HomeModule } from './modules/home/home.module'
 import { ButtonsModule } from './modules/buttons/buttons.module'
+import { SessionsModule } from './modules/sessions/sessions.module'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -70,6 +71,7 @@ export function playerFactory() {
 		ClickedOutsideDirectiveModule,
 		CategoriesModule,
 		StatisticModule,
+		SessionsModule,
 		HomeModule,
 		ButtonsModule
 	],

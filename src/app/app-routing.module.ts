@@ -10,6 +10,7 @@ import { colorResolver } from './resolvers/color.resolver'
 import { statisticResolver } from './resolvers/statistic.resolver'
 import { categoryGroupsResolver } from './resolvers/category-groups.resolver'
 import { authGuard } from './guards/auth.guard'
+import { SessionPageComponent } from './modules/sessions/session-page/session-page.component'
 
 const routes: Routes = [
 	{
@@ -34,6 +35,11 @@ const routes: Routes = [
 			categoriesResolver,
 			statisticResolver
 		]
+	},
+	{
+		path: 'sessions',
+		component: SessionPageComponent,
+		canActivate: [authGuard]
 	},
 	{
 		path: 'authorization',

@@ -151,8 +151,8 @@
 	<div
 		class="text-xl text-center h-full w-full flex items-center justify-center"
 	>
-		<span *ngIf="currentStatus === 'not-synchronized'">Loading</span>
-		<span *ngIf="currentStatus !== 'not-synchronized'">
+		<span *ngIf="currentStatus !== 'synchronized'">Loading</span>
+		<span *ngIf="currentStatus === 'synchronized'">
 			<span class="text-pink-500">Categories</span>
 			not found
 		</span>

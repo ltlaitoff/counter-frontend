@@ -1,13 +1,14 @@
 import { Component, Input } from '@angular/core'
 import { User } from 'src/types/User'
 import { AuthGuardService } from 'src/app/services/auth-guard.service'
+import { Router } from '@angular/router'
 
 @Component({
 	selector: 'user-panel',
 	templateUrl: './user-panel.component.html'
 })
 export class UserPanelComponent {
-	constructor(private authGuard: AuthGuardService) {}
+	constructor(private authGuard: AuthGuardService, private router: Router) {}
 
 	@Input() userInfo: User | null = null
 
@@ -25,8 +26,23 @@ export class UserPanelComponent {
 		this.toggleDropdownOpened()
 	}
 
-	onExitClick() {
+	onClick(value: 'exit' | 'sessions') {
+		switch (value) {
+			case 'exit':
+				return this.onExitClick()
+			case 'sessions':
+				return this.onSessionsClick()
+		}
+	}
+
+	private onExitClick() {
 		this.authGuard.unauthorize()
+		this.closeDropdown()
+	}
+
+	private onSessionsClick() {
+		this.router.navigate(['sessions'])
+
 		this.closeDropdown()
 	}
 

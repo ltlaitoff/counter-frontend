@@ -1,22 +1,18 @@
 import { Injectable } from '@angular/core'
-import {
-	ActivatedRouteSnapshot,
-	CanActivate,
-	Router,
-	RouterStateSnapshot
-} from '@angular/router'
-import { Observable, ReplaySubject, first } from 'rxjs'
+import { Router } from '@angular/router'
+import { ReplaySubject } from 'rxjs'
 
 import { ApiService } from './api.service'
 import { User } from 'src/types/User'
 import * as ApiInputs from 'src/types/ApiInputs'
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login'
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login'
+import * as Bowser from 'bowser'
+import { UserAuthHardware } from 'src/types/UserAuthHardware'
 
 @Injectable({
 	providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService {
 	public authGuardData = new ReplaySubject<ApiInputs.InitializeFailed | User>(1)
 	private socialAuthServiceUser: SocialUser | null = null
 
@@ -35,44 +31,10 @@ export class AuthGuardService implements CanActivate {
 			if (user === null) return
 
 			this.apiService
-				.authorization(user.idToken)
+				.authorization(user.idToken, this.getUserHardware())
 				.subscribe(authorizationValue => {
 					this.authorize(authorizationValue)
 				})
-		})
-	}
-
-	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-		return new Observable<boolean>(subscriber => {
-			this.authGuardData.pipe(first()).subscribe(value => {
-				console.log(value)
-
-				if (route.url.toString() === 'authorization') {
-					if (value.authorized === true) {
-						this.router.navigate(['/'])
-						subscriber.next(false)
-						return
-					}
-
-					subscriber.next(true)
-					return
-				}
-
-				if (value.authorized === true) {
-					subscriber.next(true)
-					return
-				}
-
-				subscriber.next(false)
-
-				if (this.router.url !== '/authorization') {
-					console.log(
-						'%c ',
-						'background: no-repeat url(https://i.cloudup.com/Zqeq2GhGjt-3000x3000.jpeg); font-size: 1px; padding: 166.5px 250px; background-size: 500px 333px;'
-					)
-					this.router.navigate(['/authorization'])
-				}
-			})
 		})
 	}
 
@@ -94,5 +56,24 @@ export class AuthGuardService implements CanActivate {
 			this.authGuardData.next({ authorized: false })
 			this.router.navigate(['/authorization'])
 		})
+	}
+
+	private getUserHardware(): UserAuthHardware {
+		const userAgent = window.navigator.userAgent
+
+		const hardware = Bowser.parse(window.navigator.userAgent)
+
+		console.log(hardware)
+
+		return {
+			browserName: hardware.browser.name || 'Unknown',
+			browserVersion: hardware.browser.version || '',
+			osName: hardware.os.name || 'Unknown',
+			osVersion: hardware.os.version || '',
+			osVersionName: hardware.os.versionName || '',
+			userAgent: userAgent,
+			platformType: hardware.platform.type || 'Unknown',
+			dateOfCreate: new Date(Date.now()).getTime()
+		}
 	}
 }

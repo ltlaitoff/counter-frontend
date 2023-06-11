@@ -115,5 +115,27 @@ export class CategoryGroupsCellComponent implements OnInit {
 		this.changeCategoryGroups.emit(choicedCategoryGroupsAsStringArray)
 	}
 
+	toggleFormOnKeyPress(event: KeyboardEvent) {
+		switch (event.code) {
+			case 'Space':
+			case 'Enter': {
+				event.preventDefault()
+				this.toggleFormShowed()
+
+				return
+			}
+		}
+	}
+
+	private toggleFormShowed() {
+		if (this.isFormShowed) {
+			this.closeForm()
+			return
+		}
+
+		this.showForm()
+		return
+	}
+
 	constructor(private store: Store<RootState>) {}
 }

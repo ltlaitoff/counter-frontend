@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { LogoItemColors } from './logo-item/logo-item.types'
+import { Component, Input } from '@angular/core'
+import { User } from 'src/types/User'
 
 import { LOGO_ITEMS } from './logo.config'
 import { LogoItem } from './logo.types'
@@ -9,6 +9,8 @@ import { LogoItem } from './logo.types'
 	templateUrl: './logo.component.html'
 })
 export class LogoComponent {
+	@Input() userInfo: User | null = null
+
 	logoItems: LogoItem[]
 
 	constructor() {

@@ -48,12 +48,9 @@ export class CategoryGroupsFormComponent {
 		this.deleteChoicedCategoryGroup.emit(categoryGroup)
 	}
 
-	addNewCheckedCategoryGroup(
-		event: Event,
+	private addNewCheckedCategoryGroupInner(
 		categoryGroup: CategoryGroupsStateItemWithColor
 	) {
-		event.preventDefault()
-
 		if (this.checkIsCategoryGroupChecked(categoryGroup._id)) {
 			return
 		}
@@ -61,10 +58,29 @@ export class CategoryGroupsFormComponent {
 		this.addChoicedCategoryGroup.emit(categoryGroup)
 	}
 
-	clickInsideForm(event: MouseEvent) {
+	addNewCheckedCategoryGroup(
+		event: MouseEvent | KeyboardEvent,
+		categoryGroup: CategoryGroupsStateItemWithColor
+	) {
+		event.preventDefault()
+
+		if (event instanceof KeyboardEvent) {
+			switch (event.code) {
+				case 'Space':
+				case 'Enter':
+					return this.addNewCheckedCategoryGroupInner(categoryGroup)
+			}
+		}
+
+		this.addNewCheckedCategoryGroupInner(categoryGroup)
+	}
+
+	closeFormsWithStopPropagation(event: Event) {
 		event.stopPropagation()
 
-		this.isEditCategoryGroupFormShowed = null
+		console.log('closeFormsWithStopPropagation')
+
+		this.closeForms()
 	}
 
 	toggleEditCategoryGroupForm(
@@ -86,7 +102,9 @@ export class CategoryGroupsFormComponent {
 		this.isAddFormOpened = false
 	}
 
-	toggleAddForm() {
+	toggleAddForm(e: Event) {
+		e.stopPropagation()
+
 		this.isAddFormOpened = !this.isAddFormOpened
 	}
 
@@ -142,6 +160,17 @@ export class CategoryGroupsFormComponent {
 				currentIndex: currentIndex
 			})
 		)
+	}
+
+	toggleEditCategoryGroupFormKeyboard(event: KeyboardEvent) {
+		switch (event.code) {
+			case 'Space':
+			case 'Enter': {
+				event.stopPropagation()
+
+				return
+			}
+		}
 	}
 
 	constructor(private store: Store<RootState>) {}

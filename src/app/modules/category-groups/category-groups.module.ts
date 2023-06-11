@@ -9,6 +9,7 @@ import { ClickedOutsideDirectiveModule } from 'src/app/directives/clicked-outsid
 import { KeydownDirectiveModule } from 'src/app/directives/keydown-directive.module'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { ColorModule } from '../color/color.module'
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 		KeydownDirectiveModule,
 		DragDropModule,
 		ReactiveFormsModule,
-		FormsModule
+		FormsModule,
+		ColorModule
 	],
 	exports: [CategoryGroupsCellComponent]
 })

@@ -1,17 +1,23 @@
 <div
-	class="absolute top-2 left-0 rounded-lg border border-slate-200 bg-white w-64 z-20"
-	(click)="clickInsideForm($event)"
+	class="absolute top-2 left-0 max-[1110px]:right-0 max-[1110px]:left-auto rounded-lg border border-slate-200 bg-white w-64 z-20"
+	(click)="closeFormsWithStopPropagation($event)"
+	(keypress)="closeFormsWithStopPropagation($event)"
 >
 	<div
-		class="min-h-[41px] py-2 px-2 bg-gray-100 flex gap-x-2 gap-y-1 flex-wrap rounded-t-lg border-b border-inherit"
+		class="min-h-[41px] py-2 px-2 bg-gray-100 rounded-t-lg border-b border-inherit"
 	>
-		<counter-category-groups-item
-			*ngFor="let categoryGroup of categoryGroupsChoiced"
-			[name]="categoryGroup.name"
-			[color]="categoryGroup.color.colorHEX"
-			[showDeleteButton]="true"
-			(onDelete)="onDeleteClick(categoryGroup)"
-		></counter-category-groups-item>
+		<div
+			class="flex gap-x-2 gap-y-1 flex-wrap"
+			*ngIf="categoryGroupsChoiced && categoryGroupsChoiced.length > 0"
+		>
+			<counter-category-groups-item
+				*ngFor="let categoryGroup of categoryGroupsChoiced"
+				[name]="categoryGroup.name"
+				[color]="categoryGroup.color.colorHEX"
+				[showDeleteButton]="true"
+				(onDelete)="onDeleteClick(categoryGroup)"
+			></counter-category-groups-item>
+		</div>
 	</div>
 
 	<div class="py-2">
@@ -19,6 +25,7 @@
 			class="flex flex-col"
 			cdkDropList
 			(cdkDropListDropped)="drop($event)"
+			*ngIf="categoryGroupsList && categoryGroupsList.length > 0; else notFound"
 		>
 			<li
 				*ngFor="let categoryGroup of categoryGroupsList"
@@ -26,8 +33,7 @@
 				[cdkDragData]="categoryGroup"
 				class="w-full pl-2 pr-1 py-1 flex justify-between items-center hover:bg-slate-100 cursor-pointer"
 				(click)="addNewCheckedCategoryGroup($event, categoryGroup)"
-				(keyup.space)="addNewCheckedCategoryGroup($event, categoryGroup)"
-				(keyup.enter)="addNewCheckedCategoryGroup($event, categoryGroup)"
+				(keypress)="addNewCheckedCategoryGroup($event, categoryGroup)"
 				[ngClass]="{
 					'bg-gray-100 cursor-default hover:!bg-gray-100':
 						checkIsCategoryGroupChecked(categoryGroup._id)
@@ -57,6 +63,7 @@
 					<button
 						class="h-full px-2 py-3 flex items-center gap-x-[2px] rounded hover:bg-slate-200"
 						(click)="toggleEditCategoryGroupForm($event, categoryGroup)"
+						(keypress)="toggleEditCategoryGroupFormKeyboard($event)"
 					>
 						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
 						<div class="w-[3px] h-[3px] bg-gray-400 rounded-full"></div>
@@ -77,13 +84,17 @@
 				</div>
 			</li>
 		</ul>
+
+		<ng-template #notFound>
+			<div class="text-base px-2">Not found</div>
+		</ng-template>
 	</div>
 
 	<footer class="w-full relative">
 		<button
 			class="py-1 px-2 w-full border-t border-inherit rounded-b-lg text-base hover:bg-slate-200 transition-colors duration-150 flex gap-x-1 justify-center items-center fill-slate-400 hover:fill-sky-500"
 			type="button"
-			(click)="toggleAddForm()"
+			(click)="toggleAddForm($event)"
 			[class.bg-slate-200]="isAddFormOpened"
 			[class.fill-sky-500]="isAddFormOpened"
 		>

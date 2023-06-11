@@ -23,7 +23,8 @@ type LocalStateItemNotSync = StatisticNotSyncStateItemWithCategory & {
 export class StatisticLogComponent {
 	constructor(private store: Store<RootState>) {}
 
-	notSyncStatistic: LocalStateItem[] | null = null
+	notSyncStatistic: LocalStateItem[] | null = []
+
 	notSyncStatisticSuccessesItems: LocalStateItemNotSync[] = []
 
 	statusColors = {
@@ -36,7 +37,19 @@ export class StatisticLogComponent {
 	ngOnInit() {
 		this.store.select(selectNotSyncStatisticWithCategory).subscribe(value => {
 			this.updateNoSyncLocalState(value)
+			console.log(JSON.stringify(value))
 		})
+	}
+
+	getTimeForOutput(value: number) {
+		// TODO: Func transform seconds to time-string
+		const absNumberValueInSeconds = Math.abs(value)
+
+		const output = new Date(absNumberValueInSeconds * 1000)
+
+		console.log(output.toLocaleTimeString('en-GB', { timeZone: 'UTC' }))
+
+		return output.toLocaleTimeString('en-GB', { timeZone: 'UTC' })
 	}
 
 	private updateNoSyncLocalState(newState: LocalStateItem[]) {

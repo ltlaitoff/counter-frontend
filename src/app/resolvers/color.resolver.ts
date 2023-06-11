@@ -1,22 +1,13 @@
-import { Injectable } from '@angular/core'
-import {
-	Resolve,
-	RouterStateSnapshot,
-	ActivatedRouteSnapshot
-} from '@angular/router'
+import { ResolveFn } from '@angular/router'
+import { inject } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { RootState } from '../store/rootTypes'
 import { ColorsActions } from '../store/colors'
 
-@Injectable({
-	providedIn: 'root'
-})
-export class ColorResolver implements Resolve<boolean> {
-	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		this.store.dispatch(ColorsActions.loadColors())
+export const colorResolver: ResolveFn<boolean> = (route, state) => {
+	const store = inject(Store<RootState>)
 
-		return true
-	}
+	store.dispatch(ColorsActions.loadColors())
 
-	constructor(private store: Store<RootState>) {}
+	return true
 }

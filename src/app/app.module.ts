@@ -37,6 +37,8 @@ import { CategoriesModule } from './modules/categories/categories.module'
 import { StatisticModule } from './modules/statistic/statistic.module'
 import { HomeModule } from './modules/home/home.module'
 import { ButtonsModule } from './modules/buttons/buttons.module'
+import { SessionsModule } from './modules/sessions/sessions.module'
+import { ServiceWorkerModule } from '@angular/service-worker'
 
 // Factory funtion needed ngx-lottie
 export function playerFactory() {
@@ -70,8 +72,15 @@ export function playerFactory() {
 		ClickedOutsideDirectiveModule,
 		CategoriesModule,
 		StatisticModule,
+		SessionsModule,
 		HomeModule,
-		ButtonsModule
+		ButtonsModule,
+		ServiceWorkerModule.register('ngsw-worker.js', {
+			enabled: !isDevMode(),
+			// Register the ServiceWorker as soon as the application is stable
+			// or after 30 seconds (whichever comes first).
+			registrationStrategy: 'registerWhenStable:30000'
+		})
 	],
 	providers: [
 		{

@@ -1,7 +1,0 @@
-<counter-category-select-dropdown-category-item
-	*ngFor="let category of categoriesList"
-	[category]="category"
-	[choiced]="currentCategory?._id === category._id"
-	[searchValue]="searchValue"
-	(itemClick)="onItemClick($event)"
-></counter-category-select-dropdown-category-item>

@@ -11,7 +11,8 @@ export function changeAddCategoryValueToStoreItem(
 		_id: generateNotSyncCategoryId(),
 		status: NotSyncStatus.NOT_SYNCHRONIZED,
 		action: NotSyncAction.CREATED,
-		order: 999
+		order: 999,
+		mode: data.mode || 'number'
 	}
 
 	return forAdd

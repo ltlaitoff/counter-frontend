@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core'
+import { Component, forwardRef, Input, SimpleChanges } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { CategoryStateItemWithColor } from 'src/app/store/categories/categories.types'
 import { CategoryGroupsStateItemWithColor } from 'src/app/store/category-groups/category-groups.types'
@@ -18,9 +18,19 @@ export class CategorySelectComponent implements ControlValueAccessor {
 	@Input() categories: CategoryStateItemWithColor[] | null = null
 	@Input() categoryGroups: CategoryGroupsStateItemWithColor[] | null = null
 	@Input() buttonClass: string = ''
+	// `value` is stub for sync formControlName work in adaptive
+	@Input() value: string | null | undefined = null
 
 	ngOnInit() {
 		console.log('rerender')
+	}
+
+	ngOnChanges(changes: SimpleChanges) {
+		if (changes['value'] && !changes['value'].firstChange) {
+			this.currentId = changes['value'].currentValue
+
+			this.setCurrentCategory()
+		}
 	}
 
 	isDropDownOpened = false

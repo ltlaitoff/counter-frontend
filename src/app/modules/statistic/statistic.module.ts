@@ -12,13 +12,17 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { CategoriesModule } from '../categories/categories.module'
 import { ClickedOutsideDirectiveModule } from '../../directives/clicked-outside-directive.module'
 import { KeydownDirectiveModule } from '../../directives/keydown-directive.module'
+import { TimeNumberPickerModule } from 'src/app/components-modules/time-number-picker/time-number-picker.module'
+import { RouterModule } from '@angular/router'
+import { StatisticControlsComponent } from './statistic-controls/statistic-controls.component'
 
 @NgModule({
 	declarations: [
 		StatisticComponent,
 		StatisticChartComponent,
 		StatisticLogComponent,
-		StatisticFormComponent
+		StatisticFormComponent,
+		StatisticControlsComponent
 	],
 	imports: [
 		CommonModule,
@@ -29,7 +33,9 @@ import { KeydownDirectiveModule } from '../../directives/keydown-directive.modul
 		TableControlsModule,
 		CategoriesModule,
 		ClickedOutsideDirectiveModule,
-		KeydownDirectiveModule
+		KeydownDirectiveModule,
+		TimeNumberPickerModule,
+		RouterModule
 	],
 	exports: [StatisticComponent, StatisticLogComponent]
 })

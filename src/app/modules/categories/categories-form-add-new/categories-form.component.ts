@@ -1,16 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
-import { Store } from '@ngrx/store'
-import { Color } from 'src/types/Color'
-import { sortedByOrder } from 'src/app/helpers'
-import { RootState } from 'src/app/store'
-import { selectColors } from 'src/app/store/colors'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
 
 @Component({
 	selector: 'counter-categories-form',
-	templateUrl: './categories-form.component.html',
-	styleUrls: ['./categories-form.component.scss']
+	templateUrl: './categories-form.component.html'
 })
 export class CategoriesFormComponent implements OnInit {
 	@Input() initialFormData: {
@@ -18,27 +12,32 @@ export class CategoriesFormComponent implements OnInit {
 		comment: string
 		color: string
 		dimension: string
+		mode?: string
 	} | null = null
 	@Input() fromType: 'add' | 'edit' = 'add'
 
 	@Output() onSubmit = new EventEmitter<CategoriesBasicSet>()
 
-	colors: Color[] | null = null
-
 	formData = new FormGroup({
-		name: new FormControl<string>(this.initialFormData?.name || ''),
+		name: new FormControl<string>(this.initialFormData?.name || '', [
+			Validators.required
+		]),
 		comment: new FormControl<string>(this.initialFormData?.comment || ''),
-		color: new FormControl<string | null>(this.initialFormData?.color || null),
+		color: new FormControl<string | null>(this.initialFormData?.color || null, [
+			Validators.required
+		]),
+		mode: new FormControl<string>(this.initialFormData?.mode || 'number', [
+			Validators.required
+		]),
 		dimension: new FormControl<string>(this.initialFormData?.dimension || '')
 	})
 
 	ngOnInit() {
-		this.store.select(selectColors).subscribe(newColors => {
-			this.colors = newColors
-		})
-
 		if (this.initialFormData) {
-			this.formData.setValue(this.initialFormData)
+			this.formData.setValue({
+				...this.initialFormData,
+				mode: this.initialFormData?.mode || 'number'
+			})
 		}
 	}
 
@@ -50,29 +49,41 @@ export class CategoriesFormComponent implements OnInit {
 		}
 
 		this.onSubmit.emit(valueForSend)
-		this.formData.reset()
-	}
 
-	get sortedByOrderColors() {
-		return sortedByOrder(this.colors)
+		this.formData.reset({
+			name: '',
+			comment: '',
+			color: null,
+			mode: this.formData.value.mode || 'number',
+			dimension: ''
+		})
 	}
 
 	private prepareSubmitData(value: typeof this.formData.value) {
+		if (!value.name) {
+			this.formData.get('name')?.setErrors({ required: 'required' })
+		}
+
 		if (
 			!value.name ||
 			value.comment == null ||
 			!value.color ||
-			value.dimension == null
+			value.dimension == null ||
+			!value.mode
 		) {
 			return null
 		}
+
+		const mode: 'number' | 'time' =
+			value.mode !== 'number' && value.mode !== 'time' ? 'number' : value.mode
 
 		const valueForSend = {
 			name: value.name,
 			comment: value.comment,
 			color: value.color,
 			dimension: value.dimension,
-			group: []
+			group: [],
+			mode: mode
 		}
 
 		return valueForSend
@@ -86,5 +97,7 @@ export class CategoriesFormComponent implements OnInit {
 		return this.fromType === 'edit'
 	}
 
-	constructor(private store: Store<RootState>) {}
+	get formName() {
+		return this.formData.get('name')
+	}
 }

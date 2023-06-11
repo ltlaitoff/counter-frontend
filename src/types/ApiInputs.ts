@@ -4,8 +4,12 @@ import { User } from './User'
 import { CategoryGroup } from './CategoryGroup'
 
 // TODO: Using CategoryColorString
-export type CategoriesBasicSet = Omit<Category, 'color' | 'order' | '_id'> & {
+export type CategoriesBasicSet = Omit<
+	Category,
+	'color' | 'order' | '_id' | 'mode'
+> & {
 	color: string
+	mode?: 'number' | 'time'
 }
 
 export type AddStatisticInputs = Omit<Statistic, '_id'>

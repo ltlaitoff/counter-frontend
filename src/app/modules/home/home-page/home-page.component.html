@@ -1,10 +1,12 @@
 <div class="mt-10 flex flex-col items-center justify-start">
 	<form
-		class="py-4 px-6 flex flex-col gap-y-2"
+		class="max-w-[600px] w-full py-3 px-2 flex flex-col gap-y-2"
 		[formGroup]="addForm"
 		(ngSubmit)="onSubmit()"
 	>
-		<div class="grid grid-rows-[auto_0.75fr_0.75fr_1fr_auto]">
+		<div
+			class="max-[500px]:hidden grid grid-rows-[auto_0.75fr_0.75fr_1fr_auto] grid-cols-[1fr_1fr_1.5fr]"
+		>
 			<label
 				for="add-form-count"
 				class="ml-2 col-start-1 col-end-1 row-start-1 row-end-1 text-gray-400"
@@ -16,12 +18,21 @@
 				Category
 			</div>
 
-			<input
-				id="add-form-count"
-				class="rounded-tl-md col-start-1 col-end-3 row-start-2 row-end-4 border border-gray-400 text-gray-600 row-span-2 h-full w-full px-5 text-xl"
-				type="number"
+			<counter-time-number-picker
+				class="col-start-1 col-end-3 row-start-2 row-end-4 row-span-2 h-full w-full text-xl"
+				[inputClass]="
+					'rounded-tl-md border border-gray-400 text-gray-600 h-full w-full px-5 text-lg'
+				"
+				[inputId]="'add-form-count'"
+				[inputNumberShow]="
+					this.choicedCategory == null || this.choicedCategory.mode === 'number'
+				"
+				[inputTimeShow]="
+					this.choicedCategory !== null && this.choicedCategory.mode === 'time'
+				"
 				formControlName="count"
-			/>
+				[value]="addForm.value.count"
+			></counter-time-number-picker>
 
 			<counter-category-select
 				class="-ml-[1px] rounded-r-md col-start-3 col-end-3 row-start-2 row-end-4 order-2 border row-span-2 border-gray-400"
@@ -29,9 +40,8 @@
 				[categoryGroups]="categoryGroups"
 				formControlName="category"
 				buttonClass="p-4"
+				[value]="addForm.value.category"
 			></counter-category-select>
-
-			<!-- [class]="additinalOptions.showDatetimePicker" -->
 
 			<input
 				id="add-form-comment"
@@ -39,12 +49,81 @@
 				type="text"
 				placeholder="Comment"
 				formControlName="comment"
+				[value]="addForm.value.comment"
 			/>
 
 			<input
 				*ngIf="additinalOptions.showDatetimePicker"
 				id="add-form-count"
-				class="mt-2 p-2 rounded-md col-start-1 col-end-3 row-start-5 row-end-5 border border-gray-400 text-gray-600 row-span-2 h-full w-full px-5"
+				class="mt-2 p-2 rounded-md col-start-1 col-end-3 max-[500px]:col-end-4 row-start-5 row-end-5 border border-gray-400 text-gray-600 row-span-2 h-full w-full px-5"
+				formControlName="date"
+				type="datetime-local"
+			/>
+		</div>
+
+		<div class="max-[500px]:flex hidden flex-col gap-y-2 px-2">
+			<div class="flex flex-col gap-y-1">
+				<label
+					for="add-form-count"
+					class="text-gray-400"
+				>
+					Count
+				</label>
+
+				<counter-time-number-picker
+					class="h-full w-full text-xl"
+					[inputClass]="
+						'rounded-md border border-gray-400 text-gray-600 h-full w-full px-5 py-2 text-lg'
+					"
+					[inputId]="'add-form-count'"
+					[inputNumberShow]="
+						this.choicedCategory == null ||
+						this.choicedCategory.mode === 'number'
+					"
+					[inputTimeShow]="
+						this.choicedCategory !== null &&
+						this.choicedCategory.mode === 'time'
+					"
+					formControlName="count"
+					[value]="addForm.value.count"
+				></counter-time-number-picker>
+			</div>
+
+			<div class="flex flex-col gap-y-1">
+				<div class="text-gray-400">Category</div>
+
+				<counter-category-select
+					class="-ml-[1px] rounded-md order-2 border border-gray-400"
+					[categories]="categories"
+					[categoryGroups]="categoryGroups"
+					formControlName="category"
+					buttonClass="px-4 py-2"
+					[value]="addForm.value.category"
+				></counter-category-select>
+			</div>
+
+			<div class="flex flex-col gap-y-1">
+				<label
+					for="add-form-comment"
+					class="ml-2 text-gray-400"
+				>
+					Comment
+				</label>
+
+				<input
+					id="add-form-comment"
+					class="px-4 py-2 text-gray-600 rounded-md -mt-[1px] w-full border border-gray-400"
+					type="text"
+					placeholder="Comment"
+					formControlName="comment"
+					[value]="addForm.value.comment"
+				/>
+			</div>
+
+			<input
+				*ngIf="additinalOptions.showDatetimePicker"
+				id="add-form-count"
+				class="mt-2 p-2 rounded-md col-start-1 col-end-3 max-[500px]:col-end-4 row-start-5 row-end-5 border border-gray-400 text-gray-600 row-span-2 h-full w-full px-5"
 				formControlName="date"
 				type="datetime-local"
 			/>
@@ -58,7 +137,7 @@
 				[class.!text-slate-700]="additionalSettingsShow"
 			>
 				<svg-icon
-					class="w-4 h-4"
+					class="w-4 h-4 -z-10"
 					[class.rotate-90]="additionalSettingsShow"
 					src="assets/icons/soft-arrow.svg"
 				></svg-icon>

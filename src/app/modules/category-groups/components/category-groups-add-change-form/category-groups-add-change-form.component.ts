@@ -1,11 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
-import { Store } from '@ngrx/store'
-import { sortedByOrder } from 'src/app/helpers'
-import { RootState } from 'src/app/store'
-import { selectColors } from 'src/app/store/colors'
 import { AddCategoryGroupInputs } from 'src/types/ApiInputs'
-import { Color } from 'src/types/Color'
 
 @Component({
 	selector: 'counter-category-groups-add-change-form',
@@ -22,18 +17,12 @@ export class CategoryGroupsAddChangeFormComponent {
 	@Output() onSubmit = new EventEmitter<AddCategoryGroupInputs>()
 	@Output() onDelete = new EventEmitter()
 
-	colors: Color[] | null = null
-
 	formData = new FormGroup({
 		name: new FormControl<string>(this.initialFormData?.name || ''),
 		color: new FormControl<string | null>(this.initialFormData?.color || null)
 	})
 
 	ngOnInit() {
-		this.store.select(selectColors).subscribe(newColors => {
-			this.colors = newColors
-		})
-
 		if (this.initialFormData) {
 			this.formData.setValue(this.initialFormData)
 		}
@@ -50,10 +39,6 @@ export class CategoryGroupsAddChangeFormComponent {
 
 		this.onSubmit.emit(valueForSend)
 		this.formData.reset()
-	}
-
-	get sortedByOrderColors() {
-		return sortedByOrder(this.colors)
 	}
 
 	private prepareSubmitData(value: typeof this.formData.value) {
@@ -84,6 +69,4 @@ export class CategoryGroupsAddChangeFormComponent {
 	deleteButtonClick() {
 		this.onDelete.emit()
 	}
-
-	constructor(private store: Store<RootState>) {}
 }

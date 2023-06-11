@@ -5,9 +5,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 	templateUrl: './user-panel-form.component.html'
 })
 export class UserPanelFormComponent {
-	@Output() exitClick = new EventEmitter()
+	@Output() onClick = new EventEmitter<'exit' | 'sessions'>()
 
-	onExitClick() {
-		this.exitClick.emit()
+	onClickOutput(type: 'exit' | 'sessions') {
+		this.onClick.emit(type)
 	}
 }

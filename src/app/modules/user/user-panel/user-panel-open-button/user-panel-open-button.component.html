@@ -1,11 +1,11 @@
 <button
 	*ngIf="userInfo !== null"
 	(click)="onButtonClick()"
-	class="group/badge h-full pl-4 pr-2 py-2 flex items-center gap-x-4 rounded-l-3xl rounded rounded-r-[2rem] transition-all"
+	class="group/badge h-full pl-4 pr-2 max-[900px]:px-2 py-2 flex items-center gap-x-4 max-[900px]:gap-x-3 max-[750px]:gap-x-4 rounded-l-3xl rounded rounded-r-[2rem] transition-all"
 	[class]="{ 'bg-slate-100': isOpened }"
 >
 	<div
-		class="text-slate-800 group-hover/badge:text-sky-600 duration-300"
+		class="text-slate-800 group-hover/badge:text-sky-600 duration-300 max-[900px]:text-sm max-[750px]:text-lg"
 		[class]="{ 'group-hover/badge:text-pink-600': isOpened }"
 	>
 		{{ userInfo.name }}

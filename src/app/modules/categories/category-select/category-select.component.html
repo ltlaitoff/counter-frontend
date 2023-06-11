@@ -10,12 +10,12 @@
 		<button
 			type="button"
 			*ngIf="currentCategory !== null"
-			class="w-full h-full flex gap-x-2 items-center max-w-[250px]"
+			class="w-full h-full flex gap-x-2 items-center max-w-[250px] max-[500px]:max-w-none"
 			(click)="toggleDropDown()"
 			[ngClass]="buttonClass"
 		>
 			<div
-				class="w-4 h-4 rounded-full"
+				class="min-w-[1em] min-h-[1em] rounded-full"
 				[style]="{ background: currentCategory.color.colorHEX }"
 			></div>
 			<div class="text-ellipsis overflow-hidden whitespace-nowrap">
@@ -26,7 +26,7 @@
 		<button
 			type="button"
 			*ngIf="currentCategory === null"
-			class="w-full h-full text-gray-600"
+			class="text-left w-full h-full text-gray-600"
 			(click)="toggleDropDown()"
 			[ngClass]="buttonClass"
 		>
@@ -38,7 +38,7 @@
 		*ngIf="isDropDownOpened"
 		[categories]="categories"
 		[categoryGroups]="categoryGroups"
-		[currentCategory]="currentCategory"
+		[currentCategory]="currentId"
 		(itemClick)="onItemClick($event)"
 	></counter-category-select-dropdown>
 </div>

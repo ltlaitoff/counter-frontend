@@ -1,0 +1,58 @@
+<div
+	class="absolute -left-5 mt-2 px-2 py-1 flex flex-col bg-white border border-gray-400 rounded w-[440px] max-[500px]:w-[106%] max-[500px]:-left-[3%] max-h-[400px]"
+	*ngIf="categories"
+	(click)="stopPropagination($event)"
+>
+	<header class="px-2 pt-2 pb-1">
+		<input
+			(keydown.enter)="$event.preventDefault()"
+			class="w-full py-2 px-4 rounded-md bg-slate-100 placeholder:text-slate-500"
+			type="text"
+			placeholder="Search"
+			[(ngModel)]="searchValue"
+		/>
+	</header>
+
+	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
+
+	<div class="flex gap-x-2">
+		<counter-category-select-dropdown-tab
+			*ngFor="let tab of tabs"
+			[tab]="tab"
+			[active]="activeTab === tab"
+			(onClick)="setActiveTab($event)"
+		></counter-category-select-dropdown-tab>
+	</div>
+
+	<div
+		class="py-2 overflow-y-auto flex flex-col gap-y-[2px]"
+		*ngIf="categories && categories.length > 0 && categoryGroups; else notFound"
+		[ngSwitch]="activeTab"
+	>
+		<counter-category-select-dropdown-group-tab
+			*ngSwitchCase="'group'"
+			[categories]="categories"
+			[categoryGroups]="categoryGroups"
+			[currentCategory]="currentCategory"
+			[searchValue]="searchValue"
+			(onSubmit)="onItemClick($event)"
+		></counter-category-select-dropdown-group-tab>
+
+		<counter-category-select-dropdown-category-tab
+			*ngSwitchCase="'category'"
+			[categories]="categories"
+			[currentCategory]="currentCategory"
+			[searchValue]="searchValue"
+			(onSubmit)="onItemClick($event)"
+		></counter-category-select-dropdown-category-tab>
+	</div>
+
+	<counter-category-select-dropdown-divider></counter-category-select-dropdown-divider>
+	<counter-category-select-dropdown-footer
+		[(isAddFormOpened)]="isAddFormOpened"
+	></counter-category-select-dropdown-footer>
+</div>
+
+<ng-template #notFound>
+	<div class="p-2">Not found</div>
+</ng-template>

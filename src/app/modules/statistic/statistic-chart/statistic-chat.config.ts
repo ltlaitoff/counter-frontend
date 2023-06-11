@@ -58,6 +58,9 @@ export const CHART_OPTIONS: ChartOptions<'line'> = {
 		y: { duration: 0 }
 	},
 	plugins: {
+		legend: {
+			display: false
+		},
 		tooltip: {
 			callbacks: {
 				label: function (context) {

@@ -4,9 +4,12 @@
 	(keypress)="closeFormsWithStopPropagation($event)"
 >
 	<div
-		class="min-h-[41px] py-2 px-2 bg-gray-100 flex gap-x-2 gap-y-1 flex-wrap rounded-t-lg border-b border-inherit"
+		class="min-h-[41px] py-2 px-2 bg-gray-100 rounded-t-lg border-b border-inherit"
 	>
-		<div *ngIf="categoryGroupsChoiced && categoryGroupsChoiced.length > 0">
+		<div
+			class="flex gap-x-2 gap-y-1 flex-wrap"
+			*ngIf="categoryGroupsChoiced && categoryGroupsChoiced.length > 0"
+		>
 			<counter-category-groups-item
 				*ngFor="let categoryGroup of categoryGroupsChoiced"
 				[name]="categoryGroup.name"

@@ -1,5 +1,4 @@
 <button
-	*ngIf="to === undefined"
 	class="group/form-item flex gap-x-2 items-center w-full py-1 px-4 text-left disabled:text-gray-400 enabled:hover:bg-slate-100 enabled:hover:text-sky-600 bg-white duration-300"
 	[disabled]="disabled"
 	(click)="onButtonClick()"
@@ -22,28 +21,3 @@
 
 	{{ text }}
 </button>
-
-<a
-	*ngIf="to"
-	class="group/form-item flex gap-x-2 items-center w-full py-1 px-4 text-left disabled:text-gray-400 enabled:hover:bg-slate-100 enabled:hover:text-sky-600 bg-white duration-300"
-	[routerLink]="to"
-	(click)="onButtonClick()"
->
-	<ng-content></ng-content>
-
-	<img
-		*ngIf="imageType === 'image'"
-		class="w-6 group-disabled/form-item:opacity-50"
-		[class]="imageClass"
-		[src]="imageSrc"
-	/>
-
-	<svg-icon
-		*ngIf="imageType === 'svg'"
-		class="w-6 group-disabled/form-item:opacity-50"
-		[class]="imageClass"
-		[src]="imageSrc"
-	></svg-icon>
-
-	{{ text }}
-</a>

@@ -6,7 +6,6 @@ import { Component, Input, EventEmitter, Output } from '@angular/core'
 })
 export class PanelFormItemComponent {
 	@Input() text: string = ''
-	@Input() to: string | undefined = undefined
 	@Input() imageSrc: string = ''
 	@Input() imageType: 'image' | 'svg' = 'image'
 	@Input() imageClass: string = ''

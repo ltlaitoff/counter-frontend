@@ -10,7 +10,7 @@
 	<counter-panel-form-item
 		imageSrc="assets/icons-png/sessions.png"
 		text="Sessions"
-		to="/sessions"
+		(onClick)="onClickOutput('sessions')"
 	></counter-panel-form-item>
 
 	<counter-panel-form-divider></counter-panel-form-divider>
@@ -18,6 +18,6 @@
 	<counter-panel-form-item
 		imageSrc="assets/icons-png/exit.png"
 		text="Exit"
-		(onClick)="onExitClick()"
+		(onClick)="onClickOutput('exit')"
 	></counter-panel-form-item>
 </div>

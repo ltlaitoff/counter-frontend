@@ -48,6 +48,7 @@
 						<div
 							*ngIf="showMenu === category._id"
 							class="absolute z-50 flex flex-col mt-2 py-1 max-[1110px]:left-0 left-1/2 max-[1110px]:translate-x-0 -translate-x-1/4 w-36 text-slate-600 rounded-lg border border-slate-200 bg-white"
+							(mousedown)="stopPropagation($event)"
 						>
 							<counter-panel-form-item
 								text="Edit"

@@ -140,5 +140,9 @@ export class CategoriesTableComponent implements OnInit {
 		)
 	}
 
+	stopPropagation(event: Event) {
+		event.stopPropagation()
+	}
+
 	constructor(private store: Store<RootState>) {}
 }

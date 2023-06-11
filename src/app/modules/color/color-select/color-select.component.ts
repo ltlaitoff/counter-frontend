@@ -71,6 +71,8 @@ export class ColorSelectComponent implements ControlValueAccessor {
 
 	registerOnChange(callback: (_: any) => void): void {
 		this.onChange = callback
+
+		if (this.colors) this.setFirstColorAsChoiced(this.colors)
 	}
 
 	registerOnTouched(callback: (_: any) => void): void {

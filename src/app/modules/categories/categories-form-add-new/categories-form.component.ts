@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core'
-import { FormGroup, FormControl } from '@angular/forms'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { CategoriesBasicSet } from 'src/types/ApiInputs'
 
 @Component({
@@ -19,10 +19,16 @@ export class CategoriesFormComponent implements OnInit {
 	@Output() onSubmit = new EventEmitter<CategoriesBasicSet>()
 
 	formData = new FormGroup({
-		name: new FormControl<string>(this.initialFormData?.name || ''),
+		name: new FormControl<string>(this.initialFormData?.name || '', [
+			Validators.required
+		]),
 		comment: new FormControl<string>(this.initialFormData?.comment || ''),
-		color: new FormControl<string | null>(this.initialFormData?.color || null),
-		mode: new FormControl<string>(this.initialFormData?.mode || 'number'),
+		color: new FormControl<string | null>(this.initialFormData?.color || null, [
+			Validators.required
+		]),
+		mode: new FormControl<string>(this.initialFormData?.mode || 'number', [
+			Validators.required
+		]),
 		dimension: new FormControl<string>(this.initialFormData?.dimension || '')
 	})
 
@@ -54,6 +60,10 @@ export class CategoriesFormComponent implements OnInit {
 	}
 
 	private prepareSubmitData(value: typeof this.formData.value) {
+		if (!value.name) {
+			this.formData.get('name')?.setErrors({ required: 'required' })
+		}
+
 		if (
 			!value.name ||
 			value.comment == null ||
@@ -85,5 +95,9 @@ export class CategoriesFormComponent implements OnInit {
 
 	get formTypeIsEdit() {
 		return this.fromType === 'edit'
+	}
+
+	get formName() {
+		return this.formData.get('name')
 	}
 }

@@ -9,6 +9,11 @@
 			formControlName="name"
 			class="px-2 py-1 border border-gray-300 rounded"
 			type="text"
+			required
+			[ngClass]="{
+				'border-red-500':
+					formName?.invalid && (formName?.dirty || formName?.touched)
+			}"
 		/>
 	</label>
 	<label class="flex gap-x-5 justify-between items-center">
@@ -32,6 +37,7 @@
 	<label class="flex gap-x-5 justify-between items-center">
 		Mode
 		<select
+			required
 			formControlName="mode"
 			class="px-2 py-1 border border-gray-300 rounded w-[250px] bg-white text-slate-700"
 		>
@@ -40,7 +46,10 @@
 		</select>
 	</label>
 
-	<counter-color-select formControlName="color"></counter-color-select>
+	<counter-color-select
+		required
+		formControlName="color"
+	></counter-color-select>
 
 	<button
 		type="submit"

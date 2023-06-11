@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { User } from 'src/types/User'
 import { AuthGuardService } from 'src/app/services/auth-guard.service'
 import { Router } from '@angular/router'
@@ -11,6 +11,7 @@ export class UserPanelComponent {
 	constructor(private authGuard: AuthGuardService, private router: Router) {}
 
 	@Input() userInfo: User | null = null
+	@Output() closeBurgerMenu = new EventEmitter()
 
 	isOpened = false
 
@@ -38,12 +39,14 @@ export class UserPanelComponent {
 	private onExitClick() {
 		this.authGuard.unauthorize()
 		this.closeDropdown()
+		this.closeBurgerMenu.emit()
 	}
 
 	private onSessionsClick() {
 		this.router.navigate(['sessions'])
 
 		this.closeDropdown()
+		this.closeBurgerMenu.emit()
 	}
 
 	closeWithChecks() {

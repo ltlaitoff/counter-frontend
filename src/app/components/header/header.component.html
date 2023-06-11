@@ -29,7 +29,7 @@
 	</div>
 
 	<div
-		class="absolute top-0 left-0 h-full w-full flex items-center justify-center bg-white z-50 pb-10"
+		class="fixed top-0 left-0 h-full w-full flex items-center justify-center bg-white z-50 pb-10"
 		*ngIf="menuOpened"
 	>
 		<button
@@ -56,7 +56,10 @@
 				class="h-full"
 			></app-menu>
 
-			<user-panel [userInfo]="userInfo"></user-panel>
+			<user-panel
+				[userInfo]="userInfo"
+				(closeBurgerMenu)="closeMenu()"
+			></user-panel>
 		</div>
 	</div>
 </header>

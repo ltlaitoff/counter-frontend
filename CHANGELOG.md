@@ -1,8 +1,21 @@
 # CHANGELOG
 
+## v1.2.0 - 11.06
+
+Millestone [v1.2.0]()
+
+- Create category for time [#96](https://github.com/ltlaitoff/counter-frontend/issues/96)
+- Bug: Whet updating category color category-groups are reset [#113](https://github.com/ltlaitoff/counter-frontend/issues/113)
+- Fix tab navigation in categories and statistic table [#105](https://github.com/ltlaitoff/counter-frontend/issues/105)
+- Migrate to Angular 16 [#104](https://github.com/ltlaitoff/counter-frontend/issues/104)
+- Create `Color` module and create `color-select` component [#101](https://github.com/ltlaitoff/counter-frontend/issues/101)
+- Create statistic table controls [#117](https://github.com/ltlaitoff/counter-frontend/issues/117)
+- Adaptive for all screens [#107](https://github.com/ltlaitoff/counter-frontend/issues/107)
+- Create stubs for not-data: category-table, category-select, statistic-page... [#114](https://github.com/ltlaitoff/counter-frontend/issues/114)
+
 ## v1.1.0 - 06.05
 
-Millestone [v1.1.0]https://github.com/ltlaitoff/counter-frontend/milestone/4)
+Millestone [v1.1.0](https://github.com/ltlaitoff/counter-frontend/milestone/4)
 
 - Change `exhaustMap` to `mergeMap` in all effects [#99](https://github.com/ltlaitoff/counter-frontend/issues/99)
 - Bug: On add statistic item and go to statistic page, page show only 1 item [#94](https://github.com/ltlaitoff/counter-frontend/issues/94)

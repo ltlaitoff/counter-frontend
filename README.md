@@ -1,4 +1,4 @@
-# CounterFrontend
+# PROJECT HAS BEEN MIGRATED TO [LAPRICOT](https://gitlab.com/ltlaitoff/lapricot)
 
 Documentation: [Docs](https://github.com/ltlaitoff/conspects/blob/main/projects/Counter.md)
 

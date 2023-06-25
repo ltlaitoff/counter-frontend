@@ -16,40 +16,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: HomePageComponent,
-		canActivate: [authGuard],
-		resolve: [colorResolver, categoryGroupsResolver, categoriesResolver]
-	},
-	{
-		path: 'categories',
-		component: CategoriesPageComponent,
-		canActivate: [authGuard],
-		resolve: [colorResolver, categoryGroupsResolver, categoriesResolver]
-	},
-	{
-		path: 'statistic',
-		component: StatisticComponent,
-		canActivate: [authGuard],
-		resolve: [
-			colorResolver,
-			categoryGroupsResolver,
-			categoriesResolver,
-			statisticResolver
-		]
-	},
-	{
-		path: 'sessions',
-		component: SessionPageComponent,
-		canActivate: [authGuard]
-	},
-	{
-		path: 'authorization',
-		canActivate: [authGuard],
-		component: AuthorizationComponent
-	},
-	{
-		path: 'perf',
-		component: PerfComponent
-	},
+	},	
 	{
 		path: '',
 		redirectTo: '/',
